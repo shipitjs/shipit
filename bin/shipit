@@ -1,0 +1,102 @@
+#!/usr/bin/env node
+
+var chalk = require('chalk');
+var interpret = require('interpret');
+var v8flags = require('v8flags');
+var Liftoff = require('liftoff');
+var argv = require('minimist')(process.argv.slice(2));
+var Shipit = require('../lib/shipit');
+var pkg = require('../package.json');
+
+// Initialize cli.
+var cli = new Liftoff({
+  name:'shipit',
+  extensions: interpret.jsVariants,
+  v8flags: v8flags
+});
+
+// Launch cli.
+cli.launch({
+  cwd: argv.cwd,
+  configPath: argv.shipitfile,
+  require: argv.require,
+  completion: argv.completion
+}, invoke);
+
+/**
+ * Invoke CLI.
+ *
+ * @param {object} env CLI environment
+ */
+
+function invoke(env) {
+  if (argv.version) {
+    console.info('v%s', pkg.version);
+    exit(0);
+  }
+
+  if (!env.configPath) {
+    console.error(chalk.red('shipitfile not found'));
+    exit(1);
+  }
+
+  if (argv._.length === 0) {
+    console.error(chalk.red('environment not found'));
+    exit(1);
+  }
+
+  if (argv._.length === 1) {
+    console.error(chalk.red('task not found'));
+    exit(1);
+  }
+
+  try {
+    initShipit(argv._[0], env.configPath, argv._.slice(1));
+  } catch (e) {
+    console.error(chalk.red(e.message));
+    exit(1);
+  }
+
+  // console.log('my environment is:', env);
+  // console.log('my cli options are:', argv);
+  // console.log('my liftoff config is:', this);
+}
+
+/**
+ * Initialize shipit.
+ *
+ * @param {string} env Shipit environement
+ * @param {string} shipfile Shipitfile path
+ * @param {string[]} tasks Tasks
+ */
+
+function initShipit(env, shipfile, tasks) {
+  // Create.
+  var shipit = new Shipit({environment: env});
+
+  // Load shipfile.
+  require(shipfile)(shipit);
+
+  // Initialize shipit.
+  shipit.initialize();
+
+  // Run tasks.
+  shipit.runTasks(tasks);
+}
+
+/**
+ * Properly exit.
+ * Even on Windows.
+ *
+ * @param {number} code Exit code
+ */
+
+function exit(code) {
+  if (process.platform === 'win32' && process.stdout.bufferSize) {
+    process.stdout.once('drain', function() {
+      process.exit(code);
+    });
+    return;
+  }
+  process.exit(code);
+}

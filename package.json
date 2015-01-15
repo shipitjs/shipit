@@ -1,12 +1,28 @@
 {
   "name": "shipit-cli",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Universal deployment tool written in JavaScript.",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "interpret": "^0.4.2",
+    "liftoff": "^2.0.0",
+    "lodash": "^2.4.1",
+    "minimist": "^1.1.0",
+    "orchestrator": "^0.3.7",
+    "ssh-pool": "^1.0.0",
+    "stream-line-wrapper": "^0.1.1",
+    "v8flags": "^2.0.2"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "mock-utf8-stream": "^0.1.1",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.6.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
