@@ -1,8 +1,15 @@
 {
   "name": "shipit-cli",
   "version": "0.0.0",
-  "description": "Universal deployment tool written in JavaScript.",
+  "description": "Universal automation and deployment tool written in JavaScript.",
   "main": "index.js",
+  "keywords": [
+    "shipit",
+    "automation",
+    "deployment",
+    "deploy",
+    "ssh"
+  ],
   "dependencies": {
     "bluebird": "^2.9.1",
     "chalk": "^0.5.1",
