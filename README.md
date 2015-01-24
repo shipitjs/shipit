@@ -117,16 +117,26 @@ shipit.task('pwd', function () {
 });
 ```
 
-#### shipit.run(tasks)
+#### shipit.blTask(name, deps, fn)
+
+Create a new Shipit task, that will block other tasks during its execution. If you use these type of task, the flow will be exactly the same as if you use [grunt](http://gruntjs.com).
+
+```js
+shipit.blTask('pwd', function () {
+  return shipit.remote('pwd');
+});
+```
+
+#### shipit.start(tasks)
 
 Run Shipit tasks.
 
 For more documentation, please refer to [orchestrator documentation](https://github.com/orchestrator/orchestrator#orchestratorstarttasks-cb).
 
 ```js
-shipit.run('task');
-shipit.run('task1', 'task2');
-shipit.run(['task1', 'task2']);
+shipit.start('task');
+shipit.start('task1', 'task2');
+shipit.start(['task1', 'task2']);
 ```
 
 #### shipit.local(command, [options], [callback])

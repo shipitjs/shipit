@@ -7,10 +7,11 @@ var Liftoff = require('liftoff');
 var argv = require('minimist')(process.argv.slice(2));
 var Shipit = require('../lib/shipit');
 var pkg = require('../package.json');
+var shipitDeploy = require('shipit-deploy-task');
 
 // Initialize cli.
 var cli = new Liftoff({
-  name:'shipit',
+  name: 'shipit',
   extensions: interpret.jsVariants,
   v8flags: v8flags
 });
@@ -74,6 +75,9 @@ function initShipit(env, shipfile, tasks) {
   // Create.
   var shipit = new Shipit({environment: env});
 
+  // Add deploy tasks.
+  shipitDeploy(shipit);
+
   // Load shipfile.
   require(shipfile)(shipit);
 
@@ -81,7 +85,7 @@ function initShipit(env, shipfile, tasks) {
   shipit.initialize();
 
   // Run tasks.
-  shipit.run(tasks);
+  shipit.start(tasks);
 }
 
 /**
