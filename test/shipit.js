@@ -59,17 +59,14 @@ describe('Shipit', function () {
   });
 
   describe('#local', function () {
-    it('should wrap and log to stdout', function (done) {
+    it('should wrap and log to stdout', function () {
       stdout.startCapture();
-      var echo = shipit.local('echo "hello"', function (err) {
-        if (err) return done(err);
+      return shipit.local('echo "hello"').then(function (res) {
         expect(stdout.capturedData).to.equal('@ hello\n');
-        done();
+        expect(res).to.have.property('stdout');
+        expect(res).to.have.property('stderr');
+        expect(res).to.have.property('child');
       });
-
-      // Should return a child process.
-      expect(echo).to.have.property('stdout');
-      expect(echo).to.have.property('stderr');
     });
   });
 

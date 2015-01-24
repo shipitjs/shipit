@@ -4,6 +4,7 @@
   "description": "Universal deployment tool written in JavaScript.",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^2.9.1",
     "chalk": "^0.5.1",
     "interpret": "^0.4.2",
     "liftoff": "^2.0.0",
