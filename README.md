@@ -1,10 +1,10 @@
 # Shipit 
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/shipitjs/shipit-cli?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/shipitjs/shipit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build Status](https://travis-ci.org/shipitjs/shipit-cli.svg?branch=master)](https://travis-ci.org/shipitjs/shipit-cli)
-[![Dependency Status](https://david-dm.org/shipitjs/shipit-cli.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-cli)
-[![devDependency Status](https://david-dm.org/shipitjs/shipit-cli/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-cli#info=devDependencies)
+[![Build Status](https://travis-ci.org/shipitjs/shipit.svg?branch=master)](https://travis-ci.org/shipitjs/shipit)
+[![Dependency Status](https://david-dm.org/shipitjs/shipit.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit)
+[![devDependency Status](https://david-dm.org/shipitjs/shipit/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-cli#info=devDependencies)
 
 ![Shipit logo](https://cloud.githubusercontent.com/assets/266302/3756454/81df9f46-182e-11e4-9da6-b2c7a6b84136.png)
 
@@ -16,7 +16,7 @@ Shipit is an automation engine and a deployment tool written for node / iojs. Sh
 - Login and interactive session
 - Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator) ([gulp](http://gulpjs.com/) core)
 - Blocking tasks
-- [Official deploy task](https://github.com/shipitjs/shipit-deploy-task)
+- [Official deploy task](https://github.com/shipitjs/shipit-deploy)
 - Easily extendable
 
 ## Install
