@@ -155,6 +155,14 @@ Make a remote copy from a local path to a dest path.
 shipit.remoteCopy('/tmp/workspace', '/opt/web/myapp').then(...);
 ```
 
+#### shipit.log()
+
+Log using shipit, same API as `console.log`.
+
+```js
+shipit.log('hello %s', 'world');
+```
+
 ## Deploy task
 
 Shipit is built-in with a deploy and a rollback task. You can replace them by defining a new task named "deploy" and a new task named "rollback".
