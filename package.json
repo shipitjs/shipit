@@ -24,14 +24,17 @@
   "scripts": {
     "test": "mocha"
   },
+  "bin": {
+    "shipit": "./bin/shipit"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/neoziro/shipit.git"
+    "url": "https://github.com/shipitjs/shipit-cli.git"
   },
   "author": "Greg Bergé <berge.greg@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neoziro/shipit/issues"
+    "url": "https://github.com/shipitjs/shipit-cli/issues"
   },
-  "homepage": "https://github.com/neoziro/shipit"
+  "homepage": "https://github.com/shipitjs/shipit-cli"
 }
