@@ -81,7 +81,7 @@ function initShipit(env, shipfile, tasks) {
   shipit.initialize();
 
   // Run tasks.
-  shipit.runTasks(tasks);
+  shipit.run(tasks);
 }
 
 /**
