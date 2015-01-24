@@ -8,7 +8,16 @@
 
 ![Shipit logo](https://cloud.githubusercontent.com/assets/266302/3756454/81df9f46-182e-11e4-9da6-b2c7a6b84136.png)
 
-Shipit is a deploy tool written for node / iojs. Shipit was built to be a Capistrano alternative for people who want to write tasks in JavaScript and don't have a piece of ruby in their beautiful codebase.
+Shipit is an automation engine and a deployment tool written for node / iojs. Shipit was built to be a Capistrano alternative for people who want to write tasks in JavaScript and don't have a piece of ruby in their beautiful codebase.
+
+**Features:**
+
+- Full JavaScript 
+- Login and interactive session
+- Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator) ([gulp](http://gulpjs.com/) core)
+- Blocking tasks
+- [Official deploy task](https://github.com/shipitjs/shipit-deploy-task)
+- Easily extendable
 
 ## Install
 
@@ -22,18 +31,11 @@ npm install --save-dev shipit-cli
 
 One shipit is installed, you must create a shipitfile.js, if you are familiar with grunt or gulp, this is the same.
 
-### Sample `shipitfile.js`
+### Create a `shipitfile.js`
 
 ```js
 module.exports = function (shipit) {
   shipit.initConfig({
-    default: {
-      workspace: '/tmp/deploy/my-project',
-      deployTo: '/opt/web/my-project',
-      repositoryUrl: 'git@github.com:neoziro/my-project.git',
-      ignores: ['.*'],
-      keepReleases: 5
-    },
     staging: {
       servers: 'myproject.com'
     }
@@ -45,35 +47,21 @@ module.exports = function (shipit) {
 };
 ```
 
-You can now try to run shipit command, the binary `shipit` is located in `./node_modules/.bin/shipit`. I recommend you to add in your path: `./node_modules/.bin`.
+### Launch command
 
-### Usage
+```
+shipit staging pwd
+```
+
+The binary `shipit` is located in `./node_modules/.bin/shipit`. I recommend you to add in your path: `./node_modules/.bin`.
+
+## Usage
 
 ```
 shipit <environment> <tasks ...>
 ```
 
-## Dependencies
-
-### Local
-
-- git 1.7.8+
-- rsync 3+
-- OpenSSH 5+
-
-### Remote
-
-- GNU coreutils 5+
-
-## Shipit tasks
-
-### Run task
-
-```
-shipit <environment> <tasks ...>
-```
-
-### Basic options
+### Options
 
 #### servers
 
@@ -89,7 +77,7 @@ Path to SSH key
 
 ### Events
 
-Shipit has several events describe in the workflow, you can add custom event and listen to events.
+You can add custom event and listen to events.
 
 ```js
 shipit.task('build', function () {
@@ -97,10 +85,9 @@ shipit.task('build', function () {
   shipit.emit('built');
 });
 
-shipit.on('fetched', function () {
-  shipit.run('build');
+shipit.on('built', function () {
+  shipit.run('start-server');
 });
-
 ```
 
 ### Methods
@@ -167,162 +154,19 @@ shipit.remoteCopy('/tmp/workspace', '/opt/web/myapp').then(...);
 
 #### shipit.log()
 
-Log using shipit, same API as `console.log`.
+Log using Shipit, same API as `console.log`.
 
 ```js
 shipit.log('hello %s', 'world');
 ```
 
-## Deploy task
+## Dependencies
 
-Shipit is built-in with a deploy and a rollback task. You can replace them by defining a new task named "deploy" and a new task named "rollback".
+- OpenSSH 5+
 
-### Options
+## Deploy using Shipit
 
-#### workspace
-
-Type: `String`
-
-Define the local working path of the project deployed.
-
-#### deployTo
-
-Type: `String`
-
-Define the remote path where the project will be deployed. A directory `releases` is automatically created. A symlink `current` is linked to the current release.
-
-#### repositoryUrl
-
-Type: `String`
-
-Git URL of the project repository.
-
-#### branch
-
-Type: `String`
-
-Tag, branch or commit to deploy.
-
-#### ignores
-
-Type: `Array<String>`
-
-An array of paths that match ignored files. These paths are used in the rsync command.
-
-#### keepReleases
-
-Type: `String`
-
-Number of release to keep on the remote server.
-
-#### shallowClone
-
-Type: `Boolean`
-
-Perform a shallow clone. Default: `false`.
-
-### Example
-
-```js
-shipit: {
-  default: {
-    workspace: '/tmp/github-monitor',
-    deployTo: '/tmp/deploy_to',
-    repositoryUrl: 'https://github.com/user/repo.git',
-    ignores: ['.git', 'node_modules'],
-    keepReleases: 2,
-    key: '/path/to/key',
-    shallowClone: true
-  },
-  staging: {
-    servers: 'user@myserver.com'
-  }
-}
-```
-
-To deploy on staging, you must use the following command :
-
-```
-shipit staging deploy
-```
-
-You can rollback to the previous releases with the command :
-
-```
-shipit staging rollback
-```
-
-### Variables
-
-Shipit attach several variables during the deploy and the rollback process:
-
-#### shipit.config.*
-
-All options describe in the config sections are avalaible in the `shipit.config` object.
-
-#### shipit.repository
-
-Attached during `deploy:fetch` task.
-
-You can manipulate the repository using git command, the API is describe in [gift](https://github.com/sentientwaffle/gift).
-
-#### shipit.releaseDirname
-
-Attached during `deploy:update` and `rollback:init` task.
-
-The current release dirname of the project, the format used is "yyyymmddHHMMss" (grunt.template.date format).
-
-#### shipit.releasesPath
-
-Attached during `deploy:update` and `rollback:init` task.
-
-The remote releases path.
-
-#### shipit.releasePath
-
-Attached during `deploy:update` and `rollback:init` task.
-
-The complete release path : `path.join(shipit.releasesPath, shipit.releaseDirname)`.
-
-#### shipit.currentPath
-
-Attached during `deploy:publish` and `rollback:init` task.
-
-The current symlink path : `path.join(shipit.config.deployTo, 'current')`.
-
-### Workflow tasks
-
-- deploy
-  - deploy:init
-    - Emit event "deploy".
-  - deploy:fetch
-    - Create workspace.
-    - Initialize repository.
-    - Add remote.
-    - Fetch repository.
-    - Checkout commit-ish.
-    - Merge remote branch in local branch.
-    - Emit event "fetched".
-  - deploy:update
-    - Create and define release path.
-    - Remote copy project.
-    - Emit event "updated".
-  - deploy:publish
-    - Update symlink.
-    - Emit event "published".
-  - deploy:clean
-    - Remove old releases.
-    - Emit event "cleaned".
-- rollback
-  - rollback:init
-    - Define release path.
-    - Emit event "rollback".
-  - deploy:publish
-    - Update symlink.
-    - Emit event "published".
-  - deploy:clean
-    - Remove old releases.
-    - Emit event "cleaned".
+The best way to deploy using Shipit is to use the [Shipit deploy task](https://github.com/shipitjs/shipit-deploy-task).
 
 ## License
 
