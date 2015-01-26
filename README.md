@@ -10,7 +10,7 @@
 
 Shipit is an automation engine and a deployment tool written for node / iojs.
 
-Shipit was built to be a Capistrano alternative for people who want to write tasks in JavaScript and don't have a piece of ruby in their beautiful codebase.
+Shipit was built to be a Capistrano alternative for people who don't know ruby, or who experienced some issues with it. If you want to write tasks in JavaScript and enjoy the node ecosystem, Shipit is also for you.
 
 You can automate anything with Shipit but most of the time you will want to deploy your project using
 the [Shipit deploy task](https://github.com/shipitjs/shipit-deploy-task).
