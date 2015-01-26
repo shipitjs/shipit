@@ -65,6 +65,45 @@ module.exports = function (shipit) {
 shipit staging pwd
 ```
 
+## Deploy using Shipit
+
+You can easily deploy a project using Shipit and its plugin [shipit-deploy](https://github.com/shipitjs/shipit-deploy).
+
+### Example `shipitfile.js`
+
+```js
+module.exports = function (shipit) {
+  require('shipit-deploy')(shipit);
+
+  shipit.initConfig({
+    default: {
+      workspace: '/tmp/github-monitor',
+      deployTo: '/tmp/deploy_to',
+      repositoryUrl: 'https://github.com/user/repo.git',
+      ignores: ['.git', 'node_modules'],
+      keepReleases: 2,
+      key: '/path/to/key',
+      shallowClone: true
+    },
+    staging: {
+      servers: 'user@myserver.com'
+    }
+  });
+};
+```
+
+To deploy on staging, you must use the following command :
+
+```
+shipit staging deploy
+```
+
+You can rollback to the previous releases with the command :
+
+```
+shipit staging rollback
+```
+
 ## Usage
 
 ```
