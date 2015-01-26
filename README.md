@@ -17,11 +17,10 @@ the [Shipit deploy task](https://github.com/shipitjs/shipit-deploy-task).
 
 **Features:**
 
-- Full JavaScript 
-- Login and interactive session
+- Full JavaScript (all npm package availables)
 - Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator) ([gulp](http://gulpjs.com/) core)
-- Blocking tasks
 - [Official deploy task](https://github.com/shipitjs/shipit-deploy)
+- Login and interactive SSH commands
 - Easily extendable
 
 ## Install
@@ -176,6 +175,11 @@ shipit.log('hello %s', 'world');
 ## Dependencies
 
 - [OpenSSH](http://www.openssh.com/) 5+
+
+## Who use Shipit?
+
+- [Le Monde](http://www.lemonde.fr)
+- [Ghost blogging platform](https://ghost.org/)
 
 ## License
 
