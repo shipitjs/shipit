@@ -1,6 +1,6 @@
 # Shipit 
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/shipitjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/shipitjs/shipit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Build Status](https://travis-ci.org/shipitjs/shipit.svg?branch=master)](https://travis-ci.org/shipitjs/shipit)
 [![Dependency Status](https://david-dm.org/shipitjs/shipit.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit)
