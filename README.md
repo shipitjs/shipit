@@ -8,7 +8,12 @@
 
 ![Shipit logo](https://cloud.githubusercontent.com/assets/266302/3756454/81df9f46-182e-11e4-9da6-b2c7a6b84136.png)
 
-Shipit is an automation engine and a deployment tool written for node / iojs. Shipit was built to be a Capistrano alternative for people who want to write tasks in JavaScript and don't have a piece of ruby in their beautiful codebase.
+Shipit is an automation engine and a deployment tool written for node / iojs.
+
+Shipit was built to be a Capistrano alternative for people who want to write tasks in JavaScript and don't have a piece of ruby in their beautiful codebase.
+
+You can automate anything with Shipit but most of the time you will want to deploy your project using
+the [Shipit deploy task](https://github.com/shipitjs/shipit-deploy-task).
 
 **Features:**
 
@@ -21,7 +26,13 @@ Shipit is an automation engine and a deployment tool written for node / iojs. Sh
 
 ## Install
 
-It's recommended to install Shipit locally in your project.
+### Globally
+
+```
+npm install --global shipit-cli
+```
+
+### Locally
 
 ```
 npm install --save-dev shipit-cli
@@ -29,7 +40,9 @@ npm install --save-dev shipit-cli
 
 ## Getting Started
 
-One shipit is installed, you must create a shipitfile.js, if you are familiar with grunt or gulp, this is the same.
+Once shipit is installed, you must create a shipitfile.js.
+
+If you are familiar with grunt or gulp, you will feel at home.
 
 ### Create a `shipitfile.js`
 
@@ -52,8 +65,6 @@ module.exports = function (shipit) {
 ```
 shipit staging pwd
 ```
-
-The binary `shipit` is located in `./node_modules/.bin/shipit`. I recommend you to add in your path: `./node_modules/.bin`.
 
 ## Usage
 
@@ -92,7 +103,7 @@ shipit.on('built', function () {
 
 ### Methods
 
-#### shipit.task(name, deps, fn)
+#### shipit.task(name, [deps], fn)
 
 Create a new Shipit task, if you are familiar with gulp, this is the same API. You can use a callback or a promise in your task.
 
@@ -104,9 +115,11 @@ shipit.task('pwd', function () {
 });
 ```
 
-#### shipit.blTask(name, deps, fn)
+#### shipit.blTask(name, [deps], fn)
 
-Create a new Shipit task, that will block other tasks during its execution. If you use these type of task, the flow will be exactly the same as if you use [grunt](http://gruntjs.com).
+Create a new Shipit task that will block other tasks during its execution (synchronous).
+
+If you use these type of task, the flow will be exactly the same as if you use [grunt](http://gruntjs.com).
 
 ```js
 shipit.blTask('pwd', function () {
@@ -162,11 +175,7 @@ shipit.log('hello %s', 'world');
 
 ## Dependencies
 
-- OpenSSH 5+
-
-## Deploy using Shipit
-
-The best way to deploy using Shipit is to use the [Shipit deploy task](https://github.com/shipitjs/shipit-deploy-task).
+- [OpenSSH](http://www.openssh.com/) 5+
 
 ## License
 
