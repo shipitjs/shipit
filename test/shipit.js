@@ -92,5 +92,18 @@ describe('Shipit', function () {
 
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest');
     });
+
+    it('should accept options for shipit.pool.copy', function () {
+      shipit.remoteCopy('src', 'dest', {
+        direction: 'remoteToLocal'
+      });
+
+      expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
+        direction: 'remoteToLocal',
+        ignores: []
+      });
+    });
+
+
   });
 });
