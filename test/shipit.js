@@ -92,19 +92,18 @@ describe('Shipit', function () {
 
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest');
     });
-  });
 
-  describe('#localCopy', function () {
-    beforeEach(function () {
-      shipit.pool = {copy: sinon.stub()};
-    });
-
-    it('should run command on pool', function () {
-      shipit.localCopy('src', 'dest');
+    it('should accept options for shipit.pool.copy', function () {
+      shipit.remoteCopy('src', 'dest', {
+        direction: 'remoteToLocal'
+      });
 
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
-        direction: 'remoteToLocal', ignores: []
+        direction: 'remoteToLocal',
+        ignores: []
       });
     });
+
+
   });
 });
