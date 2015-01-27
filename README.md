@@ -195,7 +195,7 @@ If you want to run a `sudo` command, the ssh connection will use the TTY mode au
 shipit.remote('ls -lah').then(...);
 ```
 
-#### shipit.remoteCopy(src, dest, callback)
+#### shipit.remoteCopy(src, dest, [options], [callback])
 
 Make a remote copy from a local path to a dest path.
 
@@ -214,6 +214,7 @@ shipit.log('hello %s', 'world');
 ## Dependencies
 
 - [OpenSSH](http://www.openssh.com/) 5+
+- [rsync](https://rsync.samba.org/) 3+
 
 ## Who use Shipit?
 
