@@ -93,4 +93,18 @@ describe('Shipit', function () {
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest');
     });
   });
+
+  describe('#localCopy', function () {
+    beforeEach(function () {
+      shipit.pool = {copy: sinon.stub()};
+    });
+
+    it('should run command on pool', function () {
+      shipit.localCopy('src', 'dest');
+
+      expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
+        direction: 'remoteToLocal', ignores: []
+      });
+    });
+  });
 });
