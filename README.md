@@ -220,6 +220,7 @@ shipit.log('hello %s', 'world');
 
 - [Le Monde](http://www.lemonde.fr)
 - [Ghost blogging platform](https://ghost.org/)
+- [Fusionary](http://fusionary.com)
 
 ## License
 
