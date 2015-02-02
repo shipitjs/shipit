@@ -1,4 +1,4 @@
-# Shipit 
+# Shipit
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/shipitjs/shipit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -179,10 +179,14 @@ shipit.start(['task1', 'task2']);
 
 #### shipit.local(command, [options], [callback])
 
-Run a command locally and streams the result. This command take a callback or return a promise.
+Run a command locally and streams the result. This command take a callback or return a promise. It returns a result object containing stdout, stderr and the child process object.
 
 ```js
-shipit.local('ls -lah', {cwd: '/tmp/deploy/workspace'}).then(...);
+shipit.local('ls -lah', {cwd: '/tmp/deploy/workspace'}).then(function (res) {
+  console.log(res.stdout);
+  console.log(res.stderr);
+  res.child.stdout.pipe(...);
+});
 ```
 
 #### shipit.remote(command, [options], [callback])
@@ -191,8 +195,18 @@ Run a command remotely and streams the result. This command take a callback or r
 
 If you want to run a `sudo` command, the ssh connection will use the TTY mode automatically.
 
+It returns an array of result objects containing stdout, stderr and the child process object. The list of results matchs the list of servers specified in configuration.
+
 ```js
-shipit.remote('ls -lah').then(...);
+shipit.remote('ls -lah').then(function (res) {
+  console.log(res[0].stdout); // stdout for first server
+  console.log(res[0].stderr); // stderr for first server
+  res[0].child.stdout.pipe(...); // child of first server
+
+  console.log(res[1].stdout); // stdout for second server
+  console.log(res[1].stderr); // stderr for second server
+  res[0].child.stdout.pipe(...); // child of second server
+});
 ```
 
 #### shipit.remoteCopy(src, dest, [options], [callback])
