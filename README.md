@@ -153,14 +153,14 @@ shipit.task('pwd', function () {
 });
 ```
 
-#### shipit.blTask(name, [deps], fn)
+#### shipit.blockingTask(name, [deps], fn)
 
 Create a new Shipit task that will block other tasks during its execution (synchronous).
 
 If you use these type of task, the flow will be exactly the same as if you use [grunt](http://gruntjs.com).
 
 ```js
-shipit.blTask('pwd', function () {
+shipit.blockingTask('pwd', function () {
   return shipit.remote('pwd');
 });
 ```
