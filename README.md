@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/shipitjs/shipit.svg?branch=master)](https://travis-ci.org/shipitjs/shipit)
 [![Dependency Status](https://david-dm.org/shipitjs/shipit.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit)
 [![devDependency Status](https://david-dm.org/shipitjs/shipit/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-cli#info=devDependencies)
-[![Inline docs](http://inch-ci.org/github/shipitjs/shipit.svg?branch=master)](http://inch-ci.org/github/foreverjs/forever)
+[![Inline docs](http://inch-ci.org/github/shipitjs/shipit.svg?branch=master)](http://inch-ci.org/github/shipitjs/shipit)
 
 ![Shipit logo](https://cloud.githubusercontent.com/assets/266302/3756454/81df9f46-182e-11e4-9da6-b2c7a6b84136.png)
 
