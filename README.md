@@ -136,7 +136,7 @@ shipit.task('build', function () {
 });
 
 shipit.on('built', function () {
-  shipit.run('start-server');
+  shipit.start('start-server');
 });
 ```
 
