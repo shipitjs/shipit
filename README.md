@@ -4,7 +4,8 @@
 
 [![Build Status](https://travis-ci.org/shipitjs/shipit.svg?branch=master)](https://travis-ci.org/shipitjs/shipit)
 [![Dependency Status](https://david-dm.org/shipitjs/shipit.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit)
-[![devDependency Status](https://david-dm.org/shipitjs/shipit/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-cli#info=devDependencies)
+[![devDependency Status](https://david-dm.org/shipitjs/shipit/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit#info=devDependencies)
+[![Inline docs](http://inch-ci.org/github/shipitjs/shipit.svg?branch=master)](http://inch-ci.org/github/shipitjs/shipit)
 
 ![Shipit logo](https://cloud.githubusercontent.com/assets/266302/3756454/81df9f46-182e-11e4-9da6-b2c7a6b84136.png)
 
@@ -92,13 +93,13 @@ module.exports = function (shipit) {
 };
 ```
 
-To deploy on staging, you must use the following command :
+To deploy on staging, you must use the following command:
 
 ```
 shipit staging deploy
 ```
 
-You can rollback to the previous releases with the command :
+You can rollback to the previous releases with the command:
 
 ```
 shipit staging rollback
@@ -126,7 +127,7 @@ Path to SSH key
 
 ### Events
 
-You can add custom event and listen to events.
+You can add and listen to custom events.
 
 ```js
 shipit.task('build', function () {
@@ -157,7 +158,7 @@ shipit.task('pwd', function () {
 
 Create a new Shipit task that will block other tasks during its execution (synchronous).
 
-If you use these type of task, the flow will be exactly the same as if you use [grunt](http://gruntjs.com).
+If you use this type of task, the flow will be exactly the same as if you used [grunt](http://gruntjs.com).
 
 ```js
 shipit.blockingTask('pwd', function () {
@@ -179,7 +180,7 @@ shipit.start(['task1', 'task2']);
 
 #### shipit.local(command, [options], [callback])
 
-Run a command locally and streams the result. This command take a callback or return a promise. It returns a result object containing stdout, stderr and the child process object.
+Runs a command locally and streams the result. This command takes a callback or returns a promise. It returns a result object containing stdout, stderr and the child process object.
 
 ```js
 shipit.local('ls -lah', {cwd: '/tmp/deploy/workspace'}).then(function (res) {
@@ -191,11 +192,11 @@ shipit.local('ls -lah', {cwd: '/tmp/deploy/workspace'}).then(function (res) {
 
 #### shipit.remote(command, [options], [callback])
 
-Run a command remotely and streams the result. This command take a callback or return a promise.
+Runs a command remotely and streams the result. This command takes a callback or returns a promise.
 
 If you want to run a `sudo` command, the ssh connection will use the TTY mode automatically.
 
-It returns an array of result objects containing stdout, stderr and the child process object. The list of results matchs the list of servers specified in configuration.
+It returns an array of result objects containing stdout, stderr and the child process object. The list of results matches the list of servers specified in the configuration.
 
 ```js
 shipit.remote('ls -lah').then(function (res) {
@@ -230,7 +231,7 @@ shipit.log('hello %s', 'world');
 - [OpenSSH](http://www.openssh.com/) 5+
 - [rsync](https://rsync.samba.org/) 3+
 
-## Who use Shipit?
+## Who uses Shipit?
 
 - [Le Monde](http://www.lemonde.fr)
 - [Ghost blogging platform](https://ghost.org/)
