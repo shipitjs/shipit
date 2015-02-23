@@ -95,12 +95,14 @@ describe('Shipit', function () {
 
     it('should accept options for shipit.pool.copy', function () {
       shipit.remoteCopy('src', 'dest', {
-        direction: 'remoteToLocal'
+        direction: 'remoteToLocal',
+        rsync: ['--info=progress2']
       });
 
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
         direction: 'remoteToLocal',
-        ignores: []
+        ignores: [],
+        rsync: ['--info=progress2']
       });
     });
 
