@@ -122,7 +122,7 @@ Servers on which the project will be deployed. Pattern must be `user@myserver.co
 #### key
 
 Type: `String`
-d
+
 Path to SSH key
 
 ### Events
