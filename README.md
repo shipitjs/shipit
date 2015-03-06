@@ -122,7 +122,7 @@ Servers on which the project will be deployed. Pattern must be `user@myserver.co
 #### key
 
 Type: `String`
-
+d
 Path to SSH key
 
 ### Events
@@ -230,6 +230,21 @@ shipit.log('hello %s', 'world');
 
 - [OpenSSH](http://www.openssh.com/) 5+
 - [rsync](https://rsync.samba.org/) 3+
+
+## Known Plugins
+
+### Official
+
+- [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
+
+### Third Party
+
+- [shipit-shared](https://github.com/timkelty/shipit-shared)
+- [shipit-db](https://github.com/timkelty/shipit-db)
+- [shipit-assets](https://github.com/timkelty/shipit-assets)
+- [shipit-ssh](https://github.com/timkelty/shipit-utils)
+- [shipit-utils](https://github.com/timkelty/shipit-utils)
+- [shipit-npm](https://github.com/callerc1/shipit-npm)
 
 ## Who use Shipit?
 
