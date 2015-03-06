@@ -231,6 +231,21 @@ shipit.log('hello %s', 'world');
 - [OpenSSH](http://www.openssh.com/) 5+
 - [rsync](https://rsync.samba.org/) 3+
 
+## Known Plugins
+
+### Official
+
+- [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
+
+### Third Party
+
+- [shipit-shared](https://github.com/timkelty/shipit-shared)
+- [shipit-db](https://github.com/timkelty/shipit-db)
+- [shipit-assets](https://github.com/timkelty/shipit-assets)
+- [shipit-ssh](https://github.com/timkelty/shipit-utils)
+- [shipit-utils](https://github.com/timkelty/shipit-utils)
+- [shipit-npm](https://github.com/callerc1/shipit-npm)
+
 ## Who use Shipit?
 
 - [Le Monde](http://www.lemonde.fr)
