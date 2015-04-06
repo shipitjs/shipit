@@ -100,10 +100,26 @@ describe('Shipit', function () {
 
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
         direction: 'remoteToLocal',
-        ignores: []
+        ignores: [],
+        rsync: []
       });
     });
 
+    it('should support options specified in config', function () {
+      shipit.config = {
+        ignores: ['foo'],
+        rsync: ['--bar']
+      };
 
+      shipit.remoteCopy('src', 'dest', {
+        direction: 'remoteToLocal'
+      });
+
+      expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
+        direction: 'remoteToLocal',
+        ignores: ['foo'],
+        rsync: ['--bar']
+      });
+    });
   });
 });
