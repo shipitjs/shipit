@@ -82,6 +82,7 @@ module.exports = function (shipit) {
       deployTo: '/tmp/deploy_to',
       repositoryUrl: 'https://github.com/user/repo.git',
       ignores: ['.git', 'node_modules'],
+      rsync: ['--del'],
       keepReleases: 2,
       key: '/path/to/key',
       shallowClone: true
