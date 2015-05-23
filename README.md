@@ -243,7 +243,7 @@ shipit.log('hello %s', 'world');
 - [shipit-shared](https://github.com/timkelty/shipit-shared)
 - [shipit-db](https://github.com/timkelty/shipit-db)
 - [shipit-assets](https://github.com/timkelty/shipit-assets)
-- [shipit-ssh](https://github.com/timkelty/shipit-utils)
+- [shipit-ssh](https://github.com/timkelty/shipit-ssh)
 - [shipit-utils](https://github.com/timkelty/shipit-utils)
 - [shipit-npm](https://github.com/callerc1/shipit-npm)
 
