@@ -13,4 +13,8 @@ module.exports = function (shipit) {
         throw new Error('test not passing');
     });
   });
+
+  shipit.task('default', ['test'], function () {
+    console.log("Using default task that depends on 'test'");
+  });
 };

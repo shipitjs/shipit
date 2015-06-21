@@ -45,13 +45,14 @@ function invoke(env) {
     exit(1);
   }
 
-  if (argv._.length === 1) {
-    console.error(chalk.red('task not found'));
-    exit(1);
+  // Run the 'default' task if no task is specified
+  var tasks = argv._.slice(1);
+  if (tasks.length === 0) {
+    tasks.push("default");
   }
-
+  
   try {
-    initShipit(argv._[0], env.configPath, argv._.slice(1));
+    initShipit(argv._[0], env.configPath, tasks);
   } catch (e) {
     console.error(chalk.red(e.message));
     exit(1);
