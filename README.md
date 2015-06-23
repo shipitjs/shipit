@@ -232,6 +232,39 @@ shipit.log('hello %s', 'world');
 - [OpenSSH](http://www.openssh.com/) 5+
 - [rsync](https://rsync.samba.org/) 3+
 
+### Customising environments
+
+You can overwrite all default variables defined as part of the `default` object.
+
+```js
+module.exports = function (shipit) {
+  shipit.initConfig({
+    staging: {
+      servers: 'staging.myproject.com',
+      workspace: '/home/vagrant/website'
+      branch: "dev"
+    },
+    production: {
+      servers: [{
+        host: 'app1.myproject.com',
+        user: 'john',
+      }, {
+        host: 'app2.myproject.com',
+        user: 'rob',
+      }],
+      branch: "production",
+      workspace: '/var/www/website'
+    }
+  });
+
+  ...
+  shipit.task('pwd', function () {
+    return shipit.remote('pwd');
+  });
+  ...
+};
+```
+
 ## Known Plugins
 
 ### Official
