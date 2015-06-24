@@ -242,7 +242,7 @@ module.exports = function (shipit) {
     staging: {
       servers: 'staging.myproject.com',
       workspace: '/home/vagrant/website'
-      branch: "dev"
+      branch: 'dev'
     },
     production: {
       servers: [{
@@ -252,7 +252,7 @@ module.exports = function (shipit) {
         host: 'app2.myproject.com',
         user: 'rob',
       }],
-      branch: "production",
+      branch: 'production',
       workspace: '/var/www/website'
     }
   });
