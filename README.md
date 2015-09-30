@@ -141,6 +141,8 @@ shipit.on('built', function () {
 });
 ```
 
+Shipit emits the `init` event once initialized, before any tasks are run.
+
 ### Methods
 
 #### shipit.task(name, [deps], fn)
