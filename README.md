@@ -281,6 +281,7 @@ module.exports = function (shipit) {
 - [shipit-npm](https://github.com/callerc1/shipit-npm)
 - [shipit-aws](https://github.com/KrashStudio/shipit-aws)
 - [shipit-captain](https://github.com/timkelty/shipit-captain/)
+- [shipit-bower](https://github.com/willsteinmetz/shipit-bower)
 
 ## Who use Shipit?
 
