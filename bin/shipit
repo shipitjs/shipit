@@ -50,7 +50,7 @@ function invoke(env) {
   if (tasks.length === 0) {
     tasks.push("default");
   }
-  
+
   try {
     initShipit(argv._[0], env.configPath, tasks);
   } catch (e) {
@@ -79,6 +79,14 @@ function initShipit(env, shipfile, tasks) {
 
   // Run tasks.
   shipit.start(tasks);
+
+  shipit.on('task_err', function () {
+    exit(1);
+  });
+
+  shipit.on('task_not_found', function () {
+    exit(1);
+  });
 }
 
 /**
