@@ -105,20 +105,34 @@ describe('Shipit', function () {
       });
     });
 
-    it('should support options specified in config', function () {
+    it('should support options specified in shipit.config', function () {
       shipit.config = {
         ignores: ['foo'],
         rsync: ['--bar']
       };
 
       shipit.remoteCopy('src', 'dest', {
-        direction: 'remoteToLocal'
+        direction: 'remoteToLocal',
+        rsync: '--foo'
       });
 
       expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
         direction: 'remoteToLocal',
         ignores: ['foo'],
         rsync: ['--bar']
+      });
+    });
+
+    it('should support options specified in options parameter', function () {
+      shipit.remoteCopy('src', 'dest', {
+        direction: 'remoteToLocal',
+        rsync: '--foo'
+      });
+
+      expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
+        direction: 'remoteToLocal',
+        ignores: [],
+        rsync: '--foo' 
       });
     });
   });
