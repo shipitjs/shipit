@@ -11,11 +11,11 @@
     "ssh"
   ],
   "dependencies": {
-    "bluebird": "^2.9.1",
+    "bluebird": "^3.3.4",
     "chalk": "^1.0.0",
-    "interpret": "^0.6.2",
+    "interpret": "^1.0.0",
     "liftoff": "^2.0.0",
-    "lodash": "^3.0.0",
+    "lodash": "^4.6.1",
     "minimist": "^1.1.0",
     "orchestrator": "^0.3.7",
     "pretty-hrtime": "^1.0.0",
