@@ -1,6 +1,6 @@
 {
   "name": "shipit-cli",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Universal automation and deployment tool written in JavaScript.",
   "main": "index.js",
   "keywords": [
