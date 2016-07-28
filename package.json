@@ -19,6 +19,7 @@
     "minimist": "^1.1.0",
     "orchestrator": "^0.3.7",
     "pretty-hrtime": "^1.0.0",
+    "prompt": "^1.0.0",
     "ssh-pool": "^1.0.0",
     "stream-line-wrapper": "^0.1.1",
     "v8flags": "^2.0.2"

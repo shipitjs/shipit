@@ -83,6 +83,7 @@ module.exports = function (shipit) {
       repositoryUrl: 'https://github.com/user/repo.git',
       ignores: ['.git', 'node_modules'],
       rsync: ['--del'],
+      warnTasks: ['nuke'],
       keepReleases: 2,
       key: '/path/to/key',
       shallowClone: true
@@ -229,11 +230,6 @@ Log using Shipit, same API as `console.log`.
 shipit.log('hello %s', 'world');
 ```
 
-## Dependencies
-
-- [OpenSSH](http://www.openssh.com/) 5+
-- [rsync](https://rsync.samba.org/) 3+
-
 ### Customising environments
 
 You can overwrite all default variables defined as part of the `default` object.
@@ -266,6 +262,43 @@ module.exports = function (shipit) {
   ...
 };
 ```
+
+#### Avoiding human error with `warnTasks` and `disallowTasks`
+
+You can set allow, warn, and disallow settings per environment in your shipitfile (***these settings only matter when shipit is run from the CLI***):
+
+```js
+module.exports = function (shipit) {
+  shipit.initConfig({
+    default: {},
+    staging: {
+      warnTasks: ['wipe'],
+      disallowTasks: ['nuke'],
+      servers: 'myserver.com'
+    }
+  });
+};
+
+  ...
+  shipit.task('wipe', function () {
+    return shipit.remote('rm -rf *');
+  });
+  shipit.task('nuke', function () {
+    return shipit.remote('rm -rf ../../*');
+  });
+  ...
+};
+```
+ - `warnTasks` is an array of tasks that prompt the user to confirm the environment name before they can run.
+ - `disallowTasks` is an array of tasks the user cannot run (from CLI) in that environment
+ - `allowTasks` doesn't do anything currently, as tasks are allowed by default, but may serve your syntactic sugar needs.
+
+
+## Dependencies
+
+- [OpenSSH](http://www.openssh.com/) 5+
+- [rsync](https://rsync.samba.org/) 3+
+
 
 ## Known Plugins
 

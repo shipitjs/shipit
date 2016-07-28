@@ -5,6 +5,7 @@ var interpret = require('interpret');
 var v8flags = require('v8flags');
 var Liftoff = require('liftoff');
 var argv = require('minimist')(process.argv.slice(2));
+var prompt = require('prompt');
 var Shipit = require('../lib/shipit');
 var pkg = require('../package.json');
 
@@ -48,7 +49,7 @@ function invoke(env) {
   // Run the 'default' task if no task is specified
   var tasks = argv._.slice(1);
   if (tasks.length === 0) {
-    tasks.push("default");
+    tasks.push('default');
   }
 
   try {
@@ -77,9 +78,53 @@ function initShipit(env, shipfile, tasks) {
   // Initialize shipit.
   shipit.initialize();
 
-  // Run tasks.
-  shipit.start(tasks);
 
+  if (Array.isArray(shipit.config.disallowTasks)) {
+    if (!tasks.every( (currentValue) => {
+        if (shipit.config.disallowTasks.indexOf(currentValue) > -1) {
+          console.log('Task \'' + currentValue + '\' is a disallowed task for \'' + shipit.environment + '\', aborting task(s)!')
+          return false;
+        }
+        return true;
+      }) ) {
+      
+      exit(1);
+    }
+  }
+  if (Array.isArray(shipit.config.warnTasks)) {
+    if (!tasks.every( (currentValue) => {
+        if (shipit.config.warnTasks.indexOf(currentValue) > -1) {
+          console.log('Task \'' + currentValue + '\' needs verification to run in \'' + shipit.environment + '\'.')
+          return false;
+        }
+        return true;
+      }) ) {
+      prompt.start();
+      prompt.get([{
+        name: 'confirmEnv',
+        description: '\nTo run please type \'' + shipit.environment + '\'',
+        type: 'string',
+        required: true
+      }], function(err, results) {
+        if (results.confirmEnv === shipit.environment) {
+          prompt.stop();
+          shipit.start(tasks);
+        } else {
+          prompt.stop();
+          console.log('Failed to confirm, aborting task(s)!')
+          exit(1);
+        }
+      });
+    } else {
+      // If there are warn tasks, but our tasks aren't one of them - run tasks.
+      shipit.start(tasks);
+    }
+  } else {
+    // If there are no warn tasks and tasks are not disallowed - run tasks.
+    shipit.start(tasks);
+  }
+
+  //Regardless if there are warn or disallow tasks, we need to set handlers for if tasks run.
   shipit.on('task_err', function () {
     exit(1);
   });
