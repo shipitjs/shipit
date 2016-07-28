@@ -2,7 +2,6 @@ module.exports = function (shipit) {
   shipit.initConfig({
     default: {},
     staging: {
-      warnTasks: ['test'],
       servers: 'myserver.com'
     }
   });
