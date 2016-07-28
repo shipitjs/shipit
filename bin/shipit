@@ -80,7 +80,7 @@ function initShipit(env, shipfile, tasks) {
 
 
   if (Array.isArray(shipit.config.disallowTasks)) {
-    if (!tasks.every( (currentValue) => {
+    if (!tasks.every( function(currentValue) {
         if (shipit.config.disallowTasks.indexOf(currentValue) > -1) {
           console.log('Task \'' + currentValue + '\' is a disallowed task for \'' + shipit.environment + '\', aborting task(s)!')
           return false;
@@ -92,7 +92,7 @@ function initShipit(env, shipfile, tasks) {
     }
   }
   if (Array.isArray(shipit.config.warnTasks)) {
-    if (!tasks.every( (currentValue) => {
+    if (!tasks.every( function(currentValue) {
         if (shipit.config.warnTasks.indexOf(currentValue) > -1) {
           console.log('Task \'' + currentValue + '\' needs verification to run in \'' + shipit.environment + '\'.')
           return false;
