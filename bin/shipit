@@ -72,21 +72,33 @@ function initShipit(env, shipfile, tasks) {
   var shipit = new Shipit({environment: env});
 
   // Load shipfile.
-  require(shipfile)(shipit);
+  var pendingConfig = require(shipfile)(shipit);
 
-  // Initialize shipit.
-  shipit.initialize();
+  var done = function() {
+    // Initialize shipit.
+    shipit.initialize();
 
-  // Run tasks.
-  shipit.start(tasks);
+    // Run tasks.
+    shipit.start(tasks);
 
-  shipit.on('task_err', function () {
-    exit(1);
-  });
+    shipit.on('task_err', function () {
+      exit(1);
+    });
 
-  shipit.on('task_not_found', function () {
-    exit(1);
-  });
+    shipit.on('task_not_found', function () {
+      exit(1);
+    });
+  }
+
+  if( pendingConfig instanceof Promise ) {
+    console.log("Waiting for config to become ready...");
+    pendingConfig.then( done ).catch( function(err) {
+      console.error('Could not load async config...', err);
+    } )
+  }
+  else {
+    done();
+  }
 }
 
 /**
