@@ -267,6 +267,45 @@ module.exports = function (shipit) {
 };
 ```
 
+### Async Config
+
+If you can't call `shipit.initConfig(...)` right away because
+you need to get data asynchronously to do so, you can return
+a promise from the module:
+
+```js
+module.exports = function (shipit) {
+  return getServersAsync().then( function( servers ) {
+    shipit.initConfig({
+      production: {
+        servers: servers,
+        // ...
+      }
+    })
+  } )
+}
+```
+
+If you need to use a function that works with callbacks
+instead of promises, you can wrap it manually:
+
+
+```js
+module.exports = function (shipit) {
+  return new Promise( function( resolve ) {
+    getServersAsync( function( servers ) {
+      shipit.initConfig({
+        production: {
+          servers: servers,
+          // ...
+        }
+      })
+      resolve()
+    } )
+  } )
+}
+```
+
 ## Known Plugins
 
 ### Official
