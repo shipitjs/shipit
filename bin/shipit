@@ -90,15 +90,11 @@ function initShipit(env, shipfile, tasks) {
     });
   }
 
-  if( pendingConfig instanceof Promise ) {
-    console.log("Waiting for config to become ready...");
-    pendingConfig.then( done ).catch( function(err) {
+  Promise.resolve( pendingConfig )
+    .then( done )
+    .catch( function( err ) {
       console.error('Could not load async config...', err);
     } )
-  }
-  else {
-    done();
-  }
 }
 
 /**
