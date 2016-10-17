@@ -181,7 +181,7 @@ shipit.start('task1', 'task2');
 shipit.start(['task1', 'task2']);
 ```
 
-#### shipit.local(command, [options], [callback])
+#### shipit.local(command, [[options]](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback), [callback])
 
 Run a command locally and streams the result. This command take a callback or return a promise. It returns a result object containing stdout, stderr and the child process object.
 
@@ -193,7 +193,7 @@ shipit.local('ls -lah', {cwd: '/tmp/deploy/workspace'}).then(function (res) {
 });
 ```
 
-#### shipit.remote(command, [options], [callback])
+#### shipit.remote(command, [[options]](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback), [callback])
 
 Run a command remotely and streams the result. This command take a callback or return a promise.
 
