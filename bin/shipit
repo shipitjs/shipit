@@ -48,12 +48,12 @@ function invoke(env) {
   // Run the 'default' task if no task is specified
   var tasks = argv._.slice(1);
   if (tasks.length === 0) {
-    tasks.push("default");
+    tasks.push('default');
   }
 
   try {
     initShipit(argv._[0], env.configPath, tasks);
-  } catch (e) {
+  } catch(e) {
     console.error(chalk.red(e.message));
     exit(1);
   }
@@ -68,6 +68,7 @@ function invoke(env) {
  */
 
 function initShipit(env, shipfile, tasks) {
+
   // Create.
   var shipit = new Shipit({environment: env});
 
@@ -75,26 +76,27 @@ function initShipit(env, shipfile, tasks) {
   var pendingConfig = require(shipfile)(shipit);
 
   var done = function() {
+
     // Initialize shipit.
     shipit.initialize();
 
     // Run tasks.
     shipit.start(tasks);
 
-    shipit.on('task_err', function () {
+    shipit.on('task_err', function() {
       exit(1);
     });
 
-    shipit.on('task_not_found', function () {
+    shipit.on('task_not_found', function() {
       exit(1);
     });
   }
 
-  Promise.resolve( pendingConfig )
-    .then( done )
-    .catch( function( err ) {
-      console.error('Could not load async config...', err);
-    } )
+  Promise.resolve(pendingConfig)
+  .then(done)
+  .catch(function(err) {
+    console.error('Could not load async config.', err);
+  } )
 }
 
 /**
@@ -111,5 +113,6 @@ function exit(code) {
     });
     return;
   }
+
   process.exit(code);
 }
