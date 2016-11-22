@@ -46,14 +46,13 @@ describe('Shipit', function () {
 
   describe('#initConfig', function () {
     it('should initialize config', function () {
-      shipit.initConfig({default: {foo: 'bar', servers: ['1', '2']}, stage: {kung: 'foo', servers: ['3']}});
+      shipit.initConfig({default: {foo: 'bar'}, stage: {kung: 'foo'}});
 
       expect(shipit.config).to.be.deep.equal({
         branch: 'master',
         keepReleases: 5,
         foo: 'bar',
         kung: 'foo',
-        servers: ['3'],
         shallowClone: false
       });
     });
