@@ -7,6 +7,7 @@ var Liftoff = require('liftoff');
 var argv = require('minimist')(process.argv.slice(2));
 var Shipit = require('../lib/shipit');
 var pkg = require('../package.json');
+var Promise = require('bluebird');
 
 // Initialize cli.
 var cli = new Liftoff({
