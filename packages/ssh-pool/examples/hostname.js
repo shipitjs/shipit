@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
-import { ConnectionPool } from '../src'
+var sshPool = require('../');
 
-const pool = new ConnectionPool(['neoziro@localhost', 'neoziro@localhost'])
+var pool = new sshPool.ConnectionPool(['neoziro@localhost', 'neoziro@localhost']);
 
-pool
-  .run('echo \\\\$boom', { stdout: process.stdout, stderr: process.stderr })
-  .then(() => {
-    console.log('Success!')
-  })
+pool.run('hostname')
+.then(function (results) {
+  console.log(results[0].stdout);
+  console.log(results[1].stdout);
+});

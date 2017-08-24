@@ -4,24 +4,31 @@
   "description": "Run remote commands over a pool of server using SSH.",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib",
-    "format": "prettier --write --no-semi --single-quote --trailing-comma all \"src/**/*.js\"",
-    "test": "eslint . && jest --runInBand --coverage && codecov"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shipitjs/shipit.git"
+    "url": "https://github.com/shipitjs/ssh-pool.git"
   },
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "license": "MIT",
-  "bugs": "https://github.com/shipitjs/shipit/issues",
-  "homepage": "https://github.com/shipitjs/shipit#readme",
-  "dependencies": {
-    "stream-line-wrapper": "^0.1.1",
-    "tmp": "^0.0.33",
-    "whereis": "^0.4.0"
+  "bugs": {
+    "url": "https://github.com/shipitjs/ssh-pool/issues"
   },
+  "homepage": "https://github.com/shipitjs/ssh-pool",
   "devDependencies": {
-    "std-mocks": "^1.0.1"
+    "chai": "^2.1.2",
+    "mocha": "^2.2.1",
+    "rewire": "^2.3.1",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
+    "std-mocks": "^1.0.0"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.14",
+    "lodash": "^3.5.0",
+    "sprintf-js": "^1.0.2",
+    "stream-line-wrapper": "^0.1.1",
+    "whereis": "^0.4.0"
   }
 }
