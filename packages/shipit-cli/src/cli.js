@@ -53,8 +53,11 @@ async function asyncInvoke(env) {
 
   try {
     /* eslint-disable global-require, import/no-dynamic-import, import/no-dynamic-require */
-    await require(env.configPath)(shipit)
+    const module = require(env.configPath)
     /* eslint-enable global-require, import/no-dynamic-import, import/no-dynamic-require */
+    const initialize =
+      typeof module.default === 'function' ? module.default : module
+    await initialize(shipit)
   } catch (error) {
     console.error(chalk.red('Could not load async config'))
     throw error
