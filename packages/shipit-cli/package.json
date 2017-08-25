@@ -12,9 +12,9 @@
   ],
   "dependencies": {
     "chalk": "^2.1.0",
+    "commander": "^2.11.0",
     "interpret": "^1.0.0",
     "liftoff": "^2.0.0",
-    "minimist": "^1.1.0",
     "orchestrator": "^0.3.7",
     "pretty-hrtime": "^1.0.0",
     "ssh-pool": "^1.5.0",
@@ -28,7 +28,7 @@
   "scripts": {
     "prepublish": "yarn build",
     "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib",
-    "test": "./bin/shipit staging test"
+    "test": "./bin/shipit --shipitfile test-sandbox/shipitfile.babel.js test hello"
   },
   "bin": {
     "shipit": "./bin/shipit"

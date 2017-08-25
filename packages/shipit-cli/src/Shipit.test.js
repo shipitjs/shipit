@@ -18,28 +18,6 @@ describe('Shipit', () => {
     shipit.stage = 'stage'
   })
 
-  describe('#initialize', () => {
-    beforeEach(() => {
-      shipit.initSshPool = jest.fn(() => shipit)
-    })
-
-    it('should add stage and initialize shipit', () => {
-      shipit.initialize()
-      expect(shipit.initSshPool).toBeCalled()
-    })
-  })
-
-  describe('#initSshPool', () => {
-    it('should initialize an ssh pool', () => {
-      shipit.config = { servers: ['deploy@my-server'] }
-      shipit.initSshPool()
-
-      expect(shipit.pool).toEqual(expect.any(ConnectionPool))
-      expect(shipit.pool.connections[0].remote.user).toBe('deploy')
-      expect(shipit.pool.connections[0].remote.host).toBe('my-server')
-    })
-  })
-
   describe('#initConfig', () => {
     it('should set config and envConfig', () => {
       const config = {
@@ -59,6 +37,36 @@ describe('Shipit', () => {
       })
 
       expect(shipit.envConfig).toBe(config)
+    })
+  })
+
+  describe('#initialize', () => {
+    beforeEach(() => {
+      shipit.initConfig({ stage: {} })
+      shipit.initSshPool = jest.fn(() => shipit)
+    })
+
+    it('should return an error if environment is not found', () => {
+      shipit.initConfig({})
+      expect(() => shipit.initialize()).toThrow(
+        "Environment 'stage' not found in config",
+      )
+    })
+
+    it('should add stage and initialize shipit', () => {
+      shipit.initialize()
+      expect(shipit.initSshPool).toBeCalled()
+    })
+  })
+
+  describe('#initSshPool', () => {
+    it('should initialize an ssh pool', () => {
+      shipit.config = { servers: ['deploy@my-server'] }
+      shipit.initSshPool()
+
+      expect(shipit.pool).toEqual(expect.any(ConnectionPool))
+      expect(shipit.pool.connections[0].remote.user).toBe('deploy')
+      expect(shipit.pool.connections[0].remote.host).toBe('my-server')
     })
   })
 

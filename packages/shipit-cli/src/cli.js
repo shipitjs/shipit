@@ -3,25 +3,10 @@ import chalk from 'chalk'
 import interpret from 'interpret'
 import v8flags from 'v8flags'
 import Liftoff from 'liftoff'
-import minimist from 'minimist'
+import program from 'commander'
 import Shipit from './Shipit'
 import pkg from '../package.json'
 
-const argv = minimist(process.argv.slice(2))
-
-// Initialize CLI
-const cli = new Liftoff({
-  name: 'shipit',
-  extensions: interpret.jsVariants,
-  v8flags,
-})
-
-/**
- * Properly exit.
- * Even on Windows.
- *
- * @param {number} code Exit code
- */
 function exit(code) {
   if (process.platform === 'win32' && process.stdout.bufferSize) {
     process.stdout.once('drain', () => {
@@ -33,84 +18,82 @@ function exit(code) {
   process.exit(code)
 }
 
-/**
- * Initialize shipit.
- *
- * @param {string} env Shipit environement
- * @param {string} shipfile Shipitfile path
- * @param {string[]} tasks Tasks
- */
+program
+  .version(pkg.version)
+  .allowUnknownOption()
+  .usage('<environment> <tasks...>')
+  .option('--shipitfile <file>', 'Specify a custom shipitfile to use')
+  .option('--require <files...>', 'Script required before launching Shipit')
+  .option('--tasks', 'List available tasks')
+  .option('--environments', 'List available environments')
 
-function initShipit(env, shipfile, tasks) {
-  // Create.
-  const shipit = new Shipit({ environment: env })
+program.parse(process.argv)
 
-  // Load shipfile.
-  const pendingConfig = require(shipfile)(shipit) // eslint-disable-line global-require, import/no-dynamic-import, import/no-dynamic-require
-
-  const done = () => {
-    // Initialize shipit.
-    shipit.initialize()
-
-    // Run tasks.
-    shipit.start(tasks)
-
-    shipit.on('task_err', () => {
-      exit(1)
-    })
-
-    shipit.on('task_not_found', () => {
-      exit(1)
-    })
-  }
-
-  Promise.resolve(pendingConfig).then(done).catch(err => {
-    console.error('Could not load async config.', err)
-  })
+if (!process.argv.slice(2).length) {
+  program.help()
 }
 
-/**
- * Invoke CLI.
- *
- * @param {object} env CLI environment
- */
-function invoke(env) {
-  if (argv.version) {
-    console.info('v%s', pkg.version)
-    exit(0)
-  }
+function logTasks(shipit) {
+  console.log(Object.keys(shipit.tasks).join('\n').trim())
+}
 
+function logEnvironments(shipit) {
+  console.log(Object.keys(shipit.envConfig).join('\n').trim())
+}
+
+async function asyncInvoke(env) {
   if (!env.configPath) {
     console.error(chalk.red('shipitfile not found'))
     exit(1)
   }
 
-  if (argv._.length === 0) {
-    console.error(chalk.red('environment not found'))
-    exit(1)
-  }
+  const [environment, ...tasks] = program.args
 
-  // Run the 'default' task if no task is specified
-  const tasks = argv._.slice(1)
-  if (tasks.length === 0) {
-    tasks.push('default')
-  }
+  const shipit = new Shipit({ environment })
 
   try {
-    initShipit(argv._[0], env.configPath, tasks)
-  } catch (e) {
-    console.error(chalk.red(e.message))
-    exit(1)
+    /* eslint-disable global-require, import/no-dynamic-import, import/no-dynamic-require */
+    await require(env.configPath)(shipit)
+    /* eslint-enable global-require, import/no-dynamic-import, import/no-dynamic-require */
+  } catch (error) {
+    console.error(chalk.red('Could not load async config'))
+    throw error
+  }
+
+  if (program.tasks === true) {
+    logTasks(shipit)
+  } else if (program.environments === true) {
+    logEnvironments(shipit)
+  } else {
+    // Run the 'default' task if no task is specified
+    const runTasks = tasks.length === 0 ? ['default'] : tasks
+
+    shipit.initialize()
+
+    shipit.on('task_err', () => exit(1))
+    shipit.on('task_not_found', () => exit(1))
+
+    shipit.start(runTasks)
   }
 }
 
-// Launch cli.
+function invoke(env) {
+  asyncInvoke(env).catch(error => {
+    setTimeout(() => {
+      throw error
+    })
+  })
+}
+
+const cli = new Liftoff({
+  name: 'shipit',
+  extensions: interpret.jsVariants,
+  v8flags,
+})
 cli.launch(
   {
-    cwd: argv.cwd,
-    configPath: argv.shipitfile,
-    require: argv.require,
-    completion: argv.completion,
+    configPath: program.shipitfile,
+    require: program.require,
   },
   invoke,
 )

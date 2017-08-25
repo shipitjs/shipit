@@ -41,8 +41,9 @@ class Shipit extends Orchestrator {
       log: console.log.bind(console),
     }
 
+    this.config = {}
+    this.envConfig = {}
     this.options = { ...defaultOptions, ...options }
-
     this.environment = options.environment
 
     this.initializeEvents()
@@ -60,6 +61,9 @@ class Shipit extends Orchestrator {
    * @returns {Shipit} for chaining
    */
   initialize() {
+    if (!this.envConfig[this.environment])
+      throw new Error(`Environment '${this.environment}' not found in config`)
+
     this.emit('init')
     return this.initSshPool()
   }
@@ -145,9 +149,6 @@ class Shipit extends Orchestrator {
    * @returns {Shipit} for chaining
    */
   initConfig(config = {}) {
-    if (!config[this.environment])
-      throw new Error(`Environment '${this.environment}' not found in config`)
-
     this.envConfig = config
     this.config = {
       branch: 'master',
@@ -264,7 +265,9 @@ class Shipit extends Orchestrator {
    */
   _readyToRunTask(...args) {
     if (
-      this.tasks.some(task => task.running === true && task.blocking === true)
+      Object.values(this.tasks).some(
+        task => task.running === true && task.blocking === true,
+      )
     )
       return false
 
