@@ -11,7 +11,7 @@ module.exports = shipit => {
   shipit.task('test', () =>
     shipit.local('echo "hello"').then(res => {
       if (res.stdout !== 'hello\n') throw new Error('test not passing')
-    }),
+    })
   )
 
   shipit.task('default', ['test'], () => {
