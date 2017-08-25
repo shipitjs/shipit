@@ -1,33 +1,31 @@
 {
   "name": "ssh-pool",
-  "version": "4.0.0",
+  "version": "3.0.0",
   "description": "Run remote commands over a pool of server using SSH.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "mocha"
+    "prepublish": "yarn build",
+    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shipitjs/ssh-pool.git"
-  },
+  "repository": "https://github.com/babel/babel/tree/master/packages/babel-traverse",
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shipitjs/ssh-pool/issues"
-  },
-  "homepage": "https://github.com/shipitjs/ssh-pool",
+  "homepage": "https://github.com/shipitjs/shipit",
   "devDependencies": {
-    "chai": "^2.1.2",
-    "mocha": "^2.2.1",
-    "rewire": "^2.3.1",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "std-mocks": "^1.0.0"
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "codecov": "^2.3.0",
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "jest": "^20.0.4",
+    "prettier": "^1.5.3",
+    "std-mocks": "^1.0.1"
   },
   "dependencies": {
-    "bluebird": "^2.9.14",
-    "lodash": "^3.5.0",
-    "sprintf-js": "^1.0.2",
     "stream-line-wrapper": "^0.1.1",
     "tmp": "^0.0.33",
     "whereis": "^0.4.0"

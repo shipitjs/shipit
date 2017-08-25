@@ -2,7 +2,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "eslint . && jest --runInBand --coverage && codecov"
+    "test": "eslint . && jest --runInBand --coverage && codecov",
+    "format": "prettier --write --no-semi --single-quote --trailing-comma all \"packages/*/src/**/*.js\""
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

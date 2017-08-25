@@ -1,6 +1,6 @@
 {
   "name": "shipit-cli",
-  "version": "4.0.0",
+  "version": "1.5.0",
   "description": "Universal automation and deployment tool written in JavaScript.",
   "main": "lib/index.js",
   "keywords": [
@@ -18,7 +18,7 @@
     "minimist": "^1.1.0",
     "orchestrator": "^0.3.7",
     "pretty-hrtime": "^1.0.0",
-    "ssh-pool": "^4.0.0",
+    "ssh-pool": "^1.5.0",
     "stream-line-wrapper": "^0.1.1",
     "v8flags": "^3.0.0"
   },
@@ -27,7 +27,8 @@
     "mock-utf8-stream": "^0.1.1"
   },
   "scripts": {
-    "test": "jest && ./bin/shipit staging test"
+    "prepublish": "yarn build",
+    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib"
   },
   "bin": {
     "shipit": "./bin/shipit"
