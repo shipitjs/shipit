@@ -41,11 +41,13 @@ describe('Shipit', () => {
   })
 
   describe('#initConfig', () => {
-    it('should initialize config', () => {
-      shipit.initConfig({
+    it('should set config and envConfig', () => {
+      const config = {
         default: { foo: 'bar', servers: ['1', '2'] },
         stage: { kung: 'foo', servers: ['3'] },
-      })
+      }
+
+      shipit.initConfig(config)
 
       expect(shipit.config).toEqual({
         branch: 'master',
@@ -55,6 +57,8 @@ describe('Shipit', () => {
         servers: ['3'],
         shallowClone: false,
       })
+
+      expect(shipit.envConfig).toBe(config)
     })
   })
 

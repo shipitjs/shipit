@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import childProcess from 'child_process'
 import { ConnectionPool } from 'ssh-pool'
-import _ from 'lodash'
 import LineWrapper from 'stream-line-wrapper'
 import Orchestrator from 'orchestrator'
 import chalk from 'chalk'
@@ -124,14 +123,17 @@ class Shipit extends Orchestrator {
   initSshPool() {
     if (!this.config.servers) throw new Error('Servers not filled')
 
-    const servers = _.isArray(this.config.servers)
+    const servers = Array.isArray(this.config.servers)
       ? this.config.servers
       : [this.config.servers]
 
-    this.pool = new ConnectionPool(
-      servers,
-      _.extend({}, this.options, _.pick(this.config, 'key', 'strict')),
-    )
+    const options = {
+      ...this.options,
+      key: this.config.key,
+      strict: this.config.strict,
+    }
+
+    this.pool = new ConnectionPool(servers, options)
 
     return this
   }
@@ -146,15 +148,14 @@ class Shipit extends Orchestrator {
     if (!config[this.environment])
       throw new Error(`Environment '${this.environment}' not found in config`)
 
-    this.config = _.assign(
-      {
-        branch: 'master',
-        keepReleases: 5,
-        shallowClone: false,
-      },
-      config.default || {},
-      config[this.environment],
-    )
+    this.envConfig = config
+    this.config = {
+      branch: 'master',
+      keepReleases: 5,
+      shallowClone: false,
+      ...config.default,
+      ...config[this.environment],
+    }
 
     return this
   }
@@ -262,7 +263,10 @@ class Shipit extends Orchestrator {
    * Implement blocking task.
    */
   _readyToRunTask(...args) {
-    if (_.find(this.tasks, { running: true, blocking: true })) return false
+    if (
+      this.tasks.some(task => task.running === true && task.blocking === true)
+    )
+      return false
 
     return super._readyToRunTask(...args) // eslint-disable-line no-underscore-dangle
   }
