@@ -15,20 +15,26 @@ export const series = async tasks =>
     next([])
   })
 
+const DEFAULT_CMD_OPTIONS = { maxBuffer: 1000 * 1024 }
+
 export const exec = async (cmd, options, childModifier) =>
   new Promise((resolve, reject) => {
-    const child = baseExec(cmd, options, (error, stdout, stderr) => {
-      if (error) {
-        /* eslint-disable no-param-reassign */
-        error.stdout = stdout
-        error.stderr = stderr
-        error.child = child
-        /* eslint-enable no-param-reassign */
-        reject(error)
-      } else {
-        resolve({ child, stdout, stderr })
-      }
-    })
+    const child = baseExec(
+      cmd,
+      { ...DEFAULT_CMD_OPTIONS, ...options },
+      (error, stdout, stderr) => {
+        if (error) {
+          /* eslint-disable no-param-reassign */
+          error.stdout = stdout
+          error.stderr = stderr
+          error.child = child
+          /* eslint-enable no-param-reassign */
+          reject(error)
+        } else {
+          resolve({ child, stdout, stderr })
+        }
+      },
+    )
 
     if (childModifier) childModifier(child)
   })

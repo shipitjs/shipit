@@ -21,8 +21,6 @@ const tmpName = async options =>
     }),
   )
 
-const DEFAULT_RUN_OPTIONS = { maxBuffer: 1000 * 1024 }
-
 /**
  * An ExecResult returned when a command is executed with success.
  * @typedef {object} ExecResult
@@ -427,7 +425,7 @@ class Connection {
     const stdoutPipe = stdout || this.options.stdout
     const stderrPipe = stderr || this.options.stderr
 
-    return exec(cmd, { ...DEFAULT_RUN_OPTIONS, ...cmdOptions }, child => {
+    return exec(cmd, cmdOptions, child => {
       if (stdoutPipe)
         child.stdout
           .pipe(new LineWrapper({ prefix: `@${this.remote.host} ` }))

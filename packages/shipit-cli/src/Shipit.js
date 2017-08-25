@@ -1,10 +1,33 @@
 /* eslint-disable no-console */
-import childProcess from 'child_process'
-import { ConnectionPool } from 'ssh-pool'
+import { ConnectionPool, exec } from 'ssh-pool'
 import LineWrapper from 'stream-line-wrapper'
 import Orchestrator from 'orchestrator'
 import chalk from 'chalk'
 import prettyTime from 'pretty-hrtime'
+
+/**
+ * An ExecResult returned when a command is executed with success.
+ * @typedef {object} ExecResult
+ * @property {Buffer} stdout
+ * @property {Buffer} stderr
+ * @property {ChildProcess} child
+ */
+
+/**
+ * An ExecResult returned when a command is executed with success.
+ * @typedef {object} MultipleExecResult
+ * @property {Buffer} stdout
+ * @property {Buffer} stderr
+ * @property {ChildProcess[]} children
+ */
+
+/**
+ * An ExecError returned when a command is executed with an error.
+ * @typedef {Error} ExecError
+ * @property {Buffer} stdout
+ * @property {Buffer} stderr
+ * @property {ChildProcess} child
+ */
 
 /**
  * Format orchestrator error.
@@ -168,42 +191,15 @@ class Shipit extends Orchestrator {
    * @param {object} options
    * @returns {ChildObject}
    */
-  local(command, options) {
-    const defaultOptions = { maxBuffer: 1024000 }
-    const cmdOptions = { ...defaultOptions, ...options }
-
-    return new Promise((resolve, reject) => {
-      this.log('Running "%s" on local.', command)
-
-      const stdoutWrapper = new LineWrapper({ prefix: '@ ' })
-      const stderrWrapper = new LineWrapper({ prefix: '@ ' })
-
-      const child = childProcess.exec(
-        command,
-        cmdOptions,
-        (err, stdout, stderr) => {
-          if (err) {
-            reject({
-              child,
-              stdout,
-              stderr,
-              err,
-            })
-          } else {
-            resolve({
-              child,
-              stdout,
-              stderr,
-            })
-          }
-        },
-      )
-
+  local(command, { stdout, stderr, ...cmdOptions } = {}) {
+    this.log('Running "%s" on local.', command)
+    const prefix = '@ '
+    return exec(command, cmdOptions, child => {
       if (this.options.stdout)
-        child.stdout.pipe(stdoutWrapper).pipe(this.options.stdout)
+        child.stdout.pipe(new LineWrapper({ prefix })).pipe(this.options.stdout)
 
       if (this.options.stderr)
-        child.stderr.pipe(stderrWrapper).pipe(this.options.stderr)
+        child.stderr.pipe(new LineWrapper({ prefix })).pipe(this.options.stderr)
     })
   }
 
@@ -211,14 +207,11 @@ class Shipit extends Orchestrator {
    * Run a command remotely.
    *
    * @param {string} command
-   * @param {object} options
-   * @returns {ChildObject}
+   * @returns {ExecResult}
+   * @throws {ExecError}
    */
-  remote(command, { cwd, ...options } = {}) {
-    return this.pool.run(
-      cwd ? `cd "${cwd.replace(/"/g, '\\"')}" && ${command}` : command,
-      options,
-    )
+  async remote(command, options) {
+    return this.pool.run(command, options)
   }
 
   /**
@@ -226,9 +219,10 @@ class Shipit extends Orchestrator {
    *
    * @param {string} src
    * @param {string} dest
-   * @returns {ChildObject}
+   * @returns {ExecResult|MultipleExecResult}
+   * @throws {ExecError}
    */
-  remoteCopy(src, dest, options) {
+  async remoteCopy(src, dest, options) {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],

@@ -14,6 +14,7 @@ describe('Shipit', () => {
       stdout,
       stderr,
       environment: 'stage',
+      log: jest.fn(),
     })
     shipit.stage = 'stage'
   })
@@ -89,16 +90,15 @@ describe('Shipit', () => {
     it('should run command on pool', () => {
       shipit.remote('my-command')
 
-      expect(shipit.pool.run).toBeCalledWith('my-command', {})
+      expect(shipit.pool.run).toBeCalledWith('my-command', undefined)
     })
 
-    it('should cd and run command on pool', () => {
+    it('should support options', () => {
       shipit.remote('my-command', { cwd: '/my-directory' })
 
-      expect(shipit.pool.run).toBeCalledWith(
-        'cd "/my-directory" && my-command',
-        {},
-      )
+      expect(shipit.pool.run).toBeCalledWith('my-command', {
+        cwd: '/my-directory',
+      })
     })
   })
 
