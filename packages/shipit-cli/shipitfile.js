@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 module.exports = shipit => {
   shipit.initConfig({
     default: {},

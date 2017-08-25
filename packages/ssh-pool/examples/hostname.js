@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const sshPool = require('../')
 
 const pool = new sshPool.ConnectionPool([

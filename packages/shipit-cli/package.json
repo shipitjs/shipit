@@ -28,7 +28,8 @@
   },
   "scripts": {
     "prepublish": "yarn build",
-    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib"
+    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib",
+    "test": "./bin/shipit staging test"
   },
   "bin": {
     "shipit": "./bin/shipit"

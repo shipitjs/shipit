@@ -1,6 +1,6 @@
 {
   "name": "ssh-pool",
-  "version": "3.0.0",
+  "version": "1.5.0",
   "description": "Run remote commands over a pool of server using SSH.",
   "main": "lib/index.js",
   "scripts": {

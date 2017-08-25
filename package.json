@@ -2,7 +2,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "eslint . && jest --runInBand --coverage && codecov",
+    "ci": "lerna run build && yarn run lint && yarn run test && lerna run test",
+    "lint": "eslint --cache .",
+    "test": "jest --runInBand --coverage && codecov",
     "format": "prettier --write --no-semi --single-quote --trailing-comma all \"packages/*/src/**/*.js\""
   },
   "devDependencies": {
