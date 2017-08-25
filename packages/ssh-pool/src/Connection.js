@@ -1,4 +1,3 @@
-import { exec } from 'child_process'
 import path from 'path'
 import LineWrapper from 'stream-line-wrapper'
 import { tmpName as asyncTmpName } from 'tmp'
@@ -12,7 +11,7 @@ import { formatRawCommand } from './commands/raw'
 import { formatRmCommand } from './commands/rm'
 import { joinCommandArgs } from './commands/util'
 import { parseRemote, formatRemote } from './remote'
-import { series, deprecateV3 } from './util'
+import { exec, series, deprecateV3 } from './util'
 
 const tmpName = async options =>
   new Promise((resolve, reject) =>
@@ -22,8 +21,35 @@ const tmpName = async options =>
     }),
   )
 
-const defaultRunOptions = { maxBuffer: 1000 * 1024 }
+const DEFAULT_RUN_OPTIONS = { maxBuffer: 1000 * 1024 }
 
+/**
+ * An ExecResult returned when a command is executed with success.
+ * @typedef {object} ExecResult
+ * @property {Buffer} stdout
+ * @property {Buffer} stderr
+ * @property {ChildProcess} child
+ */
+
+/**
+ * An ExecResult returned when a command is executed with success.
+ * @typedef {object} MultipleExecResult
+ * @property {Buffer} stdout
+ * @property {Buffer} stderr
+ * @property {ChildProcess[]} children
+ */
+
+/**
+ * An ExecError returned when a command is executed with an error.
+ * @typedef {Error} ExecError
+ * @property {Buffer} stdout
+ * @property {Buffer} stderr
+ * @property {ChildProcess} child
+ */
+
+/**
+ * Materialize a connection to a remote server.
+ */
 class Connection {
   /**
    * Initialize a new `Connection` with `options`.
@@ -50,7 +76,8 @@ class Connection {
    * @param {string} command Command to run
    * @param {object} [options] Options
    * @param {boolean} [options.tty] Force a TTY allocation.
-   * @returns {Promise.<object>} A promise with an object as result: { child, stdout, stderr }
+   * @returns {ExecResult}
+   * @throws {ExecError}
    */
   async run(command, { tty: ttyOption, cwd, ...cmdOptions } = {}) {
     let tty = ttyOption
@@ -75,7 +102,8 @@ class Connection {
    * @param {boolean} [options.direction] Specify "remoteToLocal" to copy from "remote". By default it will copy from remote.
    * @param {string[]} [options.ignores] Specify a list of files to ignore.
    * @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
-   * @returns {Promise.<object>} A promise with an object as result: { child, stdout, stderr } or { children, stdout, stderr }
+   * @returns {ExecResult|MultipleExecResult}
+   * @throws {ExecError}
    */
   async copy(src, dest, { direction, ...options } = {}) {
     deprecateV3(
@@ -97,7 +125,8 @@ class Connection {
    * @param {object} [options] Options
    * @param {string[]} [options.ignores] Specify a list of files to ignore.
    * @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
-   * @returns {Promise.<object>} A promise with an object as result: { child, stdout, stderr }
+   * @returns {ExecResult}
+   * @throws {ExecError}
    */
   async copyToRemote(src, dest, options) {
     const remoteDest = `${formatRemote(this.remote)}:${dest}`
@@ -114,7 +143,8 @@ class Connection {
    * @param {object} [options] Options
    * @param {string[]} [options.ignores] Specify a list of files to ignore.
    * @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
-   * @returns {Promise.<object>} A promise with an object as result: { child, stdout, stderr }
+   * @returns {ExecResult}
+   * @throws {ExecError}
    */
   async copyFromRemote(src, dest, options) {
     const remoteSrc = `${formatRemote(this.remote)}:${src}`
@@ -130,7 +160,9 @@ class Connection {
    * @param {string} dest Destination
    * @param {object} [options] Options
    * @param {string[]} [options.ignores] Specify a list of files to ignore.
-   * @returns {Promise.<object>} A promise with an object as result: { children, stdout, stderr }
+   * @param {...object} [cmdOptions] Command options
+   * @returns {ExecResult}
+   * @throws {ExecError}
    */
   async scpCopyToRemote(src, dest, { ignores, ...cmdOptions } = {}) {
     const archive = path.basename(await tmpName({ postfix: '.tar.gz' }))
@@ -198,7 +230,9 @@ class Connection {
    * @param {string} dest Destination
    * @param {object} [options] Options
    * @param {string[]} [options.ignores] Specify a list of files to ignore.
-   * @returns {Promise.<object>} A promise with an object as result: { children, stdout, stderr }
+   * @param {...object} [cmdOptions] Command options
+   * @returns {MultipleExecResult}
+   * @throws {ExecError}
    */
   async scpCopyFromRemote(src, dest, { ignores, ...cmdOptions } = {}) {
     const archive = path.basename(await tmpName({ postfix: '.tar.gz' }))
@@ -254,6 +288,14 @@ class Connection {
     ])
   }
 
+  /**
+   * Build an SSH command.
+   *
+   * @private
+   * @param {string} command
+   * @param {object} options
+   * @returns {string}
+   */
   buildSSHCommand(command, options) {
     return formatSshCommand({
       port: this.remote.port,
@@ -266,6 +308,19 @@ class Connection {
     })
   }
 
+  /**
+   * Abstract method to copy using rsync.
+   *
+   * @private
+   * @param {string} src
+   * @param {string} dest
+   * @param {object} options
+   * @param {string[]|string} rsync Additional arguments
+   * @param {string[]} ignores Files to ignore
+   * @param {...object} cmdOptions Command options
+   * @returns {ExecResult}
+   * @throws {ExecError}
+   */
   async rsyncCopy(src, dest, { rsync, ignores, ...cmdOptions } = {}) {
     this.log('Copy "%s" to "%s" via rsync', src, dest)
 
@@ -287,18 +342,48 @@ class Connection {
     return this.runLocally(cmd, cmdOptions)
   }
 
+  /**
+   * Automatic copy to remote method.
+   * Choose rsync and fallback to scp if not available.
+   *
+   * @private
+   * @param {string} src
+   * @param {string} dest
+   * @param {object} options
+   * @returns {ExecResult|MultipleExecResult}
+   * @throws {ExecError}
+   */
   async autoCopyToRemote(src, dest, options) {
     const rsyncAvailable = await checkRsyncAvailability()
     const method = rsyncAvailable ? 'copyToRemote' : 'scpCopyToRemote'
     return this[method](src, dest, options)
   }
 
+  /**
+   * Automatic copy from remote method.
+   * Choose rsync and fallback to scp if not available.
+   *
+   * @private
+   * @param {string} src
+   * @param {string} dest
+   * @param {object} options
+   * @returns {ExecResult|MultipleExecResult}
+   * @throws {ExecError}
+   */
   async autoCopyFromRemote(src, dest, options) {
     const rsyncAvailable = await checkRsyncAvailability()
     const method = rsyncAvailable ? 'copyFromRemote' : 'scpCopyFromRemote'
     return this[method](src, dest, options)
   }
 
+  /**
+   * Aggregate some exec tasks.
+   *
+   * @private
+   * @param {Promise.<ExecResult>[]} tasks An array of tasks
+   * @returns {MultipleExecResult}
+   * @throws {ExecError}
+   */
   async aggregate(tasks) {
     const results = await series(tasks)
 
@@ -316,25 +401,33 @@ class Connection {
     )
   }
 
+  /**
+   * Log using logger.
+   *
+   * @private
+   * @param {...*} args
+   */
   log(...args) {
     if (this.options.log) this.options.log(...args)
   }
 
+  /**
+   * Method used to run a command locally.
+   *
+   * @private
+   * @param {string} cmd
+   * @param {object} [options]
+   * @param {Buffer} [options.stdout] stdout buffer
+   * @param {Buffer} [options.stderr] stderr buffer
+   * @param {...object} [options.cmdOptions] Command options
+   * @returns {ExecResult}
+   * @throws {ExecError}
+   */
   async runLocally(cmd, { stdout, stderr, ...cmdOptions } = {}) {
-    const stdoutPipe = this.options.stdout || stdout
-    const stderrPipe = this.options.stderr || stderr
+    const stdoutPipe = stdout || this.options.stdout
+    const stderrPipe = stderr || this.options.stderr
 
-    return new Promise((resolve, reject) => {
-      // Exec command.
-      const child = exec(
-        cmd,
-        { ...defaultRunOptions, ...cmdOptions },
-        (err, cmdStdout, cmdStderr) => {
-          if (err) reject(err)
-          else resolve({ child, stdout: cmdStdout, stderr: cmdStderr })
-        },
-      )
-
+    return exec(cmd, { ...DEFAULT_RUN_OPTIONS, ...cmdOptions }, child => {
       if (stdoutPipe)
         child.stdout
           .pipe(new LineWrapper({ prefix: `@${this.remote.host} ` }))
