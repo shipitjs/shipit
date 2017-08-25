@@ -259,9 +259,10 @@ class Shipit extends Orchestrator {
    */
   _readyToRunTask(...args) {
     if (
-      Object.values(this.tasks).some(
-        task => task.running === true && task.blocking === true,
-      )
+      Object.keys(this.tasks).some(key => {
+        const task = this.tasks[key]
+        return task.running === true && task.blocking === true
+      })
     )
       return false
 
