@@ -1,7 +1,7 @@
 import path from 'path'
 import LineWrapper from 'stream-line-wrapper'
 import { tmpName as asyncTmpName } from 'tmp'
-import { formatRsyncCommand, checkRsyncAvailability } from './commands/rsync'
+import { formatRsyncCommand, isRsyncSupported } from './commands/rsync'
 import { formatSshCommand } from './commands/ssh'
 import { formatTarCommand } from './commands/tar'
 import { formatCdCommand } from './commands/cd'
@@ -352,7 +352,7 @@ class Connection {
    * @throws {ExecError}
    */
   async autoCopyToRemote(src, dest, options) {
-    const rsyncAvailable = await checkRsyncAvailability()
+    const rsyncAvailable = await isRsyncSupported()
     const method = rsyncAvailable ? 'copyToRemote' : 'scpCopyToRemote'
     return this[method](src, dest, options)
   }
@@ -369,7 +369,7 @@ class Connection {
    * @throws {ExecError}
    */
   async autoCopyFromRemote(src, dest, options) {
-    const rsyncAvailable = await checkRsyncAvailability()
+    const rsyncAvailable = await isRsyncSupported()
     const method = rsyncAvailable ? 'copyFromRemote' : 'scpCopyFromRemote'
     return this[method](src, dest, options)
   }

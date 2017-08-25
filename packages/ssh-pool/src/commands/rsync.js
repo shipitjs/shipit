@@ -1,7 +1,7 @@
 import whereis from 'whereis'
 import { wrapCommand, joinCommandArgs, requireArgs } from './util'
 
-export async function checkRsyncAvailability() {
+export async function isRsyncSupported() {
   return new Promise(resolve => whereis('rsync', err => resolve(!err)))
 }
 
