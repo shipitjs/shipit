@@ -2,6 +2,7 @@
 import stdMocks from 'std-mocks'
 import { exec } from 'child_process'
 import { __setPaths__ } from 'whereis'
+import * as util from './util'
 import Connection from './Connection'
 
 jest.mock('child_process')
@@ -10,6 +11,7 @@ jest.mock('tmp')
 
 describe('Connection', () => {
   beforeEach(() => {
+    util.deprecateV3 = jest.fn()
     __setPaths__({ rsync: '/bin/rsync' })
   })
 

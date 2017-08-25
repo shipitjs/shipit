@@ -1,5 +1,6 @@
 import { __setPaths__ } from 'whereis'
 import { exec } from 'child_process'
+import * as util from './util'
 import Connection from './Connection'
 import ConnectionPool from './ConnectionPool'
 
@@ -8,6 +9,7 @@ jest.mock('child_process')
 
 describe('ConnectionPool', () => {
   beforeEach(() => {
+    util.deprecateV3 = jest.fn()
     __setPaths__({ rsync: '/bin/rsync' })
   })
 

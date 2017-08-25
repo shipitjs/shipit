@@ -1,6 +1,11 @@
+import * as util from '../util'
 import { formatRawCommand } from './raw'
 
 describe('raw', () => {
+  beforeEach(() => {
+    util.deprecateV3 = jest.fn()
+  })
+
   describe('#formatRawCommand', () => {
     it('should support command', () => {
       expect(formatRawCommand({ command: 'echo "ok"' })).toBe('echo "ok"')

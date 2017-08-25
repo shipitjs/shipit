@@ -1,6 +1,11 @@
+import * as util from './util'
 import { parseRemote, formatRemote } from './remote'
 
 describe('SSH remote', () => {
+  beforeEach(() => {
+    util.deprecateV3 = jest.fn()
+  })
+
   describe('#parseRemote', () => {
     it('should return an error if not a string', () => {
       expect(() => {
