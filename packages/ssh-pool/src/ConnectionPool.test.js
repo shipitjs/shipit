@@ -50,17 +50,15 @@ describe('ConnectionPool', () => {
       expect(results[0].stdout.toString()).toBe('stdout')
       expect(results[1].stdout.toString()).toBe('stdout')
       expect(exec).toHaveBeenCalledWith(
-        'ssh deploy@myserver "my-command -x"',
+        'cd /root && ssh deploy@myserver "my-command -x" && cd -',
         {
-          cwd: '/root',
           maxBuffer: 1000 * 1024,
         },
         expect.any(Function),
       )
       expect(exec).toHaveBeenCalledWith(
-        'ssh deploy@myserver2 "my-command -x"',
+        'cd /root && ssh deploy@myserver2 "my-command -x" && cd -',
         {
-          cwd: '/root',
           maxBuffer: 1000 * 1024,
         },
         expect.any(Function),

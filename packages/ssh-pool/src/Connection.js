@@ -52,14 +52,14 @@ class Connection {
    * @param {boolean} [options.tty] Force a TTY allocation.
    * @returns {Promise.<object>} A promise with an object as result: { child, stdout, stderr }
    */
-  async run(command, { tty: ttyOption, ...cmdOptions } = {}) {
+  async run(command, { tty: ttyOption, cwd, ...cmdOptions } = {}) {
     let tty = ttyOption
     if (command.startsWith('sudo') && typeof ttyOption === 'undefined') {
       deprecateV3('You should set "tty" option explictly when you use "sudo".')
       tty = true
     }
     this.log('Running "%s" on host "%s".', command, this.remote.host)
-    const cmd = this.buildSSHCommand(command, { tty })
+    const cmd = this.buildSSHCommand(command, { tty, cwd })
     return this.runLocally(cmd, cmdOptions)
   }
 

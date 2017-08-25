@@ -1,6 +1,18 @@
 import { joinCommandArgs, wrapCommand } from './util'
 
-export function formatSshCommand({ port, key, strict, tty, remote, command }) {
+function wrapCwd(cwd, command) {
+  return `cd ${cwd} && ${command} && cd -`
+}
+
+export function formatSshCommand({
+  port,
+  key,
+  strict,
+  tty,
+  remote,
+  cwd,
+  command,
+}) {
   let args = ['ssh']
   if (tty) args = [...args, '-tt']
   if (port) args = [...args, '-p', port]
@@ -9,5 +21,6 @@ export function formatSshCommand({ port, key, strict, tty, remote, command }) {
     args = [...args, '-o', `StrictHostKeyChecking=${strict}`]
   if (remote) args = [...args, remote]
   if (command) args = [...args, wrapCommand(command)]
-  return joinCommandArgs(args)
+  const sshCommand = joinCommandArgs(args)
+  return cwd ? wrapCwd(cwd, sshCommand) : sshCommand
 }

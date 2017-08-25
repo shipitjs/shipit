@@ -45,5 +45,15 @@ describe('ssh', () => {
         }),
       ).toBe('ssh user@host "echo \\"ok\\""')
     })
+
+    it('should support cwd', () => {
+      expect(
+        formatSshCommand({
+          remote: 'user@host',
+          command: 'echo "ok"',
+          cwd: '/usr',
+        }),
+      ).toBe('cd /usr && ssh user@host "echo \\"ok\\"" && cd -')
+    })
   })
 })
