@@ -9,7 +9,7 @@ import pkg from '../package.json'
 
 const argv = minimist(process.argv.slice(2))
 
-// Initialize cli.
+// Initialize CLI
 const cli = new Liftoff({
   name: 'shipit',
   extensions: interpret.jsVariants,
