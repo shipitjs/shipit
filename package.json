@@ -22,6 +22,9 @@
     "prettier": "^1.5.3",
     "std-mocks": "^1.0.1"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "jest": {
     "testEnvironment": "node",
     "roots": [
