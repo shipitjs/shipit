@@ -9,6 +9,7 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
 
 script:
+  - chmod 700 ssh && chmod 644 ssh/id_rsa.pub && chmod 600 ssh/id_rsa
   - yarn ci
 
 notifications:
