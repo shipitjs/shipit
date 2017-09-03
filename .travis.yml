@@ -19,3 +19,6 @@ cache:
   directories:
     - ".eslintcache"
     - "node_modules"
+
+addons:
+  ssh_known_hosts: test.shipitjs.com
