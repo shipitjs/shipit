@@ -1,5 +1,5 @@
 export function escapeCommand(command) {
-  return command.replace(/"/g, '\\"')
+  return command.replace(/"/g, '\\"').replace(/\$/g, '\\$')
 }
 
 export function wrapCommand(command) {
