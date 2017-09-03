@@ -27,8 +27,7 @@
   },
   "scripts": {
     "prepublish": "yarn build",
-    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib",
-    "test": "./bin/shipit --shipitfile test-sandbox/shipitfile.babel.js test hello"
+    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib"
   },
   "bin": {
     "shipit": "./bin/shipit"
