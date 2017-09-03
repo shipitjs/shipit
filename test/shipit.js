@@ -85,7 +85,7 @@ describe('Shipit', function () {
     it('should cd and run command on pool', function () {
       shipit.remote('my-command', {cwd: '/my-directory'});
 
-      expect(shipit.pool.run).to.be.calledWith('cd "/my-directory" && my-command', {});
+      expect(shipit.pool.run).to.be.calledWith('cd /my-directory && my-command', {});
     });
   });
 
