@@ -7,6 +7,7 @@
     "build": "babel-node scripts/build.js",
     "ci": "yarn build && yarn lint && yarn test",
     "dev": "lerna bootstrap && yarn build --silent && babel-node scripts/watch.js",
+    "dev:test": "jest --watch",
     "format": "prettier --write \"packages/*/src/**/*.js\"",
     "lint": "eslint --cache .",
     "test": "jest --runInBand --coverage && codecov"
