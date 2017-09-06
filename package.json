@@ -2,25 +2,35 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "ci": "lerna run build && yarn run lint && yarn run test && lerna run test",
+    "publish": "lerna publish",
+    "prepublish": "yarn build",
+    "build": "babel-node scripts/build.js",
+    "ci": "yarn build && yarn lint && yarn test",
+    "dev": "lerna bootstrap && yarn build --silent && babel-node scripts/watch.js",
+    "format": "prettier --write \"packages/*/src/**/*.js\"",
     "lint": "eslint --cache .",
-    "test": "jest --runInBand --coverage && codecov",
-    "format": "prettier --write --no-semi --single-quote --trailing-comma all \"packages/*/src/**/*.js\""
+    "test": "jest --runInBand --coverage && codecov"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
+    "chalk": "^2.1.0",
     "codecov": "^2.3.0",
-    "eslint": "^4.4.1",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-config-prettier": "^2.3.0",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-config-prettier": "^2.4.0",
     "eslint-plugin-import": "^2.7.0",
-    "jest": "^20.0.4",
-    "lerna": "^2.1.0",
-    "prettier": "^1.5.3",
-    "std-mocks": "^1.0.1"
+    "glob": "^7.1.2",
+    "jest": "^21.0.1",
+    "lerna": "^2.1.2",
+    "micromatch": "^3.0.4",
+    "mkdirp": "^0.5.1",
+    "prettier": "^1.6.1",
+    "std-mocks": "^1.0.1",
+    "string-length": "^2.0.0"
   },
   "workspaces": [
     "packages/*"

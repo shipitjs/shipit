@@ -25,10 +25,6 @@
     "babel-cli": "^6.26.0",
     "mock-utf8-stream": "^0.1.1"
   },
-  "scripts": {
-    "prepublish": "yarn build",
-    "build": "rm -rf lib/ && babel --ignore=\"*.test.js\" src -d lib"
-  },
   "bin": {
     "shipit": "./bin/shipit"
   },
