@@ -34,11 +34,19 @@ if (!process.argv.slice(2).length) {
 }
 
 function logTasks(shipit) {
-  console.log(Object.keys(shipit.tasks).join('\n').trim())
+  console.log(
+    Object.keys(shipit.tasks)
+      .join('\n')
+      .trim(),
+  )
 }
 
 function logEnvironments(shipit) {
-  console.log(Object.keys(shipit.envConfig).join('\n').trim())
+  console.log(
+    Object.keys(shipit.envConfig)
+      .join('\n')
+      .trim(),
+  )
 }
 
 async function asyncInvoke(env) {

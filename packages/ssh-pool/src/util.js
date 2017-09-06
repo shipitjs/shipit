@@ -10,7 +10,9 @@ export const series = async tasks =>
         return
       }
       const task = tasksCopy.shift()
-      task().then(result => next([...results, result])).catch(reject)
+      task()
+        .then(result => next([...results, result]))
+        .catch(reject)
     }
     next([])
   })
