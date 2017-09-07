@@ -111,6 +111,55 @@ shipit staging rollback
 shipit <environment> <tasks ...>
 ```
 
+## Roles
+Shipit can also target segments of your server fleet based on their roles
+allowing you to restart the web server on only hosts that actually
+have a web server running or clear the cache on servers that actually keep a
+cache.
+
+In order to segment your servers, simply add a role to each server object in
+your configuration
+
+```
+servers: [
+  {
+    user: 'root',
+    host: 'app1.example.com',
+    role: 'appserver'
+  },{
+    user: 'root',
+    host: 'worker1.example.com',
+    role: 'worker'
+  },{
+    user: 'root',
+    host: 'db1.example.com',
+    role: 'database'
+  }
+]
+```
+
+You can have as many roles as you want and they can be identified with whatever
+word you choose. `appserver`, `worker`, and `database` are merely provided as
+examples.
+
+Now, when you call the `remote()` and `remoteCopy()` functions, pass alone a
+`role` option to tell shipit which servers to target. If no `role` is provided,
+then it target all of your servers by default.
+
+```javascript
+module.exports = function (shipit) {
+
+  shipit.task('deploy:restart_appservers', () => {
+    return shipit.remote('service nginx restart', { role: 'appserver' })
+  })
+
+  shipit.task('deploy:restart_workers', () => {
+    return shipit.remote('service worker restart', { role: 'worker' })
+  })
+
+}
+```
+
 ### Options
 
 #### servers

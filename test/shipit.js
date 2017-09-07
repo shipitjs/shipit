@@ -34,13 +34,53 @@ describe('Shipit', function () {
   });
 
   describe('#initSshPool', function () {
-    it('should initialize an ssh pool', function () {
+    it('should initialize a simple string ssh pool', function () {
       shipit.config = {servers: ['deploy@my-server']};
       shipit.initSshPool();
 
-      expect(shipit.pool).to.be.instanceOf(ConnectionPool);
-      expect(shipit.pool).to.have.deep.property('.connections[0].remote.user', 'deploy');
-      expect(shipit.pool).to.have.deep.property('.connections[0].remote.host', 'my-server');
+      expect(shipit.pools.all).to.be.instanceOf(ConnectionPool);
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.user', 'deploy');
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.host', 'my-server');
+    });
+
+    it('should initialize a simple object ssh pool', function () {
+      shipit.config = {servers: [{ user: 'deploy', host: 'my-server'}]};
+      shipit.initSshPool();
+
+      expect(shipit.pools.all).to.be.instanceOf(ConnectionPool);
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.user', 'deploy');
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.host', 'my-server');
+    });
+
+    it('should initialize a mixed object ssh pool', function () {
+      shipit.config = {servers: ['deploy@my-server1',{ user: 'deploy', host: 'my-server2'}]};
+      shipit.initSshPool();
+
+      expect(shipit.pools.all).to.be.instanceOf(ConnectionPool);
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.user', 'deploy');
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.host', 'my-server1');
+      expect(shipit.pools.all).to.have.deep.property('.connections[1].remote.user', 'deploy');
+      expect(shipit.pools.all).to.have.deep.property('.connections[1].remote.host', 'my-server2');
+    });
+
+    it('should initialize multiple pools based on roles', function () {
+      shipit.config = {servers: [
+        { user: 'deploy', host: 'webserver', role: 'web' },
+        { user: 'deploy', host: 'workerserver', role: 'worker' }
+      ]};
+      shipit.initSshPool();
+
+      expect(shipit.pools.all).to.be.instanceOf(ConnectionPool);
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.user', 'deploy');
+      expect(shipit.pools.all).to.have.deep.property('.connections[0].remote.host', 'webserver');
+      expect(shipit.pools.all).to.have.deep.property('.connections[1].remote.user', 'deploy');
+      expect(shipit.pools.all).to.have.deep.property('.connections[1].remote.host', 'workerserver');
+      expect(shipit.pools.web).to.be.instanceOf(ConnectionPool);
+      expect(shipit.pools.web).to.have.deep.property('.connections[0].remote.user', 'deploy');
+      expect(shipit.pools.web).to.have.deep.property('.connections[0].remote.host', 'webserver');
+      expect(shipit.pools.worker).to.be.instanceOf(ConnectionPool);
+      expect(shipit.pools.worker).to.have.deep.property('.connections[0].remote.user', 'deploy');
+      expect(shipit.pools.worker).to.have.deep.property('.connections[0].remote.host', 'workerserver');
     });
   });
 
@@ -73,46 +113,60 @@ describe('Shipit', function () {
 
   describe('#remote', function () {
     beforeEach(function () {
-      shipit.pool = {run: sinon.stub()};
+      shipit.pools = {
+        all: { run: sinon.stub() },
+        web: { run: sinon.stub() },
+        worker: { run: sinon.stub() }
+      };
     });
 
-    it('should run command on pool', function () {
+    it('should run command on all pool', function () {
       shipit.remote('my-command');
 
-      expect(shipit.pool.run).to.be.calledWith('my-command');
+      expect(shipit.pools.all.run).to.be.calledWith('my-command');
     });
 
-    it('should cd and run command on pool', function () {
-      shipit.remote('my-command', {cwd: '/my-directory'});
+    it('should cd and run command on all pool', function () {
+      shipit.remote('my-command', { cwd: '/my-directory' });
 
-      expect(shipit.pool.run).to.be.calledWith('cd "/my-directory" && my-command', {});
+      expect(shipit.pools.all.run).to.be.calledWith('cd "/my-directory" && my-command', {});
+    });
+
+    it('should run command on specific pool', function () {
+      shipit.remote('my-command', { role: 'web' });
+
+      expect(shipit.pools.web.run).to.be.calledWith('my-command');
     });
   });
 
   describe('#remoteCopy', function () {
     beforeEach(function () {
-      shipit.pool = {copy: sinon.stub()};
+      shipit.pools = {
+        all: { copy: sinon.stub() },
+        web: { copy: sinon.stub() },
+        worker: { copy: sinon.stub() }
+      };
     });
 
-    it('should run command on pool', function () {
+    it('should run command on all pool', function () {
       shipit.remoteCopy('src', 'dest');
 
-      expect(shipit.pool.copy).to.be.calledWith('src', 'dest');
+      expect(shipit.pools.all.copy).to.be.calledWith('src', 'dest');
     });
 
-    it('should accept options for shipit.pool.copy', function () {
+    it('should accept options for shipit.pool.copy on all pool', function () {
       shipit.remoteCopy('src', 'dest', {
         direction: 'remoteToLocal'
       });
 
-      expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
+      expect(shipit.pools.all.copy).to.be.calledWith('src', 'dest', {
         direction: 'remoteToLocal',
         ignores: [],
         rsync: []
       });
     });
 
-    it('should support options specified in config', function () {
+    it('should support options specified in config on all pool', function () {
       shipit.config = {
         ignores: ['foo'],
         rsync: ['--bar']
@@ -122,11 +176,18 @@ describe('Shipit', function () {
         direction: 'remoteToLocal'
       });
 
-      expect(shipit.pool.copy).to.be.calledWith('src', 'dest', {
+      expect(shipit.pools.all.copy).to.be.calledWith('src', 'dest', {
         direction: 'remoteToLocal',
         ignores: ['foo'],
         rsync: ['--bar']
       });
     });
+
+    it('should run command on specific pool', function () {
+      shipit.remoteCopy('src', 'dest', { role: 'web' });
+
+      expect(shipit.pools.web.copy).to.be.calledWith('src', 'dest');
+    });
+
   });
 });
