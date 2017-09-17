@@ -24,4 +24,11 @@ describe('shipit-cli', () => {
     expect(stdout).toMatch(/@test.shipitjs.com deploy/)
     expect(stdout).toMatch(/Finished 'remoteUser' after/)
   })
+
+  it('should work with "~"', async () => {
+    const { stdout } = await exec(
+      `babel-node ${shipitCli} --shipitfile ${shipitFile} test cwdSsh`,
+    )
+    expect(stdout).toMatch(/@test.shipitjs.com \/home\/deploy\/\.ssh/)
+  })
 })

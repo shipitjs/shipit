@@ -53,7 +53,9 @@ describe('ssh', () => {
           command: 'echo "ok"',
           cwd: '/usr',
         }),
-      ).toBe('cd /usr && ssh user@host "echo \\"ok\\"" && cd -')
+      ).toBe(
+        'ssh user@host "cd /usr > /dev/null; echo \\"ok\\"; cd - > /dev/null"',
+      )
     })
   })
 })

@@ -17,4 +17,8 @@ export default shipit => {
   shipit.task('remoteUser', async () => {
     await shipit.remote('echo $USER')
   })
+
+  shipit.task('cwdSsh', async () => {
+    await shipit.remote('pwd', { cwd: '~/.ssh' })
+  })
 }
