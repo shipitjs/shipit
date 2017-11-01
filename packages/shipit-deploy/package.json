@@ -1,7 +1,7 @@
 {
-  "name": "shipit-cli",
+  "name": "shipit-deploy",
   "version": "1.5.0",
-  "description": "Universal automation and deployment tool written in JavaScript.",
+  "description": "Official set of deploy tasks for Shipit.",
   "main": "lib/index.js",
   "keywords": [
     "shipit",
@@ -10,23 +10,16 @@
     "deploy",
     "ssh"
   ],
+  "peerDependencies": {
+    "shipit-cli": "^1.5.0"
+  },
   "dependencies": {
     "chalk": "^2.3.0",
-    "commander": "^2.11.0",
-    "interpret": "^1.0.0",
-    "liftoff": "^2.0.0",
-    "orchestrator": "^0.3.7",
-    "pretty-hrtime": "^1.0.0",
-    "ssh-pool": "^1.5.0",
-    "stream-line-wrapper": "^0.1.1",
-    "v8flags": "^3.0.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "mock-utf8-stream": "^0.1.1"
-  },
-  "bin": {
-    "shipit": "./bin/shipit"
+    "lodash": "^4.6.1",
+    "mkdirp-promise": "^5.0.1",
+    "moment": "^2.19.1",
+    "path2": "^0.1.0",
+    "shipit-utils": "^1.1.3"
   },
   "repository": {
     "type": "git",
