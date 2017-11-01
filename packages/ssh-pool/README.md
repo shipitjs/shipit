@@ -1,35 +1,30 @@
 # ssh-pool
-[![Build Status](https://travis-ci.org/shipitjs/ssh-pool.svg?branch=master)](https://travis-ci.org/shipitjs/ssh-pool)
-[![Dependency Status](https://david-dm.org/shipitjs/ssh-pool.svg?theme=shields.io)](https://david-dm.org/shipitjs/ssh-pool)
-[![devDependency Status](https://david-dm.org/shipitjs/ssh-pool/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/ssh-pool#info=devDependencies)
 
 Run remote commands over a pool of server using SSH.
 
-## Install
-
-```
+```sh
 npm install ssh-pool
 ```
 
 ## Usage
 
 ```js
-var sshPool = require('ssh-pool');
+import { ConnectionPool } from 'ssh-pool'
 
-var pool = new sshPool.ConnectionPool(['user@server1', 'user@server2']);
+const pool = new ConnectionPool(['user@server1', 'user@server2'])
 
-pool.run('hostname')
-.then(function (results) {
-  console.log(results[0].stdout); // 'server1'
-  console.log(results[1].stdout); // 'server2'
-});
+async function run() {
+  const results = await pool.run('hostname')
+  console.log(results[0].stdout) // 'server1'
+  console.log(results[1].stdout) // 'server2'
+}
 ```
 
 ### new Connection(options)
 
 Create a new connection to run command on a remote server.
 
-**Arguments:**
+**Parameters:**
 
 ```
 @param {object} options Options
@@ -38,149 +33,146 @@ Create a new connection to run command on a remote server.
 @param {Stream} [options.stderr] Stderr stream
 @param {string} [options.key] SSH key
 @param {function} [options.log] Log method
+@param {boolean} [options.asUser] Use a custom user to run command
 ```
 
 The remote can use the shorthand syntax or an object:
 
 ```js
-// Default user will be deploy and ssh default port.
-new Connection({remote: 'localhost'});
+// You specify user and host
+new Connection({ remote: 'user@localhost' })
 
-// Default ssh port will be used.
-new Connection({remote: 'user@localhost'});
+// You can specify a custom SSH port
+new Connection({ remote: 'user@localhost:4000' })
 
-// Custom user and custom port.
-new Connection({remote: 'user@localhost:22'});
-
-// Object syntax.
-new Connection({remote: {user: 'user', host: 'localhost', port: 22}});
+// You can also define remote using an object
+new Connection({
+  remote: {
+    user: 'user',
+    host: 'localhost',
+    port: 4000,
+  },
+})
 ```
 
 The log method is used to log output directly:
 
 ```js
-var connection = new Connection({
-  remote: 'localhost',
-  log: console.log.bind(console)
-});
+import { Connection } from 'ssh-pool'
 
-connection.run('pwd');
+const connection = new Connection({
+  remote: 'localhost',
+  log: (...args) => console.log(...args),
+})
+
+connection.run('pwd')
 
 // Will output:
 // Running "pwd" on host "localhost".
 // @localhost /my/directory
 ```
 
-### connection.run(command, [options], [cb])
+### connection.run(command, [options])
 
-Run a command on the remote server, you can specify custom `childProcess.exec` options. A callback or a promise can be used.
+Run a command on the remote server, you can specify custom `childProcess.exec` options.
 
-**Arguments:**
-
-```
-@param {string} command Command
-@param {object} [options] Exec options
-@param {function} [cb] Callback
-@returns {Promise}
-```
-
-```js
-connection.run('ls', {env: {NODE_ENV: 'test'}})
-.then(function (result) {
-  result.stdout; // stdout output
-  result.stderr; // stderr output
-  result.child; // child object
-});
-```
-
-### connection.copy(src, dest, [options], [cb])
-
-Copy a file or a directory to a remote server, you can specify custom `childProcess.exec` options. A callback or a promise can be used.
-
-**Arguments:**
+**Parameters:**
 
 ```
-@param {string} src Source
-@param {string} dest Destination
-@param {object} [options] Exec Options
-@param {function} [cb] Callback
-@returns {Promise}
+@param {string} command Command to run
+@param {object} [options] Options
+@param {boolean} [options.tty] Force a TTY allocation.
+@returns {ExecResult}
+@throws {ExecError}
 ```
 
 ```js
-connection.copy('./localfile', '/remote-file', {env: {NODE_ENV: 'test'}})
-.then(function (result) {
-  result.stdout; // stdout output
-  result.stderr; // stderr output
-  result.child; // child object
-});
+// Run "ls" command on a remote server
+connection.run('ls').then(res => {
+  console.log(res.stdout) // file1 file2 file3
+})
+```
+
+### connection.copyToRemote(src, dest, [options])
+
+Copy a file or a directory from local to a remote server, you can specify custom `childProcess.exec` options. It uses rsync under the hood.
+
+**Parameters:**
+
+```
+* @param {string} src Source
+* @param {string} dest Destination
+* @param {object} [options] Options
+* @param {string[]} [options.ignores] Specify a list of files to ignore.
+* @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
+* @returns {ExecResult}
+* @throws {ExecError}
+```
+
+```js
+// Copy a local file to a remote file using Rsync
+connection.copyToRemote('./localfile', '/remote-file').then(() => {
+  console.log('File copied!')
+})
+```
+
+### connection.copyFromRemote(src, dest, [options])
+
+Copy a file or a directory from a remote server to local, you can specify custom `childProcess.exec` options. It uses rsync under the hood.
+
+**Parameters:**
+
+```
+* @param {string} src Source
+* @param {string} dest Destination
+* @param {object} [options] Options
+* @param {string[]} [options.ignores] Specify a list of files to ignore.
+* @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
+* @returns {ExecResult}
+* @throws {ExecError}
+```
+
+```js
+// Copy a remote file to a local file using Rsync
+connection.copyFromRemote('/remote-file', './local-file').then(() => {
+  console.log('File copied!')
+})
 ```
 
 ### new ConnectionPool(connections, [options])
 
 Create a new pool of connections and custom options for all connections.
-
-If you use the short syntax, connections will be automatically created, else you can use previous created connections.
+You can use either short syntax or connections to create a pool.
 
 ```js
+import { Connection, ConnectionPool } from 'ssh-pool'
+
 // Use shorthand.
-var pool = new ConnectionPool(['server1', 'server2']);
+const pool = new ConnectionPool(['server1', 'server2'])
 
 // Use previously created connections.
-var connection1 = new Connection({remote: 'server1'});
-var connection2 = new Connection({remote: 'server2'});
-var pool = new ConnectionPool([connection1, connection2]);
+const connection1 = new Connection({ remote: 'server1' })
+const connection2 = new Connection({ remote: 'server2' })
+const pool = new ConnectionPool([connection1, connection2])
 ```
 
-### pool.run(command, [options], [cb])
+Connection Pool accepts exactly the same methods as Connection. It runs commands in parallel on each server defined in the pool. You get an array of results.
 
-Same as `connection.run`, except that the command is executed in parallel on each server of the pool.
+### isRsyncSupported
 
-**Arguments:**
-
-```
-@param {string} command Command
-@param {object} [options] Options
-@param {function} [cb] Callback
-@returns {Promise}
-```
+A method to test if rsync is supported on the local machine.
 
 ```js
-pool.run('hostname')
-.then(function (results) {
-  // ...
-});
+import { isRsyncSupported } from 'ssh-pool'
+
+isRsyncSupported().then(supported => {
+  if (supported) {
+    console.log('Rsync is supported!')
+  } else {
+    console.log('Rsync is not supported!')
+  }
+})
 ```
-
-### pool.copy(src, dest, [options], [cb])
-
-Same as `connection.copy`, except that the copy is done in parallel on each server of the pool.
-
-**Options:**
-
-```
-@param {object} [options.direction] Direction of copy
-```
-
-Also all exec options are supported.
-
-**Arguments:**
-
-```
-@param {string} src Source
-@param {string} dest Destination
-@param {object} options Options
-@param {function} [cb] Callback
-@returns {Promise}
-```
-
-```js
-pool.copy('./localfile', '/remote-file')
-.then(function (results) {
-  // ...
-});
-```
-
 
 ## License
 
