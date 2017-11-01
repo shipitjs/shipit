@@ -49,10 +49,7 @@ const fetchTask = shipit => {
     async function setGitConfig() {
       if (!shipit.config.gitConfig) return
 
-      shipit.log(
-        'Set custom git config options for "%s"',
-        shipit.workspace,
-      )
+      shipit.log('Set custom git config options for "%s"', shipit.workspace)
 
       await Promise.all(
         Object.keys(shipit.config.gitConfig || {}).map(key =>

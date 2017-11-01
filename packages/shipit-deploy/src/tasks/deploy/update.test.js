@@ -72,9 +72,7 @@ describe('deploy:update task', () => {
       expect(shipit.remote).toBeCalledWith(
         'mkdir -p /remote/deploy/releases/YYYYMMDDHHmmss',
       )
-      expect(
-        shipit.remoteCopy,
-      ).toBeCalledWith(
+      expect(shipit.remoteCopy).toBeCalledWith(
         '/tmp/workspace/',
         '/remote/deploy/releases/YYYYMMDDHHmmss',
         { rsync: '--del' },
@@ -98,11 +96,13 @@ describe('deploy:update task', () => {
             })
             stubShipit(sh)
             await start(sh, 'deploy:update')
-            expect(
-              sh.remoteCopy,
-            ).toBeCalledWith(p.res, '/remote/deploy/releases/YYYYMMDDHHmmss', {
-              rsync: '--del',
-            })
+            expect(sh.remoteCopy).toBeCalledWith(
+              p.res,
+              '/remote/deploy/releases/YYYYMMDDHHmmss',
+              {
+                rsync: '--del',
+              },
+            )
           }),
         )
       })
@@ -117,9 +117,7 @@ describe('deploy:update task', () => {
 
         await start(sh, 'deploy:update')
 
-        expect(
-          sh.remoteCopy,
-        ).toBeCalledWith(
+        expect(sh.remoteCopy).toBeCalledWith(
           '/tmp/workspace/',
           '/remote/deploy/releases/YYYYMMDDHHmmss',
           { rsync: '--foo' },
@@ -230,6 +228,7 @@ describe('deploy:update task', () => {
 
   it('should remove workspace', async () => {
     stubShipit(shipit)
+    rmfr.mockClear()
     expect(rmfr).not.toHaveBeenCalled()
     await start(shipit, 'deploy:update')
     expect(rmfr).toHaveBeenCalledWith('/tmp/workspace')
