@@ -1,3 +1,4 @@
+import path from 'path'
 import utils from 'shipit-utils'
 import chalk from 'chalk'
 import tmp from 'tmp-promise'
@@ -17,8 +18,15 @@ const fetchTask = shipit => {
       async function create() {
         shipit.log('Create workspace...')
         /* eslint-disable no-param-reassign */
-        const tmpDir = await tmp.dir()
-        shipit.workspace = tmpDir.path
+        if (shipit.config.shallowClone) {
+          const tmpDir = await tmp.dir()
+          shipit.workspace = tmpDir.path
+        } else {
+          shipit.workspace = shipit.config.workspace
+          if (path.resolve(shipit.workspace) === process.cwd()) {
+            throw new Error('Workspace should be a temporary directory')
+          }
+        }
         /* eslint-enable no-param-reassign */
         shipit.log(chalk.green(`Workspace created: "${shipit.workspace}"`))
       }

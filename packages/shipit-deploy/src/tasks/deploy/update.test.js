@@ -27,10 +27,7 @@ function createShipitInstance(config) {
     ),
   })
 
-  shipit.workspace = {
-    path: '/tmp/workspace',
-    cleanup: jest.fn(async () => {}),
-  }
+  shipit.workspace = '/tmp/workspace'
   shipit.currentPath = path.join(shipit.config.deployTo, 'current')
   shipit.releasesPath = path.join(shipit.config.deployTo, 'releases')
 
