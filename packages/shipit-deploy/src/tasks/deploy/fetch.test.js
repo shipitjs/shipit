@@ -1,11 +1,8 @@
 import Shipit from 'shipit-cli'
-import mkdirp from 'mkdirp-promise'
-import rmfr from 'rmfr'
 import { start } from '../../../tests/util'
 import fetchTask from './fetch'
 
-jest.mock('mkdirp-promise')
-jest.mock('rmfr')
+jest.mock('tmp-promise')
 
 describe('deploy:fetch task', () => {
   let shipit
@@ -31,7 +28,6 @@ describe('deploy:fetch task', () => {
 
   it('should create workspace, create repo, checkout and call sync', async () => {
     await start(shipit, 'deploy:fetch')
-    expect(mkdirp).toBeCalledWith('/tmp/workspace')
     expect(shipit.local).toBeCalledWith('git init', { cwd: '/tmp/workspace' })
     expect(shipit.local).toBeCalledWith('git remote', { cwd: '/tmp/workspace' })
     expect(
@@ -57,8 +53,6 @@ describe('deploy:fetch task', () => {
     shipit.config.shallowClone = true
     await start(shipit, 'deploy:fetch')
 
-    expect(rmfr).toBeCalledWith('/tmp/workspace')
-    expect(mkdirp).toBeCalledWith('/tmp/workspace')
     expect(shipit.local).toBeCalledWith('git init', {
       cwd: '/tmp/workspace',
     })
@@ -89,7 +83,6 @@ describe('deploy:fetch task', () => {
 
     await start(shipit, 'deploy:fetch')
 
-    expect(mkdirp).toBeCalledWith('/tmp/workspace')
     expect(shipit.local).toBeCalledWith('git init', {
       cwd: '/tmp/workspace',
     })
@@ -128,7 +121,6 @@ describe('deploy:fetch task', () => {
 
     await start(shipit, 'deploy:fetch')
 
-    expect(mkdirp).toBeCalledWith('/tmp/workspace')
     expect(shipit.local).toBeCalledWith('git init', {
       cwd: '/tmp/workspace',
     })

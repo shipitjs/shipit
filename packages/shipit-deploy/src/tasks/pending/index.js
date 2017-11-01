@@ -1,12 +1,14 @@
 import utils from 'shipit-utils'
 import logTask from './log'
+import fetchTask from '../deploy/fetch'
 
 /**
  * Pending task.
- * - pending:init
+ * - deploy:fetch
  * - pending:log
  */
 export default shipit => {
   logTask(shipit)
-  utils.registerTask(shipit, 'pending', ['pending:log'])
+  fetchTask(shipit)
+  utils.registerTask(shipit, 'pending', ['deploy:fetch', 'pending:log'])
 }

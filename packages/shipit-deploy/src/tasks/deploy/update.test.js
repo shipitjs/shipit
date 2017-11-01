@@ -1,9 +1,12 @@
 import moment from 'moment'
 import _ from 'lodash'
+import rmfr from 'rmfr'
 import path from 'path2/posix'
 import Shipit from 'shipit-cli'
 import { start } from '../../../tests/util'
 import updateTask from './update'
+
+jest.mock('rmfr')
 
 function createShipitInstance(config) {
   const shipit = new Shipit({
@@ -24,6 +27,10 @@ function createShipitInstance(config) {
     ),
   })
 
+  shipit.workspace = {
+    path: '/tmp/workspace',
+    cleanup: jest.fn(async () => {}),
+  }
   shipit.currentPath = path.join(shipit.config.deployTo, 'current')
   shipit.releasesPath = path.join(shipit.config.deployTo, 'releases')
 
@@ -222,5 +229,12 @@ describe('deploy:update task', () => {
       await start(shipit, 'deploy:update')
       expect(shipit.previousRelease).not.toBe(null)
     })
+  })
+
+  it('should remove workspace', async () => {
+    stubShipit(shipit)
+    expect(rmfr).not.toHaveBeenCalled()
+    await start(shipit, 'deploy:update')
+    expect(rmfr).toHaveBeenCalledWith('/tmp/workspace')
   })
 })

@@ -18,7 +18,6 @@ describe('rollback:init task', () => {
     // Shipit config
     shipit.initConfig({
       test: {
-        workspace: '/tmp/workspace',
         deployTo: '/remote/deploy',
       },
     })

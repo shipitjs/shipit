@@ -1,7 +1,6 @@
 import utils from 'shipit-utils'
 import chalk from 'chalk'
-import mkdirp from 'mkdirp-promise'
-import rmfr from 'rmfr'
+import tmp from 'tmp-promise'
 
 /**
  * Fetch task.
@@ -16,15 +15,12 @@ const fetchTask = shipit => {
      */
     async function createWorkspace() {
       async function create() {
-        shipit.log('Create workspace "%s"', shipit.config.workspace)
-        await mkdirp(shipit.config.workspace)
-        shipit.log(chalk.green('Workspace created.'))
-      }
-
-      if (shipit.config.shallowClone) {
-        shipit.log('Deleting existing workspace "%s"', shipit.config.workspace)
-        await rmfr(shipit.config.workspace)
-        return create()
+        shipit.log('Create workspace...')
+        /* eslint-disable no-param-reassign */
+        const tmpDir = await tmp.dir()
+        shipit.workspace = tmpDir.path
+        /* eslint-enable no-param-reassign */
+        shipit.log(chalk.green(`Workspace created: "${shipit.workspace}"`))
       }
 
       return create()
@@ -34,8 +30,8 @@ const fetchTask = shipit => {
      * Initialize repository.
      */
     async function initRepository() {
-      shipit.log('Initialize local repository in "%s"', shipit.config.workspace)
-      await shipit.local('git init', { cwd: shipit.config.workspace })
+      shipit.log('Initialize local repository in "%s"', shipit.workspace)
+      await shipit.local('git init', { cwd: shipit.workspace })
       shipit.log(chalk.green('Repository initialized.'))
     }
 
@@ -47,13 +43,13 @@ const fetchTask = shipit => {
 
       shipit.log(
         'Set custom git config options for "%s"',
-        shipit.config.workspace,
+        shipit.workspace,
       )
 
       await Promise.all(
         Object.keys(shipit.config.gitConfig || {}).map(key =>
           shipit.local(`git config ${key} "${shipit.config.gitConfig[key]}"`, {
-            cwd: shipit.config.workspace,
+            cwd: shipit.workspace,
           }),
         ),
       )
@@ -67,7 +63,7 @@ const fetchTask = shipit => {
       shipit.log('List local remotes.')
 
       const res = await shipit.local('git remote', {
-        cwd: shipit.config.workspace,
+        cwd: shipit.workspace,
       })
 
       const remotes = res.stdout ? res.stdout.split(/\s/) : []
@@ -76,13 +72,13 @@ const fetchTask = shipit => {
       shipit.log(
         'Update remote "%s" to local repository "%s"',
         shipit.config.repositoryUrl,
-        shipit.config.workspace,
+        shipit.workspace,
       )
 
       // Update remote.
       await shipit.local(
         `git remote ${method} shipit ${shipit.config.repositoryUrl}`,
-        { cwd: shipit.config.workspace },
+        { cwd: shipit.workspace },
       )
 
       shipit.log(chalk.green('Remote updated.'))
@@ -100,7 +96,7 @@ const fetchTask = shipit => {
 
       shipit.log('Fetching repository "%s"', shipit.config.repositoryUrl)
 
-      await shipit.local(fetchCommand, { cwd: shipit.config.workspace })
+      await shipit.local(fetchCommand, { cwd: shipit.workspace })
       shipit.log(chalk.green('Repository fetched.'))
     }
 
@@ -110,7 +106,7 @@ const fetchTask = shipit => {
     async function checkout() {
       shipit.log('Checking out commit-ish "%s"', shipit.config.branch)
       await shipit.local(`git checkout ${shipit.config.branch}`, {
-        cwd: shipit.config.workspace,
+        cwd: shipit.workspace,
       })
       shipit.log(chalk.green('Checked out.'))
     }
@@ -121,7 +117,7 @@ const fetchTask = shipit => {
     async function reset() {
       shipit.log('Resetting the working tree')
       await shipit.local('git reset --hard HEAD', {
-        cwd: shipit.config.workspace,
+        cwd: shipit.workspace,
       })
       shipit.log(chalk.green('Reset working tree.'))
     }
@@ -135,7 +131,7 @@ const fetchTask = shipit => {
       const res = await shipit.local(
         `git branch --list ${shipit.config.branch}`,
         {
-          cwd: shipit.config.workspace,
+          cwd: shipit.workspace,
         },
       )
 
@@ -150,7 +146,7 @@ const fetchTask = shipit => {
 
       // Merge branch.
       await shipit.local(`git merge shipit/${shipit.config.branch}`, {
-        cwd: shipit.config.workspace,
+        cwd: shipit.workspace,
       })
 
       shipit.log(chalk.green('Branch merged.'))
@@ -164,7 +160,7 @@ const fetchTask = shipit => {
 
       shipit.log('Updating submodules.')
       await shipit.local('git submodule update --init --recursive', {
-        cwd: shipit.config.workspace,
+        cwd: shipit.workspace,
       })
       shipit.log(chalk.green('Submodules updated'))
     }

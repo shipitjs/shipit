@@ -16,11 +16,11 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "lodash": "^4.6.1",
-    "mkdirp-promise": "^5.0.1",
     "moment": "^2.19.1",
     "path2": "^0.1.0",
     "rmfr": "^1.0.3",
-    "shipit-utils": "^1.1.3"
+    "shipit-utils": "^1.1.3",
+    "tmp-promise": "^1.0.3"
   },
   "repository": {
     "type": "git",

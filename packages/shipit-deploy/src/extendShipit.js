@@ -122,7 +122,7 @@ function extendShipit(shipit) {
     const response = await this.local(
       `git log --pretty=format:"${shipit.config
         .gitLogFormat}" ${deployedRevision}..${compareRevision}`,
-      { cwd: shipit.config.workspace },
+      { cwd: shipit.workspace },
     )
     const commits = response.stdout.trim()
     return commits || null

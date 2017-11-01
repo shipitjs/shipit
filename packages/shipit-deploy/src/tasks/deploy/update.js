@@ -3,6 +3,7 @@ import path from 'path2/posix'
 import moment from 'moment'
 import chalk from 'chalk'
 import util from 'util'
+import rmfr from 'rmfr'
 import _ from 'lodash'
 import extendShipit from '../../extendShipit'
 
@@ -14,6 +15,7 @@ import extendShipit from '../../extendShipit'
  * - Copy previous release (for faster rsync)
  * - Set current revision and write REVISION file.
  * - Remote copy project.
+ * - Remove workspace.
  */
 const updateTask = shipit => {
   utils.registerTask(shipit, 'deploy:update', async () => {
@@ -59,7 +61,7 @@ const updateTask = shipit => {
       const options = _.get(shipit.config, 'deploy.remoteCopy') || {
         rsync: '--del',
       }
-      const rsyncFrom = shipit.config.rsyncFrom || shipit.config.workspace
+      const rsyncFrom = shipit.config.rsyncFrom || shipit.workspace
       const uploadDirPath = path.resolve(
         rsyncFrom,
         shipit.config.dirToCopy || '',
@@ -115,7 +117,7 @@ const updateTask = shipit => {
       const response = await shipit.local(
         `git rev-parse ${shipit.config.branch}`,
         {
-          cwd: shipit.config.workspace,
+          cwd: shipit.workspace,
         },
       )
 
@@ -132,12 +134,19 @@ const updateTask = shipit => {
       shipit.log(chalk.green('Revision file created.'))
     }
 
+    async function removeWorkspace() {
+      shipit.log(`Removing workspace "${shipit.workspace}"`)
+      await rmfr(shipit.workspace)
+      shipit.log(chalk.green('Workspace removed.'))
+    }
+
     await setPreviousRelease()
     await setPreviousRevision()
     await createReleasePath()
     await copyPreviousRelease()
     await remoteCopy()
     await setCurrentRevision()
+    await removeWorkspace()
     shipit.emit('updated')
   })
 }
