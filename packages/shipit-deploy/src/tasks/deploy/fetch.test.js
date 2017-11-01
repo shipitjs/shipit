@@ -1,9 +1,11 @@
 import Shipit from 'shipit-cli'
 import mkdirp from 'mkdirp-promise'
+import rmfr from 'rmfr'
 import { start } from '../../../tests/util'
 import fetchTask from './fetch'
 
 jest.mock('mkdirp-promise')
+jest.mock('rmfr')
 
 describe('deploy:fetch task', () => {
   let shipit
@@ -55,7 +57,7 @@ describe('deploy:fetch task', () => {
     shipit.config.shallowClone = true
     await start(shipit, 'deploy:fetch')
 
-    expect(shipit.local).toBeCalledWith('rm -rf /tmp/workspace')
+    expect(rmfr).toBeCalledWith('/tmp/workspace')
     expect(mkdirp).toBeCalledWith('/tmp/workspace')
     expect(shipit.local).toBeCalledWith('git init', {
       cwd: '/tmp/workspace',

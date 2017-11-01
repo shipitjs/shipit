@@ -1,6 +1,7 @@
 import utils from 'shipit-utils'
 import chalk from 'chalk'
 import mkdirp from 'mkdirp-promise'
+import rmfr from 'rmfr'
 
 /**
  * Fetch task.
@@ -22,7 +23,7 @@ const fetchTask = shipit => {
 
       if (shipit.config.shallowClone) {
         shipit.log('Deleting existing workspace "%s"', shipit.config.workspace)
-        await shipit.local(`rm -rf ${shipit.config.workspace}`)
+        await rmfr(shipit.config.workspace)
         return create()
       }
 
