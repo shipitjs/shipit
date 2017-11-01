@@ -7,20 +7,6 @@
   "author": "Bergé Greg <berge.greg@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/shipitjs/shipit",
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
-    "codecov": "^2.3.0",
-    "eslint": "^4.4.1",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-config-prettier": "^2.3.0",
-    "eslint-plugin-import": "^2.7.0",
-    "jest": "^20.0.4",
-    "prettier": "^1.5.3",
-    "std-mocks": "^1.0.1"
-  },
   "dependencies": {
     "stream-line-wrapper": "^0.1.1",
     "tmp": "^0.0.33",

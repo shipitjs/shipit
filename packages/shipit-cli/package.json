@@ -11,7 +11,7 @@
     "ssh"
   ],
   "dependencies": {
-    "chalk": "^2.1.0",
+    "chalk": "^2.3.0",
     "commander": "^2.11.0",
     "interpret": "^1.0.0",
     "liftoff": "^2.0.0",

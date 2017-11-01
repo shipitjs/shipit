@@ -67,10 +67,7 @@ const updateTask = shipit => {
 
       shipit.log('Copy project to remote servers.')
 
-      await shipit.remoteCopy(
-        path.join(uploadDirPath, shipit.releasePath),
-        options,
-      )
+      await shipit.remoteCopy(`${uploadDirPath}/`, shipit.releasePath, options)
       shipit.log(chalk.green('Finished copy.'))
     }
 

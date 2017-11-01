@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 import utils from 'shipit-utils'
 
 /**
@@ -11,8 +12,14 @@ const cleanTask = shipit => {
       shipit.config.keepReleases,
     )
 
-    const command = `(ls -rd ${shipit.releasesPath}/*|head -n ${shipit.config
-      .keepReleases}; ls -d ${shipit.releasesPath}/*)|sort|uniq -u|xargs rm -rf`
+    const command =
+      '(ls -rd ' +
+      shipit.releasesPath +
+      '/*|head -n ' +
+      shipit.config.keepReleases +
+      ';ls -d ' +
+      shipit.releasesPath +
+      '/*)|sort|uniq -u|xargs rm -rf'
     await shipit.remote(command)
 
     shipit.emit('cleaned')

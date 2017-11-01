@@ -1,6 +1,6 @@
 import utils from 'shipit-utils'
 import chalk from 'chalk'
-import mkdirp from 'mkdirp'
+import mkdirp from 'mkdirp-promise'
 
 /**
  * Fetch task.
@@ -13,17 +13,17 @@ const fetchTask = shipit => {
     /**
      * Create workspace.
      */
-    function createWorkspace() {
-      function create() {
+    async function createWorkspace() {
+      async function create() {
         shipit.log('Create workspace "%s"', shipit.config.workspace)
-        return Promise.promisify(mkdirp)(shipit.config.workspace).then(() => {
-          shipit.log(chalk.green('Workspace created.'))
-        })
+        await mkdirp(shipit.config.workspace)
+        shipit.log(chalk.green('Workspace created.'))
       }
 
       if (shipit.config.shallowClone) {
         shipit.log('Deleting existing workspace "%s"', shipit.config.workspace)
-        return shipit.local(`rm -rf ${shipit.config.workspace}`).then(create)
+        await shipit.local(`rm -rf ${shipit.config.workspace}`)
+        return create()
       }
 
       return create()
