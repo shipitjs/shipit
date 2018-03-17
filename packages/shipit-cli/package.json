@@ -1,0 +1,41 @@
+{
+  "name": "shipit-cli",
+  "version": "1.5.0",
+  "description": "Universal automation and deployment tool written in JavaScript.",
+  "main": "lib/index.js",
+  "keywords": [
+    "shipit",
+    "automation",
+    "deployment",
+    "deploy",
+    "ssh"
+  ],
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "commander": "^2.15.0",
+    "interpret": "^1.1.0",
+    "liftoff": "^2.5.0",
+    "orchestrator": "^0.3.7",
+    "pretty-hrtime": "^1.0.0",
+    "ssh-pool": "^1.5.0",
+    "stream-line-wrapper": "^0.1.1",
+    "v8flags": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "mock-utf8-stream": "^0.1.1"
+  },
+  "bin": {
+    "shipit": "./bin/shipit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shipitjs/shipit.git"
+  },
+  "author": "Greg Bergé <berge.greg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shipitjs/shipit/issues"
+  },
+  "homepage": "https://github.com/shipitjs/shipit"
+}

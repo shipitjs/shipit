@@ -1,0 +1,15 @@
+{
+  "name": "ssh-pool",
+  "version": "1.5.0",
+  "description": "Run remote commands over a pool of server using SSH.",
+  "main": "lib/index.js",
+  "repository": "https://github.com/babel/babel/tree/master/packages/babel-traverse",
+  "author": "Bergé Greg <berge.greg@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/shipitjs/shipit",
+  "dependencies": {
+    "stream-line-wrapper": "^0.1.1",
+    "tmp": "^0.0.33",
+    "whereis": "^0.4.0"
+  }
+}
