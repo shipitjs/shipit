@@ -11,15 +11,15 @@
     "ssh"
   ],
   "dependencies": {
-    "chalk": "^2.3.0",
-    "commander": "^2.11.0",
-    "interpret": "^1.0.0",
-    "liftoff": "^2.0.0",
+    "chalk": "^2.3.2",
+    "commander": "^2.15.0",
+    "interpret": "^1.1.0",
+    "liftoff": "^2.5.0",
     "orchestrator": "^0.3.7",
     "pretty-hrtime": "^1.0.0",
     "ssh-pool": "^1.5.0",
     "stream-line-wrapper": "^0.1.1",
-    "v8flags": "^3.0.0"
+    "v8flags": "^3.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
