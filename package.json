@@ -2,14 +2,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "publish": "lerna publish",
-    "prepublish": "yarn build",
     "build": "lerna-build",
     "ci": "yarn build && yarn lint && yarn test",
     "dev": "lerna bootstrap && yarn build && lerna-watch",
-    "dev:test": "jest --watch",
     "format": "prettier --write \"packages/*/src/**/*.js\"",
     "lint": "eslint --cache .",
+    "publish": "lerna publish",
     "test": "jest --runInBand --coverage && codecov"
   },
   "devDependencies": {
