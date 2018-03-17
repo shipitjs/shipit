@@ -28,14 +28,7 @@ describe('Shipit', () => {
 
       shipit.initConfig(config)
 
-      expect(shipit.config).toEqual({
-        branch: 'master',
-        keepReleases: 5,
-        foo: 'bar',
-        kung: 'foo',
-        servers: ['3'],
-        shallowClone: false,
-      })
+      expect(shipit.config).toEqual({"foo": "bar", "kung": "foo", "servers": ["3"]})
 
       expect(shipit.globalConfig).toBe(config)
     })

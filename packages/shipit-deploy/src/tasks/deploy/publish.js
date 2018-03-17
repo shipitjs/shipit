@@ -1,6 +1,7 @@
 import utils from 'shipit-utils'
 import chalk from 'chalk'
 import path from 'path2/posix'
+import extendShipit from '../../extendShipit'
 
 /**
  * Publish task.
@@ -8,6 +9,8 @@ import path from 'path2/posix'
  */
 const publishTask = shipit => {
   utils.registerTask(shipit, 'deploy:publish', async () => {
+    extendShipit(shipit)
+
     shipit.log('Publishing release "%s"', shipit.releasePath)
 
     const relativeReleasePath = path.join('releases', shipit.releaseDirname)

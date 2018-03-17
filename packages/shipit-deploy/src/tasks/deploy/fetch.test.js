@@ -18,6 +18,8 @@ describe('deploy:fetch task', () => {
     // Shipit config
     shipit.initConfig({
       test: {
+        deployTo: '/var/apps/dep',
+        shallowClone: false,
         workspace: '/tmp/workspace',
         repositoryUrl: 'git://website.com/user/repo',
       },

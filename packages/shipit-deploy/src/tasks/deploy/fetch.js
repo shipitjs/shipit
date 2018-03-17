@@ -2,6 +2,7 @@ import path from 'path'
 import utils from 'shipit-utils'
 import chalk from 'chalk'
 import tmp from 'tmp-promise'
+import extendShipit from '../../extendShipit'
 
 /**
  * Fetch task.
@@ -11,6 +12,8 @@ import tmp from 'tmp-promise'
  */
 const fetchTask = shipit => {
   utils.registerTask(shipit, 'deploy:fetch', async () => {
+    extendShipit(shipit)
+
     /**
      * Create workspace.
      */

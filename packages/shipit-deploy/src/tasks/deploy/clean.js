@@ -1,5 +1,6 @@
 /* eslint-disable prefer-template */
 import utils from 'shipit-utils'
+import extendShipit from '../../extendShipit'
 
 /**
  * Clean task.
@@ -7,6 +8,8 @@ import utils from 'shipit-utils'
  */
 const cleanTask = shipit => {
   utils.registerTask(shipit, 'deploy:clean', async () => {
+    extendShipit(shipit)
+
     shipit.log(
       'Keeping "%d" last releases, cleaning others',
       shipit.config.keepReleases,

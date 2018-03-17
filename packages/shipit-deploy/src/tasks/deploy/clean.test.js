@@ -16,11 +16,11 @@ describe('deploy:clean task', () => {
     // Shipit config.
     shipit.initConfig({
       test: {
+        deployTo: '/remote/deploy',
         keepReleases: 5,
       },
     })
 
-    shipit.releasesPath = '/remote/deploy/releases'
     shipit.remote = jest.fn(async () => [])
   })
 
