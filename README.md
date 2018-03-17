@@ -330,7 +330,7 @@ shipit.log('hello %s', 'world')
 
 ### Official
 
-* [shipit-deploy](https://github.com/shipitjs/shipit/tree/v4.0.0/packages/shipit-deploy)
+* [shipit-deploy](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy)
 
 ### Third Party
 

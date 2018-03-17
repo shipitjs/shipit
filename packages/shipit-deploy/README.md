@@ -19,7 +19,7 @@ Set of deployment tasks for [Shipit](https://github.com/shipitjs/shipit).
 npm install shipit-deploy
 ```
 
-If you are deploying from Windows, you may want to have a look at the [wiki page about usage in Windows](https://github.com/shipitjs/shipit/blob/v4.0.0/packages/shipit-deploy/docs/Windows.md).
+If you are deploying from Windows, you may want to have a look at the [wiki page about usage in Windows](https://github.com/shipitjs/shipit/blob/master/packages/shipit-deploy/docs/Windows.md).
 
 ## Usage
 
