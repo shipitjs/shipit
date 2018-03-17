@@ -253,10 +253,6 @@ array-slice@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/array-slice/-/array-slice-1.0.0.tgz#e73034f00dcc1f40876008fd20feae77bd4b7c2f"
 
-array-to-sentence@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/array-to-sentence/-/array-to-sentence-1.1.0.tgz#c804956dafa53232495b205a9452753a258d39fc"
-
 array-union@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/array-union/-/array-union-1.0.2.tgz#9a34410e4f4e3da23dea375be5be70f24778ec39"
@@ -291,12 +287,11 @@ assert-plus@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-0.2.0.tgz#d74e1b87e7affc0db8aadb7021f3fe48101ab234"
 
-assert-valid-glob-opts@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/assert-valid-glob-opts/-/assert-valid-glob-opts-1.0.0.tgz#ab9b5438ec5e929f5bb08201819affb1227f730a"
+assert-valid-glob-opts@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/assert-valid-glob-opts/-/assert-valid-glob-opts-0.2.0.tgz#c39b2e9e4d224482b92cc1c417130c272cd5ef8c"
   dependencies:
-    glob-option-error "^1.0.0"
-    validate-glob-opts "^1.0.0"
+    validate-glob-opts "^0.2.1"
 
 assign-symbols@^1.0.0:
   version "1.0.0"
@@ -2297,10 +2292,6 @@ glob-base@^0.3.0:
     glob-parent "^2.0.0"
     is-glob "^2.0.0"
 
-glob-option-error@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/glob-option-error/-/glob-option-error-1.0.0.tgz#57cc65def9c7d5c1461baf13129bb5403cff6176"
-
 glob-parent@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-2.0.0.tgz#81383d72db054fcccf5336daa902f182f6edbb28"
@@ -2569,10 +2560,6 @@ indent-string@^2.1.0:
 indent-string@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/indent-string/-/indent-string-3.2.0.tgz#4a5fd6d27cc332f37e5419a504dbb837105c9289"
-
-indexed-filter@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/indexed-filter/-/indexed-filter-1.0.0.tgz#6ec9bf16f52c34e33f32fb6c3cf0b88a91d0c0d1"
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -4715,11 +4702,11 @@ rimraf@^2.5.4, rimraf@^2.6.2:
   dependencies:
     glob "^7.0.5"
 
-rmfr@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/rmfr/-/rmfr-2.0.0.tgz#8a42e81332550b3f0019b8fb8ab245bea81b6d1c"
+rmfr@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/rmfr/-/rmfr-1.0.8.tgz#b7b14a29c2d44e843f9b983c368bdbbc0941fd85"
   dependencies:
-    assert-valid-glob-opts "^1.0.0"
+    assert-valid-glob-opts "^0.2.0"
     glob "^7.1.2"
     graceful-fs "^4.1.11"
     inspect-with-kind "^1.0.4"
@@ -5424,13 +5411,10 @@ v8flags@^3.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-validate-glob-opts@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/validate-glob-opts/-/validate-glob-opts-1.0.2.tgz#ef9f98977d965537ea4f51fa7d5799e9c6ebca91"
+validate-glob-opts@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/validate-glob-opts/-/validate-glob-opts-0.2.1.tgz#4ffa23ea096db0381f28edbf5c283fa40fb75b07"
   dependencies:
-    array-to-sentence "^1.1.0"
-    indexed-filter "^1.0.0"
-    inspect-with-kind "^1.0.4"
     is-plain-obj "^1.1.0"
 
 validate-npm-package-license@^3.0.1:

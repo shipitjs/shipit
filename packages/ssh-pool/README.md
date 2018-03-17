@@ -1,5 +1,9 @@
 # ssh-pool
 
+[![Build Status][build-badge]][build]
+[![version][version-badge]][package]
+[![MIT License][license-badge]][license]
+
 Run remote commands over a pool of server using SSH.
 
 ```sh
@@ -158,9 +162,9 @@ const pool = new ConnectionPool([connection1, connection2])
 
 Connection Pool accepts exactly the same methods as Connection. It runs commands in parallel on each server defined in the pool. You get an array of results.
 
-### isRsyncSupported
+### isRsyncSupported()
 
-A method to test if rsync is supported on the local machine.
+Test if rsync is supported on the local machine.
 
 ```js
 import { isRsyncSupported } from 'ssh-pool'
@@ -174,6 +178,25 @@ isRsyncSupported().then(supported => {
 })
 ```
 
+### exec(cmd, options, childModifier)
+
+Execute a command and return an object containing `{ child, stdout, stderr }`.
+
+```js
+import { exec } from 'ssh-pool'
+
+exec('echo "hello"')
+  .then(({ stdout }) => console.log(stdout))
+  .catch(({ stderr, stdout }) => console.error(stderr))
+```
+
 ## License
 
 MIT
+
+[build-badge]: https://img.shields.io/travis/shipitjs/shipit.svg?style=flat-square
+[build]: https://travis-ci.org/shipitjs/shipit
+[version-badge]: https://img.shields.io/npm/v/ssh-pool.svg?style=flat-square
+[package]: https://www.npmjs.com/package/ssh-pool
+[license-badge]: https://img.shields.io/npm/l/ssh-pool.svg?style=flat-square
+[license]: https://github.com/shipitjs/shipit/blob/master/LICENSE

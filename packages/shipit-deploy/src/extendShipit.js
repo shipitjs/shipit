@@ -46,7 +46,14 @@ function extendShipit(shipit) {
   /* eslint-disable no-param-reassign */
   shipit.currentPath = path.join(shipit.config.deployTo, 'current')
   shipit.releasesPath = path.join(shipit.config.deployTo, 'releases')
-  shipit.config.gitLogFormat = shipit.config.gitLogFormat || '%h: %s - %an'
+  const config = {
+    branch: 'master',
+    keepReleases: 5,
+    shallowClone: true,
+    gitLogFormat: '%h: %s - %an',
+    ...shipit.config,
+  }
+  Object.assign(shipit.config, config)
   /* eslint-enable no-param-reassign */
 
   const Shipit = shipit.constructor
@@ -120,8 +127,9 @@ function extendShipit(shipit) {
     const compareRevision = `${remotes[0]}/${this.config.branch}`
 
     const response = await this.local(
-      `git log --pretty=format:"${shipit.config
-        .gitLogFormat}" ${deployedRevision}..${compareRevision}`,
+      `git log --pretty=format:"${
+        shipit.config.gitLogFormat
+      }" ${deployedRevision}..${compareRevision}`,
       { cwd: shipit.workspace },
     )
     const commits = response.stdout.trim()

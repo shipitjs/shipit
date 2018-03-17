@@ -1,249 +1,122 @@
-# Shipit
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/shipitjs/shipit/master/resources/shipit-logo.png" alt="Shipit" title="Shipit" width="500">
+</h1>
+<p align="center" style="font-size: 1.2rem;">Deploy code without stress ⛵️</p>
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/shipitjs/shipit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/shipitjs/shipit.svg?branch=master)](https://travis-ci.org/shipitjs/shipit)
-[![Dependency Status](https://david-dm.org/shipitjs/shipit.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit)
-[![devDependency Status](https://david-dm.org/shipitjs/shipit/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit#info=devDependencies)
-[![Inline docs](http://inch-ci.org/github/shipitjs/shipit.svg?branch=master)](http://inch-ci.org/github/shipitjs/shipit)
+[![Build Status][build-badge]][build]
+[![version][version-badge]][package]
+[![MIT License][license-badge]][license]
 
-![Shipit logo](https://cloud.githubusercontent.com/assets/266302/3756454/81df9f46-182e-11e4-9da6-b2c7a6b84136.png)
+[![PRs Welcome][prs-badge]][prs]
 
-Shipit is an automation engine and a deployment tool written for node / iojs.
-
-Shipit was built to be a Capistrano alternative for people who don't know ruby, or who experienced some issues with it. If you want to write tasks in JavaScript and enjoy the node ecosystem, Shipit is also for you.
-
-You can automate anything with Shipit but most of the time you will want to deploy your project using
-the [Shipit deploy task](https://github.com/shipitjs/shipit-deploy-task).
-
-**Features:**
-
-- Full JavaScript (all npm package availables)
-- Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator) ([gulp](http://gulpjs.com/) core)
-- [Official deploy task](https://github.com/shipitjs/shipit-deploy)
-- Login and interactive SSH commands
-- Easily extendable
-
-## Install
-
-### Globally
-
-```
-npm install --global shipit-cli
-```
-
-### Locally
+[![Watch on GitHub][github-watch-badge]][github-watch]
+[![Star on GitHub][github-star-badge]][github-star]
+[![Tweet][twitter-badge]][twitter]
 
 ```
 npm install --save-dev shipit-cli
 ```
 
-## Getting Started
+Shipit is an automation engine and a deployment tool.
 
-Once shipit is installed, you must create a shipitfile.js.
+Shipit provides a good alternative to Capistrano or other build tools. It is easy to deploy or to automate simple task on your remote servers.
 
-If you are familiar with grunt or gulp, you will feel at home.
+**Features:**
 
-### Create a `shipitfile.js`
-
-```js
-module.exports = function (shipit) {
-  shipit.initConfig({
-    staging: {
-      servers: 'myproject.com'
-    }
-  });
-
-  shipit.task('pwd', function () {
-    return shipit.remote('pwd');
-  });
-};
-```
-
-### Launch command
-
-```
-shipit staging pwd
-```
+* Write your task using JavaScript
+* Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator)
+* Login and interactive SSH commands
+* Easily extendable
 
 ## Deploy using Shipit
 
-You can easily deploy a project using Shipit and its plugin [shipit-deploy](https://github.com/shipitjs/shipit-deploy).
-
-### Example `shipitfile.js`
+1.  Create a `shipitfile.js` at the root of your project
 
 ```js
-module.exports = function (shipit) {
-  require('shipit-deploy')(shipit);
+// shipitfile.js
+module.exports = shipit => {
+  // Load shipit-deploy tasks
+  require('shipit-deploy')(shipit)
 
   shipit.initConfig({
     default: {
-      workspace: '/tmp/github-monitor',
-      deployTo: '/tmp/deploy_to',
-      repositoryUrl: 'https://github.com/user/repo.git',
-      ignores: ['.git', 'node_modules'],
-      rsync: ['--del'],
-      keepReleases: 2,
-      key: '/path/to/key',
-      shallowClone: true
+      deployTo: '/var/apps/super-project',
+      repositoryUrl: 'https://github.com/user/super-project.git',
     },
     staging: {
-      servers: 'user@myserver.com'
-    }
-  });
-};
+      servers: 'deploy@staging.super-project.com',
+    },
+  })
+}
 ```
 
-To deploy on staging, you must use the following command :
+2.  Run deploy command `shipit staging deploy`
 
+3.  You can rollback using `shipit staging rollback`
+
+## Recipes
+
+### Copy config file
+
+Add a custom task in your `shipitfile.js` and run `copyToRemote`.
+
+```js
+// shipitfile.js
+module.exports = shipit => {
+  /* ... */
+
+  shipit.task('copyConfig', async () => {
+    await shipit.copyToRemote(
+      'config.json',
+      '/var/apps/super-project/config.json',
+    )
+  })
+}
 ```
-shipit staging deploy
-```
 
-You can rollback to the previous releases with the command :
-
-```
-shipit staging rollback
-```
-
-## Usage
-
-```
-shipit <environment> <tasks ...>
-```
-
-### Options
-
-#### servers
-
-Type: `String` or `Array<String>`
-
-Servers on which the project will be deployed. Pattern must be `user@myserver.com` if user is not specified (`myserver.com`) the default user will be "deploy".
-
-#### key
-
-Type: `String`
-
-Path to SSH key
-
-### Events
+### Use events
 
 You can add custom event and listen to events.
 
 ```js
-shipit.task('build', function () {
+shipit.task('build', function() {
   // ...
-  shipit.emit('built');
-});
+  shipit.emit('built')
+})
 
-shipit.on('built', function () {
-  shipit.start('start-server');
-});
+shipit.on('built', function() {
+  shipit.start('start-server')
+})
 ```
 
 Shipit emits the `init` event once initialized, before any tasks are run.
 
-### Methods
+### Use Babel in your `shipitfile.js`
 
-#### shipit.task(name, [deps], fn)
-
-Create a new Shipit task, if you are familiar with gulp, this is the same API. You can use a callback or a promise in your task.
-
-For more documentation, please refer to [orchestrator documentation](https://github.com/orchestrator/orchestrator#orchestratoraddname-deps-function).
+Instead of using a `shipitfile.js`, use `shipitfile.babel.js`:
 
 ```js
-shipit.task('pwd', function () {
-  return shipit.remote('pwd');
-});
-```
-
-#### shipit.blTask(name, [deps], fn)
-
-Create a new Shipit task that will block other tasks during its execution (synchronous).
-
-If you use these type of task, the flow will be exactly the same as if you use [grunt](http://gruntjs.com).
-
-```js
-shipit.blTask('pwd', function () {
-  return shipit.remote('pwd');
-});
-```
-
-#### shipit.start(tasks)
-
-Run Shipit tasks.
-
-For more documentation, please refer to [orchestrator documentation](https://github.com/orchestrator/orchestrator#orchestratorstarttasks-cb).
-
-```js
-shipit.start('task');
-shipit.start('task1', 'task2');
-shipit.start(['task1', 'task2']);
-```
-
-#### shipit.local(command, [[options]](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback), [callback])
-
-Run a command locally and streams the result. This command take a callback or return a promise. It returns a result object containing stdout, stderr and the child process object.
-
-```js
-shipit.local('ls -lah', {cwd: '/tmp/deploy/workspace'}).then(function (res) {
-  console.log(res.stdout);
-  console.log(res.stderr);
-  res.child.stdout.pipe(...);
-});
-```
-
-#### shipit.remote(command, [[options]](https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback), [callback])
-
-Run a command remotely and streams the result. This command take a callback or return a promise.
-
-If you want to run a `sudo` command, the ssh connection will use the TTY mode automatically.
-
-It returns an array of result objects containing stdout, stderr and the child process object. The list of results matchs the list of servers specified in configuration.
-
-```js
-shipit.remote('ls -lah').then(function (res) {
-  console.log(res[0].stdout); // stdout for first server
-  console.log(res[0].stderr); // stderr for first server
-  res[0].child.stdout.pipe(...); // child of first server
-
-  console.log(res[1].stdout); // stdout for second server
-  console.log(res[1].stderr); // stderr for second server
-  res[0].child.stdout.pipe(...); // child of second server
-});
-```
-
-#### shipit.remoteCopy(src, dest, [options], [callback])
-
-Make a remote copy from a local path to a dest path.
-
-```js
-shipit.remoteCopy('/tmp/workspace', '/opt/web/myapp').then(...);
-```
-
-#### shipit.log()
-
-Log using Shipit, same API as `console.log`.
-
-```js
-shipit.log('hello %s', 'world');
-```
-
-## Dependencies
-
-- [OpenSSH](http://www.openssh.com/) 5+
-- [rsync](https://rsync.samba.org/) 3+
-
-### Customising environments
-
-You can overwrite all default variables defined as part of the `default` object.
-
-```js
-module.exports = function (shipit) {
+// shipitfile.babel.js
+export default shipit => {
   shipit.initConfig({
+    /* ... */
+  })
+}
+```
+
+### Customizing environments
+
+You can overwrite all default variables defined as part of the `default` object:
+
+```js
+module.exports = shipit => {
+  shipit.initConfig({
+    default: {
+      branch: 'dev',
+    },
     staging: {
       servers: 'staging.myproject.com',
       workspace: '/home/vagrant/website'
-      branch: 'dev'
     },
     production: {
       servers: [{
@@ -266,70 +139,233 @@ module.exports = function (shipit) {
 };
 ```
 
-### Async Config
+### Asynchronous config
 
 If you can't call `shipit.initConfig(...)` right away because
 you need to get data asynchronously to do so, you can return
 a promise from the module:
 
 ```js
-module.exports = function (shipit) {
-  return getServersAsync().then( function( servers ) {
-    shipit.initConfig({
-      production: {
-        servers: servers,
-        // ...
-      }
-    })
-  } )
+module.exports = async shipit => {
+  const servers = await getServers()
+  shipit.initConfig({
+    production: {
+      servers: servers,
+      // ...
+    },
+  })
 }
 ```
 
-If you need to use a function that works with callbacks
-instead of promises, you can wrap it manually:
+## Usage
 
+```
+Usage: shipit <environment> <tasks...>
+
+Options:
+
+  -V, --version         output the version number
+  --shipitfile <file>   Specify a custom shipitfile to use
+  --require <files...>  Script required before launching Shipit
+  --tasks               List available tasks
+  --environments        List available environments
+  -h, --help            output usage information
+```
+
+### Global configuration
+
+#### ignores
+
+Type: `Array<String>`
+
+List of files excluded in `copyFromRemote` or `copyToRemote` methods.
+
+#### key
+
+Type: `String`
+
+Path to SSH key.
+
+#### servers
+
+Type: `String` or `Array<String>`
+
+The server can use the shorthand syntax or an object:
+
+* `user@host`: user and host
+* `user@host:4000`: user, host and port
+* `{ user, host, port }`: an object
+
+### Shipit Deploy configuration
+
+#### deleteOnRollback
+
+Type: `Boolean`, default to `false`
+
+Delete release when a rollback is done.
+
+#### deployTo
+
+Type: `String`
+
+Directory where the code will be deployed on remote servers.
+
+#### keepReleases
+
+Type: `Number`
+
+Number of releases kept on remote servers.
+
+#### repositoryUrl
+
+Type: `String`
+
+Repository URL to clone, must be defined using `https` or `git+ssh` format.
+
+#### shallowClone
+
+Type: `Boolean`, default `true`
+
+Clone only the last commit of the repository.
+
+#### workspace
+
+Type: `String`
+
+If `shallowClone` is set to `false`, this directory will be used to clone the repository before deploying it.
+
+### API
+
+#### shipit.task(name, [deps], fn)
+
+Create a new Shipit task. If a promise is returned task will wait for completion.
 
 ```js
-module.exports = function (shipit) {
-  return new Promise( function( resolve ) {
-    getServersAsync( function( servers ) {
-      shipit.initConfig({
-        production: {
-          servers: servers,
-          // ...
-        }
-      })
-      resolve()
-    } )
-  } )
-}
+shipit.task('hello', async () => {
+  await shipit.remote('echo "hello on remote"')
+  await shipit.local('echo "hello from local"')
+})
 ```
+
+#### shipit.blTask(name, [deps], fn)
+
+Create a new Shipit task that will block other tasks during its execution. If a promise is returned other task will wait before start.
+
+```js
+shipit.blTask('hello', async () => {
+  await shipit.remote('echo "hello on remote"')
+  await shipit.local('echo "hello from local"')
+})
+```
+
+#### shipit.start(tasks)
+
+Run Shipit tasks.
+
+```js
+shipit.start('task')
+shipit.start('task1', 'task2')
+shipit.start(['task1', 'task2'])
+```
+
+#### shipit.local(command, [options])
+
+Run a command locally and streams the result. See [ssh-pool#exec](https://github.com/shipitjs/shipit/tree/master/packages/ssh-pool#exec).
+
+```js
+shipit
+  .local('ls -lah', {
+    cwd: '/tmp/deploy/workspace',
+  })
+  .then(({ stdout }) => console.log(stdout))
+  .catch(({ stderr }) => console.error(stderr))
+```
+
+#### shipit.remote(command, [options])
+
+Run a command remotely and streams the result. Run a command locally and streams the result. See [ssh-pool#connection.run](https://github.com/shipitjs/shipit/tree/master/packages/ssh-pool#connectionruncommand-options).
+
+```js
+shipit
+  .remote('ls -lah')
+  .then(([server1Result, server2Result]) => {
+    console.log(server1Result.stdout)
+    console.log(server2Result.stdout)
+  })
+  .catch(error => {
+    console.error(error.stderr)
+  })
+```
+
+#### shipit.copyToRemote(src, dest, [options])
+
+Make a remote copy from a local path to a remote path. See [ssh-pool#connection.copyToRemote](https://github.com/shipitjs/shipit/tree/master/packages/ssh-pool#connectioncopytoremotesrc-dest-options).
+
+```js
+shipit.copyToRemote('/tmp/workspace', '/opt/web/myapp')
+```
+
+#### shipit.copyFromRemote(src, dest, [options])
+
+Make a remote copy from a remote path to a local path. See [ssh-pool#connection.copyFromRemote](https://github.com/shipitjs/shipit/tree/master/packages/ssh-pool#connectioncopyfromremotesrc-dest-options).
+
+```js
+shipit.copyFromRemote('/opt/web/myapp', '/tmp/workspace')
+```
+
+#### shipit.log(...args)
+
+Log using Shipit, same API as `console.log`.
+
+```js
+shipit.log('hello %s', 'world')
+```
+
+## Dependencies
+
+* [OpenSSH](http://www.openssh.com/) 5+
+* [rsync](https://rsync.samba.org/) 3+
 
 ## Known Plugins
 
 ### Official
 
-- [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
+* [shipit-deploy](https://github.com/shipitjs/shipit/tree/v4.0.0/packages/shipit-deploy)
 
 ### Third Party
 
-- [shipit-shared](https://github.com/timkelty/shipit-shared)
-- [shipit-db](https://github.com/timkelty/shipit-db)
-- [shipit-assets](https://github.com/timkelty/shipit-assets)
-- [shipit-ssh](https://github.com/timkelty/shipit-ssh)
-- [shipit-utils](https://github.com/timkelty/shipit-utils)
-- [shipit-npm](https://github.com/callerc1/shipit-npm)
-- [shipit-aws](https://github.com/KrashStudio/shipit-aws)
-- [shipit-captain](https://github.com/timkelty/shipit-captain/)
-- [shipit-bower](https://github.com/willsteinmetz/shipit-bower)
-- [shipit-composer](https://github.com/jeremyzahner/shipit-composer)
+* [shipit-shared](https://github.com/timkelty/shipit-shared)
+* [shipit-db](https://github.com/timkelty/shipit-db)
+* [shipit-assets](https://github.com/timkelty/shipit-assets)
+* [shipit-ssh](https://github.com/timkelty/shipit-ssh)
+* [shipit-utils](https://github.com/timkelty/shipit-utils)
+* [shipit-npm](https://github.com/callerc1/shipit-npm)
+* [shipit-aws](https://github.com/KrashStudio/shipit-aws)
+* [shipit-captain](https://github.com/timkelty/shipit-captain/)
+* [shipit-bower](https://github.com/willsteinmetz/shipit-bower)
+* [shipit-composer](https://github.com/jeremyzahner/shipit-composer)
 
 ## Who use Shipit?
 
-- [Le Monde](http://www.lemonde.fr)
-- [Ghost blogging platform](https://ghost.org/)
-- [Fusionary](http://fusionary.com)
+* [Le Monde](http://www.lemonde.fr)
+* [Ghost blogging platform](https://ghost.org/)
+* [Fusionary](http://fusionary.com)
 
 ## License
 
 MIT
+
+[build-badge]: https://img.shields.io/travis/shipitjs/shipit.svg?style=flat-square
+[build]: https://travis-ci.org/shipitjs/shipit
+[version-badge]: https://img.shields.io/npm/v/shipit-cli.svg?style=flat-square
+[package]: https://www.npmjs.com/package/shipit-cli
+[license-badge]: https://img.shields.io/npm/l/shipit-cli.svg?style=flat-square
+[license]: https://github.com/shipitjs/shipit/blob/master/LICENSE
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs]: http://makeapullrequest.com
+[github-watch-badge]: https://img.shields.io/github/watchers/shipitjs/shipit.svg?style=social
+[github-watch]: https://github.com/shipitjs/shipit/watchers
+[github-star-badge]: https://img.shields.io/github/stars/shipitjs/shipit.svg?style=social
+[github-star]: https://github.com/shipitjs/shipit/stargazers
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20svgr!%20https://github.com/shipitjs/shipit%20%F0%9F%91%8D
+[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/shipitjs/shipit.svg?style=social

@@ -43,7 +43,7 @@ function logTasks(shipit) {
 
 function logEnvironments(shipit) {
   console.log(
-    Object.keys(shipit.envConfig)
+    Object.keys(shipit.globalConfig)
       .join('\n')
       .trim(),
   )

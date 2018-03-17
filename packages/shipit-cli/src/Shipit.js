@@ -65,7 +65,7 @@ class Shipit extends Orchestrator {
     }
 
     this.config = {}
-    this.envConfig = {}
+    this.globalConfig = {}
     this.options = { ...defaultOptions, ...options }
     this.environment = options.environment
 
@@ -84,7 +84,7 @@ class Shipit extends Orchestrator {
    * @returns {Shipit} for chaining
    */
   initialize() {
-    if (!this.envConfig[this.environment])
+    if (!this.globalConfig[this.environment])
       throw new Error(`Environment '${this.environment}' not found in config`)
 
     this.emit('init')
@@ -172,15 +172,11 @@ class Shipit extends Orchestrator {
    * @returns {Shipit} for chaining
    */
   initConfig(config = {}) {
-    this.envConfig = config
+    this.globalConfig = config
     this.config = {
-      branch: 'master',
-      keepReleases: 5,
-      shallowClone: false,
       ...config.default,
       ...config[this.environment],
     }
-
     return this
   }
 
@@ -230,6 +226,51 @@ class Shipit extends Orchestrator {
     const copyOptions = { ...defaultOptions, ...options }
 
     return this.pool.copy(src, dest, copyOptions)
+  }
+
+  /**
+   * Run a copy from the local to the remote using rsync.
+   * All exec options are also available.
+   *
+   * @see https://nodejs.org/dist/latest-v8.x/docs/api/child_process.html#child_process_child_process_exec_command_options_callback
+   *
+   * @param {string} src
+   * @param {string} dest
+   * @param {object} [options] Options
+   * @param {string[]} [options.ignores] Specify a list of files to ignore.
+   * @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
+   * @returns {MultipleExecResult}
+   * @throws {ExecError}
+   */
+  async copyToRemote(src, dest, options) {
+    const defaultOptions = {
+      ignores: this.config && this.config.ignores ? this.config.ignores : [],
+      rsync: this.config && this.config.rsync ? this.config.rsync : [],
+    }
+    const copyOptions = { ...defaultOptions, ...options }
+    return this.pool.copyToRemote(src, dest, copyOptions)
+  }
+
+  /**
+   * Run a copy from the remote to the local using rsync.
+   * All exec options are also available.
+   *
+   * @see https://nodejs.org/dist/latest-v8.x/docs/api/child_process.html#child_process_child_process_exec_command_options_callback
+   * @param {string} src Source
+   * @param {string} dest Destination
+   * @param {object} [options] Options
+   * @param {string[]} [options.ignores] Specify a list of files to ignore.
+   * @param {string[]|string} [options.rsync] Specify a set of rsync arguments.
+   * @returns {MultipleExecResult}
+   * @throws {ExecError}
+   */
+  async copyFromRemote(src, dest, options) {
+    const defaultOptions = {
+      ignores: this.config && this.config.ignores ? this.config.ignores : [],
+      rsync: this.config && this.config.rsync ? this.config.rsync : [],
+    }
+    const copyOptions = { ...defaultOptions, ...options }
+    return this.pool.copyFromRemote(src, dest, copyOptions)
   }
 
   /**

@@ -20,7 +20,7 @@ describe('Shipit', () => {
   })
 
   describe('#initConfig', () => {
-    it('should set config and envConfig', () => {
+    it('should set config and globalConfig', () => {
       const config = {
         default: { foo: 'bar', servers: ['1', '2'] },
         stage: { kung: 'foo', servers: ['3'] },
@@ -37,7 +37,7 @@ describe('Shipit', () => {
         shallowClone: false,
       })
 
-      expect(shipit.envConfig).toBe(config)
+      expect(shipit.globalConfig).toBe(config)
     })
   })
 
@@ -140,6 +140,86 @@ describe('Shipit', () => {
 
       expect(shipit.pool.copy).toBeCalledWith('src', 'dest', {
         direction: 'remoteToLocal',
+        ignores: ['foo'],
+        rsync: ['--bar'],
+      })
+    })
+  })
+
+  describe('#copyFromRemote', () => {
+    beforeEach(() => {
+      shipit.pool = { copyFromRemote: jest.fn() }
+    })
+
+    it('should run command on pool', () => {
+      shipit.copyFromRemote('src', 'dest')
+
+      expect(shipit.pool.copyFromRemote).toBeCalledWith('src', 'dest', {
+        ignores: [],
+        rsync: [],
+      })
+    })
+
+    it('should accept options for shipit.pool.copyFromRemote', () => {
+      shipit.copyFromRemote('src', 'dest', {
+        ignores: ['foo'],
+      })
+
+      expect(shipit.pool.copyFromRemote).toBeCalledWith('src', 'dest', {
+        ignores: ['foo'],
+        rsync: [],
+      })
+    })
+
+    it('should support options specified in config', () => {
+      shipit.config = {
+        ignores: ['foo'],
+        rsync: ['--bar'],
+      }
+
+      shipit.copyFromRemote('src', 'dest')
+
+      expect(shipit.pool.copyFromRemote).toBeCalledWith('src', 'dest', {
+        ignores: ['foo'],
+        rsync: ['--bar'],
+      })
+    })
+  })
+
+  describe('#copyToRemote', () => {
+    beforeEach(() => {
+      shipit.pool = { copyToRemote: jest.fn() }
+    })
+
+    it('should run command on pool', () => {
+      shipit.copyToRemote('src', 'dest')
+
+      expect(shipit.pool.copyToRemote).toBeCalledWith('src', 'dest', {
+        ignores: [],
+        rsync: [],
+      })
+    })
+
+    it('should accept options for shipit.pool.copyToRemote', () => {
+      shipit.copyToRemote('src', 'dest', {
+        ignores: ['foo'],
+      })
+
+      expect(shipit.pool.copyToRemote).toBeCalledWith('src', 'dest', {
+        ignores: ['foo'],
+        rsync: [],
+      })
+    })
+
+    it('should support options specified in config', () => {
+      shipit.config = {
+        ignores: ['foo'],
+        rsync: ['--bar'],
+      }
+
+      shipit.copyToRemote('src', 'dest')
+
+      expect(shipit.pool.copyToRemote).toBeCalledWith('src', 'dest', {
         ignores: ['foo'],
         rsync: ['--bar'],
       })
