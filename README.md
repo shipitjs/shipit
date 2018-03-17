@@ -1,7 +1,7 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/shipitjs/shipit/master/resources/shipit-logo.png" alt="Shipit" title="Shipit" width="500">
+  <img src="https://raw.githubusercontent.com/shipitjs/shipit/master/ressources/shipit-logo.png" alt="Shipit" title="Shipit" width="500">
 </h1>
-<p align="center" style="font-size: 1.2rem;">Deploy code without stress ⛵️</p>
+<p align="center" style="font-size: 1.2rem;">Universal automation and deployment tool ⛵️</p>
 
 [![Build Status][build-badge]][build]
 [![version][version-badge]][package]
@@ -19,7 +19,7 @@ npm install --save-dev shipit-cli
 
 Shipit is an automation engine and a deployment tool.
 
-Shipit provides a good alternative to Capistrano or other build tools. It is easy to deploy or to automate simple task on your remote servers.
+Shipit provides a good alternative to Capistrano or other build tools. It is easy to deploy or to automate simple tasks on your remote servers.
 
 **Features:**
 
@@ -367,5 +367,5 @@ MIT
 [github-watch]: https://github.com/shipitjs/shipit/watchers
 [github-star-badge]: https://img.shields.io/github/stars/shipitjs/shipit.svg?style=social
 [github-star]: https://github.com/shipitjs/shipit/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20svgr!%20https://github.com/shipitjs/shipit%20%F0%9F%91%8D
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20ShipitJS!%20https://github.com/shipitjs/shipit%20%F0%9F%91%8D
 [twitter-badge]: https://img.shields.io/twitter/url/https/github.com/shipitjs/shipit.svg?style=social
