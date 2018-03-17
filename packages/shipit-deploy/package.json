@@ -1,6 +1,6 @@
 {
   "name": "shipit-deploy",
-  "version": "1.5.0",
+  "version": "4.0.0",
   "description": "Official set of deploy tasks for Shipit.",
   "main": "lib/index.js",
   "keywords": [
@@ -33,6 +33,6 @@
   },
   "homepage": "https://github.com/shipitjs/shipit",
   "devDependencies": {
-    "ssh-pool": "^1.5.0"
+    "ssh-pool": "^4.0.0"
   }
 }

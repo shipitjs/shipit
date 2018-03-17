@@ -1,6 +1,6 @@
 {
   "name": "ssh-pool",
-  "version": "1.5.0",
+  "version": "4.0.0",
   "description": "Run remote commands over a pool of server using SSH.",
   "main": "lib/index.js",
   "repository": "https://github.com/babel/babel/tree/master/packages/babel-traverse",
