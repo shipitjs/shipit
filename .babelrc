@@ -3,7 +3,8 @@
     ["env", {
       "targets": {
         "node": "6"
-      }
+      },
+      "loose": true
     }]
   ],
   "plugins": ["transform-object-rest-spread"]
