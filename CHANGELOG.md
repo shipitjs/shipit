@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/shipitjs/shipit/compare/v4.0.0...v4.0.1) (2018-03-18)
+
+
+### Bug Fixes
+
+* **shipit-cli:** correctly publish binary ([6b60f20](https://github.com/shipitjs/shipit/commit/6b60f20))
+
+
+
+
 <a name="4.0.0"></a>
 
 # 4.0.0 (2018-03-17)
