@@ -26,8 +26,16 @@ If you are deploying from Windows, you may want to have a look at the [wiki page
 ### Example `shipitfile.js`
 
 ```js
+// ES6 import
+import shipitDeploy from 'shipit-deploy';
+
+// CommonJS import
+//const shipitDeploy = require('shipit-deploy').default;
+
 module.exports = shipit => {
-  require('shipit-deploy')(shipit)
+
+  // Load shipit-deploy tasks
+  shipitDeploy(shipit)
 
   shipit.initConfig({
     default: {
