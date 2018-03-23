@@ -1,1 +1,3 @@
-export { default } from './Shipit'
+import Shipit from './Shipit'
+
+module.exports = Shipit

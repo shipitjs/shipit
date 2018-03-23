@@ -1,4 +1,9 @@
-export { default as Connection } from './Connection'
-export { default as ConnectionPool } from './ConnectionPool'
-export { exec } from './util'
-export { isRsyncSupported } from './commands/rsync'
+import Connection from './Connection'
+import ConnectionPool from './ConnectionPool'
+import { exec } from './util'
+import { isRsyncSupported } from './commands/rsync'
+
+exports.Connection = Connection
+exports.ConnectionPool = ConnectionPool
+exports.exec = exec
+exports.isRsyncSupported = isRsyncSupported
