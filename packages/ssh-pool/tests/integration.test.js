@@ -1,3 +1,5 @@
+import path from 'path'
+
 const sshPool = require('../src')
 
 describe('ssh-pool', () => {
@@ -21,4 +23,15 @@ describe('ssh-pool', () => {
     const [{ stdout: second }] = await pool.run("echo '$USER'")
     expect(second).toBe('$USER\n')
   })
+
+  it(
+    'should copy to remote',
+    async () => {
+      await pool.scpCopyToRemote(
+        path.resolve(__dirname, '__fixtures__/test.txt'),
+        './',
+      )
+    },
+    20000,
+  )
 })
