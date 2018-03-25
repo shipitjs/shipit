@@ -34,9 +34,17 @@ Shipit provides a good alternative to Capistrano or other build tools. It is eas
 
 ```js
 // shipitfile.js
+
+// ES6 import
+import shipitDeploy from 'shipit-deploy';
+
+// CommonJS import
+//const shipitDeploy = require('shipit-deploy').default;
+
 module.exports = shipit => {
+
   // Load shipit-deploy tasks
-  require('shipit-deploy')(shipit)
+  shipitDeploy(shipit)
 
   shipit.initConfig({
     default: {
