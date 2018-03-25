@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="4.0.2"></a>
+## [4.0.2](https://github.com/shipitjs/shipit/compare/v4.0.1...v4.0.2) (2018-03-25)
+
+
+### Bug Fixes
+
+* be compatible with CommonJS ([abd2316](https://github.com/shipitjs/shipit/commit/abd2316))
+* fix scpCopyFromRemote & scpCopyToRemote ([01bc213](https://github.com/shipitjs/shipit/commit/01bc213)), closes [#178](https://github.com/shipitjs/shipit/issues/178)
+
+
+
+
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/shipitjs/shipit/compare/v4.0.0...v4.0.1) (2018-03-18)
 
