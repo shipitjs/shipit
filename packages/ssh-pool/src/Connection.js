@@ -387,13 +387,13 @@ class Connection {
 
     return results.reduce(
       (aggregate, result) => ({
-        stdout: Buffer.concat([aggregate.stdout, result.stdout]),
-        stderr: Buffer.concat([aggregate.stderr, result.stderr]),
+        stdout: String(aggregate.stdout) + String(result.stdout),
+        stderr: String(aggregate.stderr) + String(result.stderr),
         children: [...aggregate.children, result.child],
       }),
       {
-        stdout: Buffer.from([]),
-        stderr: Buffer.from([]),
+        stdout: '',
+        stderr: '',
         children: [],
       },
     )

@@ -11,6 +11,7 @@ jest.mock('tmp')
 
 describe('Connection', () => {
   beforeEach(() => {
+    exec.mockClear()
     util.deprecateV3 = jest.fn()
     __setPaths__({ rsync: '/bin/rsync' })
   })
@@ -48,9 +49,8 @@ describe('Connection', () => {
       await connection.run('my-command -x', { cwd: '/root' })
 
       expect(exec).toHaveBeenCalledWith(
-        'ssh user@host "my-command -x"',
+        'ssh user@host "cd /root > /dev/null; my-command -x; cd - > /dev/null"',
         {
-          cwd: '/root',
           maxBuffer: 1024000,
         },
         expect.any(Function),
@@ -58,12 +58,11 @@ describe('Connection', () => {
     })
 
     it('should escape double quotes', async () => {
-      await connection.run('echo "ok"', { cwd: '/root' })
+      await connection.run('echo "ok"')
 
       expect(exec).toHaveBeenCalledWith(
         'ssh user@host "echo \\"ok\\""',
         {
-          cwd: '/root',
           maxBuffer: 1024000,
         },
         expect.any(Function),
@@ -76,26 +75,12 @@ describe('Connection', () => {
       expect(result.stderr.toString()).toBe('stderr')
     })
 
-    it('should handle sudo', async () => {
-      await connection.run('sudo my-command -x', { cwd: '/root' })
-
-      expect(exec).toHaveBeenCalledWith(
-        'ssh -tt user@host "sudo my-command -x"',
-        {
-          cwd: '/root',
-          maxBuffer: 1024000,
-        },
-        expect.any(Function),
-      )
-    })
-
     it('should handle tty', async () => {
-      await connection.run('sudo my-command -x', { cwd: '/root', tty: true })
+      await connection.run('sudo my-command -x', { tty: true })
 
       expect(exec).toHaveBeenCalledWith(
         'ssh -tt user@host "sudo my-command -x"',
         {
-          cwd: '/root',
           maxBuffer: 1024000,
         },
         expect.any(Function),
@@ -168,7 +153,7 @@ describe('Connection', () => {
       )
     })
 
-    it.only('should log output', async () => {
+    it('should log output', async () => {
       const log = jest.fn()
       connection = new Connection({
         remote: 'user@host',
@@ -209,12 +194,11 @@ describe('Connection', () => {
     })
 
     it('should handle sudo as user correctly', async () => {
-      await connection.run('my-command -x', { cwd: '/root', tty: true })
+      await connection.run('my-command -x', { tty: true })
 
       expect(exec).toHaveBeenCalledWith(
         'ssh -tt user@host "sudo -u test my-command -x"',
         {
-          cwd: '/root',
           maxBuffer: 1000 * 1024,
         },
         expect.any(Function),
@@ -222,12 +206,11 @@ describe('Connection', () => {
     })
 
     it('should handle sudo as user without double sudo', () => {
-      connection.run('sudo my-command -x', { cwd: '/root' })
+      connection.run('sudo my-command -x', { tty: true })
 
       expect(exec).toHaveBeenCalledWith(
         'ssh -tt user@host "sudo -u test my-command -x"',
         {
-          cwd: '/root',
           maxBuffer: 1000 * 1024,
         },
         expect.any(Function),
