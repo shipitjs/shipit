@@ -283,7 +283,7 @@ shipit
 
 #### shipit.remote(command, [options])
 
-Run a command remotely and streams the result. Run a command locally and streams the result. See [ssh-pool#connection.run](https://github.com/shipitjs/shipit/tree/master/packages/ssh-pool#connectionruncommand-options).
+Run a command remotely and streams the result. See [ssh-pool#connection.run](https://github.com/shipitjs/shipit/tree/master/packages/ssh-pool#connectionruncommand-options).
 
 ```js
 shipit
