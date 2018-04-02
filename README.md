@@ -14,7 +14,7 @@
 [![Tweet][twitter-badge]][twitter]
 
 ```
-npm install --save-dev shipit-cli
+npm install -g shipit-cli
 ```
 
 Shipit is an automation engine and a deployment tool.
