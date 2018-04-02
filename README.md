@@ -13,8 +13,13 @@
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
+## Install shipit command line tools globally
 ```
 npm install -g shipit-cli
+```
+## Install shipit-deploy as development dependency in your project
+```
+npm install --save-dev shipit-deploy
 ```
 
 Shipit is an automation engine and a deployment tool.
