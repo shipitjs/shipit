@@ -16,6 +16,7 @@
 ## Install shipit command line tools and shipit-deploy in your project
 ```
 npm install --save-dev shipit-cli
+npm install --save-dev shipit-deploy
 ```
 
 Shipit is an automation engine and a deployment tool.
