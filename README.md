@@ -13,8 +13,10 @@
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
+## Install shipit command line tools and shipit-deploy in your project
 ```
 npm install --save-dev shipit-cli
+npm install --save-dev shipit-deploy
 ```
 
 Shipit is an automation engine and a deployment tool.
@@ -50,9 +52,9 @@ module.exports = shipit => {
 }
 ```
 
-2.  Run deploy command `shipit staging deploy`
+2.  Run deploy command using [npx](https://www.npmjs.com/package/npx): `npx shipit staging deploy`
 
-3.  You can rollback using `shipit staging rollback`
+3.  You can rollback using `npx shipit staging rollback`
 
 ## Recipes
 
