@@ -158,6 +158,7 @@ class Shipit extends Orchestrator {
       ...this.options,
       key: this.config.key,
       strict: this.config.strict,
+      verbose: this.options.verboseSSH,
     }
 
     this.pool = new ConnectionPool(servers, options)

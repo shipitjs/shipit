@@ -12,8 +12,10 @@ export function formatSshCommand({
   remote,
   cwd,
   command,
+  verbose,
 }) {
   let args = ['ssh']
+  if (verbose) args = [...args, '-v']
   if (tty) args = [...args, '-tt']
   if (port) args = [...args, '-p', port]
   if (key) args = [...args, '-i', key]

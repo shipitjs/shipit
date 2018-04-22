@@ -7,8 +7,7 @@
     "dev": "lerna bootstrap && yarn build && lerna-watch",
     "format": "prettier --write \"packages/*/src/**/*.js\"",
     "lint": "eslint --cache .",
-    "release":
-      "yarn build && lerna publish --conventional-commits && conventional-github-releaser -p angular",
+    "release": "yarn build && lerna publish --conventional-commits && conventional-github-releaser -p angular",
     "test": "jest --runInBand --coverage && codecov"
   },
   "devDependencies": {
@@ -33,5 +32,8 @@
     "std-mocks": "^1.0.1",
     "string-length": "^2.0.0"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {}
 }
