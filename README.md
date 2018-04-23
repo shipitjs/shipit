@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/shipitjs/shipit/master/ressources/shipit-logo.png" alt="Shipit" title="Shipit" width="500">
+  <img src="./resources/shipit-logo.png" alt="Shipit" title="Shipit" width="500">
 </h1>
 <p align="center" style="font-size: 1.2rem;">Universal automation and deployment tool ⛵️</p>
 
