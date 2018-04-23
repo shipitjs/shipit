@@ -59,7 +59,7 @@ class Connection {
    * @param {string} [options.key] SSH key
    * @param {function} [options.log] Log method
    * @param {boolean} [options.asUser] Use a custom user to run command
-   * @param {boolean} [options.verbosityLevel] The SSH verbosity level: 0 (none), 1 (-v), 2 (-vv), 3+ (-vvv)
+   * @param {number} [options.verbosityLevel] The SSH verbosity level: 0 (none), 1 (-v), 2 (-vv), 3+ (-vvv)
    */
   constructor(options = {}) {
     this.options = options
