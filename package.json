@@ -32,8 +32,5 @@
     "std-mocks": "^1.0.1",
     "string-length": "^2.0.0"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {}
+  "workspaces": ["packages/*"]
 }

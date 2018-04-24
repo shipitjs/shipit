@@ -2,4 +2,3 @@ node_modules/
 packages/*/lib
 coverage/
 .eslintcache
-.DS_Store
