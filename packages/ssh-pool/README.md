@@ -38,6 +38,7 @@ Create a new connection to run command on a remote server.
 @param {string} [options.key] SSH key
 @param {function} [options.log] Log method
 @param {boolean} [options.asUser] Use a custom user to run command
+@param {number} [options.verbosityLevel] SSH verbosity level: 0 (none), 1 (-v), 2 (-vv), 3+ (-vvv)
 ```
 
 The remote can use the shorthand syntax or an object:
