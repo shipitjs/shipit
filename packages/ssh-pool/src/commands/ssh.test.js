@@ -57,5 +57,18 @@ describe('ssh', () => {
         'ssh user@host "cd /usr > /dev/null; echo \\"ok\\"; cd - > /dev/null"',
       )
     })
+
+    it('should support verbosityLevel', () => {
+      expect(
+        formatSshCommand({
+          remote: 'user@host',
+          command: 'echo "ok"',
+          cwd: '/usr',
+          verbosityLevel: 2,
+        }),
+      ).toBe(
+        'ssh -vv user@host "cd /usr > /dev/null; echo \\"ok\\"; cd - > /dev/null"',
+      )
+    })
   })
 })
