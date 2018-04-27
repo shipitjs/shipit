@@ -236,6 +236,12 @@ Type: `String`
 
 If `shallowClone` is set to `false`, this directory will be used to clone the repository before deploying it.
 
+#### verboseSSHLevel
+
+Type: `Number`, default `0`
+
+SSH verbosity level to use when connecting to remote servers. **0** (none), **1** (-v), **2** (-vv), **3** (-vvv).
+
 ### API
 
 #### shipit.task(name, [deps], fn)

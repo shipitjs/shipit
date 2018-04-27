@@ -59,6 +59,7 @@ class Connection {
    * @param {string} [options.key] SSH key
    * @param {function} [options.log] Log method
    * @param {boolean} [options.asUser] Use a custom user to run command
+   * @param {number} [options.verbosityLevel] The SSH verbosity level: 0 (none), 1 (-v), 2 (-vv), 3+ (-vvv)
    */
   constructor(options = {}) {
     this.options = options
@@ -300,6 +301,7 @@ class Connection {
       key: this.options.key,
       strict: this.options.strict,
       tty: this.options.tty,
+      verbosityLevel: this.options.verbosityLevel,
       remote: formatRemote(this.remote),
       command: formatRawCommand({ command, asUser: this.options.asUser }),
       ...options,
