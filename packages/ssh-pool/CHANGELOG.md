@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="4.1.0"></a>
+# [4.1.0](https://github.com/babel/babel/tree/master/packages/babel-traverse/compare/v4.0.2...v4.1.0) (2018-04-27)
+
+
+### Features
+
+* **ssh-pool:** add SSH Verbosity Levels ([#191](https://github.com/babel/babel/tree/master/packages/babel-traverse/issues/191)) ([327c63e](https://github.com/babel/babel/tree/master/packages/babel-traverse/commit/327c63e))
+
+
+
+
 <a name="4.0.2"></a>
 ## [4.0.2](https://github.com/babel/babel/tree/master/packages/babel-traverse/compare/v4.0.1...v4.0.2) (2018-03-25)
 
