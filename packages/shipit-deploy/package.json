@@ -11,7 +11,7 @@
     "ssh"
   ],
   "peerDependencies": {
-    "shipit-cli": "^1.5.0"
+    "shipit-cli": "^4.1.0"
   },
   "dependencies": {
     "chalk": "^2.3.2",
