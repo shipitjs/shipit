@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="4.1.1"></a>
+## [4.1.1](https://github.com/shipitjs/shipit/compare/v4.1.0...v4.1.1) (2018-05-30)
+
+
+### Bug Fixes
+
+* update shipit-deploy's peerDependency to v4.1.0 ([#192](https://github.com/shipitjs/shipit/issues/192)) ([6f7b407](https://github.com/shipitjs/shipit/commit/6f7b407))
+
+
+
+
 <a name="4.1.0"></a>
 # [4.1.0](https://github.com/shipitjs/shipit/compare/v4.0.2...v4.1.0) (2018-04-27)
 
