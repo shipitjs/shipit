@@ -11,7 +11,7 @@
     "ssh"
   ],
   "dependencies": {
-    "chalk": "^2.3.2",
+    "chalk": "^2.4.1",
     "commander": "^2.15.0",
     "interpret": "^1.1.0",
     "liftoff": "^2.5.0",
@@ -19,7 +19,7 @@
     "pretty-hrtime": "^1.0.0",
     "ssh-pool": "^4.1.0",
     "stream-line-wrapper": "^0.1.1",
-    "v8flags": "^3.0.2"
+    "v8flags": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -14,8 +14,8 @@
     "shipit-cli": "^4.1.0"
   },
   "dependencies": {
-    "chalk": "^2.3.2",
-    "lodash": "^4.17.5",
+    "chalk": "^2.4.1",
+    "lodash": "^4.17.10",
     "moment": "^2.21.0",
     "path2": "^0.1.0",
     "rmfr": "^1.0.8",
