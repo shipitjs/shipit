@@ -135,9 +135,11 @@ const updateTask = shipit => {
     }
 
     async function removeWorkspace() {
-      shipit.log(`Removing workspace "${shipit.workspace}"`)
-      await rmfr(shipit.workspace)
-      shipit.log(chalk.green('Workspace removed.'))
+      if (shipit.config.shallowClone) {
+        shipit.log(`Removing workspace "${shipit.workspace}"`)
+        await rmfr(shipit.workspace)
+        shipit.log(chalk.green('Workspace removed.'))
+      }
     }
 
     await setPreviousRelease()
