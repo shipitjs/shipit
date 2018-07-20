@@ -226,8 +226,8 @@ describe('deploy:update task', () => {
     })
   })
 
-  it('should remove workspace when shallow cloning', async () => {
-    shipit.config.shallowClone = true
+  it('should remove workspace when removal is enabled', async () => {
+    shipit.config.removeWorkspace = true
     stubShipit(shipit)
     rmfr.mockClear()
     expect(rmfr).not.toHaveBeenCalled()
@@ -235,8 +235,8 @@ describe('deploy:update task', () => {
     expect(rmfr).toHaveBeenCalledWith('/tmp/workspace')
   })
 
-  it('should keep workspace when not shallow cloning', async () => {
-    shipit.config.shallowClone = false
+  it('should keep workspace when removal is disabled', async () => {
+    shipit.config.removeWorkspace = false
     stubShipit(shipit)
     rmfr.mockClear()
     expect(rmfr).not.toHaveBeenCalled()

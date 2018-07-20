@@ -157,6 +157,12 @@ Type: `String`
 
 Parameter to pass to `cp` to copy the previous release. Non NTFS filesystems support `-r`. Default: `-a`
 
+### removeWorkspace
+
+Type: `Boolean`
+
+Purge workspace after update. Default: `true`.
+
 ## Variables
 
 Several variables are attached during the deploy and the rollback process:
