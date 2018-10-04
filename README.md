@@ -329,6 +329,14 @@ Log using Shipit, same API as `console.log`.
 shipit.log('hello %s', 'world')
 ```
 
+#### shipit.workspace
+
+Directory that shipit has cloned the repository to.
+
+```js
+shipit.workspace
+```
+
 ## Dependencies
 
 * [OpenSSH](http://www.openssh.com/) 5+
