@@ -1,12 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import stdMocks from 'std-mocks'
 import { exec } from 'child_process'
-import { __setPaths__ } from 'whereis'
+import { __setPaths__ } from 'which'
 import * as util from './util'
 import Connection from './Connection'
 
 jest.mock('child_process')
-jest.mock('whereis')
+jest.mock('which')
 jest.mock('tmp')
 
 describe('Connection', () => {

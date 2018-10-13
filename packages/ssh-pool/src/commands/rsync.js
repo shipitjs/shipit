@@ -1,8 +1,8 @@
-import whereis from 'whereis'
+import which from 'which'
 import { wrapCommand, joinCommandArgs, requireArgs } from './util'
 
 export async function isRsyncSupported() {
-  return new Promise(resolve => whereis('rsync', err => resolve(!err)))
+  return new Promise(resolve => which('rsync', err => resolve(!err)))
 }
 
 function formatExcludes(excludes) {

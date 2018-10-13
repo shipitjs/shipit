@@ -1,10 +1,10 @@
-import { __setPaths__ } from 'whereis'
+import { __setPaths__ } from 'which'
 import { exec } from 'child_process'
 import * as util from './util'
 import Connection from './Connection'
 import ConnectionPool from './ConnectionPool'
 
-jest.mock('whereis')
+jest.mock('which')
 jest.mock('child_process')
 
 describe('ConnectionPool', () => {
