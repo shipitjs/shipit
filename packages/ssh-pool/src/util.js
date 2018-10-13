@@ -44,3 +44,7 @@ export const exec = async (cmd, options, childModifier) =>
 export function deprecateV3(...args) {
   console.warn(...args, 'It will break in v3.0.0.')
 }
+
+export function deprecateV5(...args) {
+  console.warn(...args, 'It will break in v5.0.0.')
+}
