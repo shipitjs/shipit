@@ -11,7 +11,7 @@ import { formatRawCommand } from './commands/raw'
 import { formatRmCommand } from './commands/rm'
 import { joinCommandArgs } from './commands/util'
 import { parseRemote, formatRemote } from './remote'
-import { exec, series, deprecateV3 } from './util'
+import { exec, series, deprecateV3, deprecateV5 } from './util'
 
 const tmpName = async options =>
   new Promise((resolve, reject) =>
@@ -105,7 +105,7 @@ class Connection {
    * @throws {ExecError}
    */
   async copy(src, dest, { direction, ...options } = {}) {
-    deprecateV3(
+    deprecateV5(
       '"copy" method is deprecated, please use "copyToRemote", "copyFromRemote", "scpCopyToRemote" or "scpCopyFromRemote".',
     )
     if (direction === 'remoteToLocal')
