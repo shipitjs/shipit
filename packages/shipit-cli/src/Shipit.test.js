@@ -1,4 +1,5 @@
-import stream from 'mock-utf8-stream'
+/* eslint-disable import/no-extraneous-dependencies */
+import Stream from 'mock-utf8-stream'
 import { ConnectionPool } from 'ssh-pool'
 import Shipit from './Shipit'
 
@@ -8,8 +9,8 @@ describe('Shipit', () => {
   let stderr
 
   beforeEach(() => {
-    stdout = new stream.MockWritableStream()
-    stderr = new stream.MockWritableStream()
+    stdout = new Stream.MockWritableStream()
+    stderr = new Stream.MockWritableStream()
     shipit = new Shipit({
       stdout,
       stderr,
@@ -28,7 +29,7 @@ describe('Shipit', () => {
 
       shipit.initConfig(config)
 
-      expect(shipit.config).toEqual({"foo": "bar", "kung": "foo", "servers": ["3"]})
+      expect(shipit.config).toEqual({ foo: 'bar', kung: 'foo', servers: ['3'] })
 
       expect(shipit.globalConfig).toBe(config)
     })

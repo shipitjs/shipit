@@ -2,11 +2,24 @@
   "name": "ssh-pool",
   "version": "4.1.0",
   "description": "Run remote commands over a pool of server using SSH.",
-  "main": "lib/index.js",
-  "repository": "https://github.com/babel/babel/tree/master/packages/babel-traverse",
-  "author": "Bergé Greg <berge.greg@gmail.com>",
+  "engines": {
+    "node": ">=6"
+  },
+  "author": "Greg Bergé <berge.greg@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/shipitjs/shipit",
+  "repository": "https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy",
+  "main": "lib/index.js",
+  "keywords": [
+    "shipit",
+    "automation",
+    "deployment",
+    "ssh"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf lib/",
+    "build": "babel --config-file ../../babel.config.js -d lib --ignore \"**/*.test.js\" src",
+    "prepublishOnly": "yarn run build"
+  },
   "dependencies": {
     "stream-line-wrapper": "^0.1.1",
     "tmp": "^0.0.33",

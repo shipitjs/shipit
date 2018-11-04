@@ -158,7 +158,10 @@ class Shipit extends Orchestrator {
       ...this.options,
       key: this.config.key,
       strict: this.config.strict,
-      verbosityLevel: (this.config.verboseSSHLevel === undefined) ? 0 : this.config.verboseSSHLevel
+      verbosityLevel:
+        this.config.verboseSSHLevel === undefined
+          ? 0
+          : this.config.verboseSSHLevel,
     }
 
     this.pool = new ConnectionPool(servers, options)

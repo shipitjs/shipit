@@ -2,6 +2,12 @@
   "name": "shipit-cli",
   "version": "4.1.1",
   "description": "Universal automation and deployment tool written in JavaScript.",
+  "engines": {
+    "node": ">=6"
+  },
+  "author": "Greg Bergé <berge.greg@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy",
   "main": "lib/index.js",
   "keywords": [
     "shipit",
@@ -10,6 +16,14 @@
     "deploy",
     "ssh"
   ],
+  "scripts": {
+    "prebuild": "rm -rf lib/",
+    "build": "babel --config-file ../../babel.config.js -d lib --ignore \"**/*.test.js\" src",
+    "prepublishOnly": "yarn run build"
+  },
+  "bin": {
+    "shipit": "./bin/shipit"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.15.0",
@@ -20,22 +34,5 @@
     "ssh-pool": "^4.1.0",
     "stream-line-wrapper": "^0.1.1",
     "v8flags": "^3.1.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "mock-utf8-stream": "^0.1.1"
-  },
-  "bin": {
-    "shipit": "./bin/shipit"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shipitjs/shipit.git"
-  },
-  "author": "Greg Bergé <berge.greg@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shipitjs/shipit/issues"
-  },
-  "homepage": "https://github.com/shipitjs/shipit"
+  }
 }
