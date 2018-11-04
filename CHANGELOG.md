@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/shipitjs/shipit/compare/v4.1.1...v4.1.2) (2018-11-04)
+
+
+### Bug Fixes
+
+* **security:** use which instead of whereis ([#220](https://github.com/shipitjs/shipit/issues/220)) ([6f46cad](https://github.com/shipitjs/shipit/commit/6f46cad))
+* **shipit-deploy:** only remove workspace if not shallow clone ([#200](https://github.com/shipitjs/shipit/issues/200)) ([6ba6f00](https://github.com/shipitjs/shipit/commit/6ba6f00))
+* use correct deprecation warning ([#219](https://github.com/shipitjs/shipit/issues/219)) ([e0c0fa5](https://github.com/shipitjs/shipit/commit/e0c0fa5))
+
+
+
+
+
 <a name="4.1.1"></a>
 ## [4.1.1](https://github.com/shipitjs/shipit/compare/v4.1.0...v4.1.1) (2018-05-30)
 

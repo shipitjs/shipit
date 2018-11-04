@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.1...v4.1.2) (2018-11-04)
+
+
+### Bug Fixes
+
+* **shipit-deploy:** only remove workspace if not shallow clone ([#200](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/200)) ([6ba6f00](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/6ba6f00))
+
+
+
+
+
 <a name="4.1.1"></a>
 ## [4.1.1](https://github.com/shipitjs/shipit/compare/v4.1.0...v4.1.1) (2018-05-30)
 

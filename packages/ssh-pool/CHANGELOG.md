@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.1...v4.1.2) (2018-11-04)
+
+
+### Bug Fixes
+
+* **security:** use which instead of whereis ([#220](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/220)) ([6f46cad](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/6f46cad))
+* use correct deprecation warning ([#219](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/219)) ([e0c0fa5](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/e0c0fa5))
+
+
+
+
+
 <a name="4.1.0"></a>
 # [4.1.0](https://github.com/babel/babel/tree/master/packages/babel-traverse/compare/v4.0.2...v4.1.0) (2018-04-27)
 
