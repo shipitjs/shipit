@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import shipitDeploy from '../../'
+import shipitDeploy from '../..'
 
 export default shipit => {
   shipitDeploy(shipit)
@@ -11,7 +11,7 @@ export default shipit => {
       deployTo: '/tmp/shipit',
       repositoryUrl: 'https://github.com/shipitjs/shipit.git',
       ignores: ['.git', 'node_modules'],
-      shallowClone: true
+      shallowClone: true,
     },
     test: {
       servers: 'deploy@test.shipitjs.com',
