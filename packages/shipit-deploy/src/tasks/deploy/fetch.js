@@ -22,7 +22,7 @@ const fetchTask = shipit => {
         shipit.log('Create workspace...')
         /* eslint-disable no-param-reassign */
         if (shipit.config.shallowClone) {
-          const tmpDir = await tmp.dir({mode: "0755"})
+          const tmpDir = await tmp.dir({ mode: '0755' })
           shipit.workspace = tmpDir.path
         } else {
           shipit.workspace = shipit.config.workspace
@@ -174,14 +174,20 @@ const fetchTask = shipit => {
     }
 
     await createWorkspace()
-    await initRepository()
-    await setGitConfig()
-    await addRemote()
-    await fetch()
-    await checkout()
-    await reset()
-    await merge()
-    await updateSubmodules()
+
+    if (shipit.config.repositoryUrl) {
+      await initRepository()
+      await setGitConfig()
+      await addRemote()
+      await fetch()
+      await checkout()
+      await reset()
+      await merge()
+      await updateSubmodules()
+    } else {
+      shipit.log(chalk.yellow('Skip fetching repo. No repositoryUrl provided'))
+    }
+
     shipit.emit('fetched')
   })
 }

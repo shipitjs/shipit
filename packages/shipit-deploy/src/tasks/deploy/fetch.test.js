@@ -6,11 +6,13 @@ jest.mock('tmp-promise')
 
 describe('deploy:fetch task', () => {
   let shipit
+  let log
 
   beforeEach(() => {
+    log = jest.fn()
     shipit = new Shipit({
       environment: 'test',
-      log: jest.fn(),
+      log,
     })
 
     fetchTask(shipit)
@@ -128,5 +130,16 @@ describe('deploy:fetch task', () => {
     )
     expect(shipit.local).toBeCalledWith('git checkout master', opts)
     expect(shipit.local).toBeCalledWith('git branch --list master', opts)
+  })
+
+  it('should skip fetching if no repositoryUrl provided', async () => {
+    delete shipit.config.repositoryUrl
+
+    await start(shipit, 'deploy:fetch')
+
+    expect(shipit.local).not.toHaveBeenCalled()
+    expect(log).toBeCalledWith(
+      expect.stringContaining('Skip fetching repo. No repositoryUrl provided'),
+    )
   })
 })
