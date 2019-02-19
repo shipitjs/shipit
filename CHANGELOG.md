@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.4](https://github.com/shipitjs/shipit/compare/v4.1.3...v4.1.4) (2019-02-19)
+
+
+### Bug Fixes
+
+* **shipit-deploy:** skip fetching git in case when repositoryUrl was not provided (closes [#207](https://github.com/shipitjs/shipit/issues/207)) ([#226](https://github.com/shipitjs/shipit/issues/226)) ([4ae0f89](https://github.com/shipitjs/shipit/commit/4ae0f89))
+
+
+
+
+
 ## [4.1.3](https://github.com/shipitjs/shipit/compare/v4.1.2...v4.1.3) (2018-11-11)
 
 
