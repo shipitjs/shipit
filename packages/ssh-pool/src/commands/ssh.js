@@ -10,6 +10,7 @@ export function formatSshCommand({
   strict,
   tty,
   remote,
+  proxy,
   cwd,
   command,
   verbosityLevel,
@@ -26,6 +27,8 @@ export function formatSshCommand({
   if (tty) args = [...args, '-tt']
   if (port) args = [...args, '-p', port]
   if (key) args = [...args, '-i', key]
+  if (proxy)
+    args = [...args, '-o', `ProxyCommand='${proxy}'`]
   if (strict !== undefined)
     args = [...args, '-o', `StrictHostKeyChecking=${strict}`]
   if (remote) args = [...args, remote]

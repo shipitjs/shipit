@@ -78,14 +78,14 @@ class Connection {
    * @returns {ExecResult}
    * @throws {ExecError}
    */
-  async run(command, { tty: ttyOption, cwd, ...cmdOptions } = {}) {
+  async run(command, { tty: ttyOption, cwd,proxy, ...cmdOptions } = {}) {
     let tty = ttyOption
     if (command.startsWith('sudo') && typeof ttyOption === 'undefined') {
       deprecateV3('You should set "tty" option explictly when you use "sudo".')
       tty = true
     }
     this.log('Running "%s" on host "%s".', command, this.remote.host)
-    const cmd = this.buildSSHCommand(command, { tty, cwd })
+    const cmd = this.buildSSHCommand(command, { tty, cwd ,proxy})
     return this.runLocally(cmd, cmdOptions)
   }
 
@@ -163,7 +163,7 @@ class Connection {
    * @returns {ExecResult}
    * @throws {ExecError}
    */
-  async scpCopyToRemote(src, dest, { ignores, ...cmdOptions } = {}) {
+  async scpCopyToRemote(src, dest, { ignores, proxy,...cmdOptions } = {}) {
     const archive = path.basename(await tmpName({ postfix: '.tar.gz' }))
     const srcDir = path.dirname(src)
     const remoteDest = `${formatRemote(this.remote)}:${dest}`
@@ -185,8 +185,10 @@ class Connection {
       formatCdCommand({ folder: srcDir }),
       '&&',
       formatScpCommand({
+
         port: this.remote.port,
         key: this.options.key,
+        proxy,
         src: archive,
         dest: remoteDest,
       }),
@@ -233,7 +235,7 @@ class Connection {
    * @returns {MultipleExecResult}
    * @throws {ExecError}
    */
-  async scpCopyFromRemote(src, dest, { ignores, ...cmdOptions } = {}) {
+  async scpCopyFromRemote(src, dest, { ignores,proxy, ...cmdOptions } = {}) {
     const archive = path.basename(await tmpName({ postfix: '.tar.gz' }))
     const srcDir = path.dirname(src)
     const srcArchive = path.join(srcDir, archive)
@@ -253,8 +255,10 @@ class Connection {
     const createDestFolder = formatMkdirCommand({ folder: dest })
 
     const copy = formatScpCommand({
+
       port: this.remote.port,
       key: this.options.key,
+      proxy,
       src: remoteSrcArchive,
       dest,
     })
@@ -301,6 +305,7 @@ class Connection {
       key: this.options.key,
       strict: this.options.strict,
       tty: this.options.tty,
+      proxy: this.options.proxy,
       verbosityLevel: this.options.verbosityLevel,
       remote: formatRemote(this.remote),
       command: formatRawCommand({ command, asUser: this.options.asUser }),
@@ -329,6 +334,7 @@ class Connection {
       key: this.options.key,
       strict: this.options.strict,
       tty: this.options.tty,
+      proxy: this.options.proxy,
     })
 
     const cmd = formatRsyncCommand({

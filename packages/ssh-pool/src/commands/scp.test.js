@@ -27,7 +27,11 @@ describe('scp', () => {
         formatScpCommand({ src: 'file.js', dest: 'foo/', port: 3000 }),
       ).toBe('scp -P 3000 file.js foo/')
     })
-
+    it('should support proxy', () => {
+      expect(
+        formatScpCommand({ src: 'file.js', dest: 'foo/', port: 3000, proxy:'ssh -W %h:%p user@bastion'  }),
+      ).toBe('scp -o "ProxyCommand ssh -W %h:%p user@bastion" -P 3000 file.js foo/')
+    })
     it('should support key', () => {
       expect(
         formatScpCommand({
