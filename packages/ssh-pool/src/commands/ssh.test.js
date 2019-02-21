@@ -15,9 +15,8 @@ describe('ssh', () => {
     })
 
     it('should support proxy', () => {
-          expect(formatSshCommand({ proxy: 'ssh -W %h:%p user@bastion' })).toBe(
-            "ssh -o ProxyCommand='ssh -W %h:%p user@bastion'",
-          )
+      expect(formatSshCommand({ proxy: 'ssh -W %h:%p user@bastion' })).toBe("ssh -o ProxyCommand='ssh -W %h:%p user@bastion'")
+    })
     it('should support strict', () => {
       expect(formatSshCommand({ strict: true })).toBe(
         'ssh -o StrictHostKeyChecking=true',
