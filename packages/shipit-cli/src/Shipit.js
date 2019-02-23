@@ -166,7 +166,7 @@ class Shipit extends Orchestrator {
 
     this.pool = new ConnectionPool(servers, options)
 
-    this.emit('init:ssh_pool')
+    this.emit('init:after_ssh_pool')
     return this
   }
 
