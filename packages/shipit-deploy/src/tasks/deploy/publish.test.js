@@ -33,7 +33,7 @@ describe('deploy:publish task', () => {
     await start(shipit, 'deploy:publish')
     expect(shipit.currentPath).toBe('/remote/deploy/current')
     expect(shipit.remote).toBeCalledWith(
-      'cd /remote/deploy && if [ -d current ] && [ ! -L current ]; then echo "ERR: could not make symlink"; else ln -nfs releases/20141704123138 current_tmp && mv -fT current_tmp current; fi',
+      'cd /remote/deploy && if [ -d current ] && [ ! -L current ]; then echo "ERR: could not make symlink"; else ln -nfs releases/20141704123138 current_tmp && mv -f current_tmp current; fi',
     )
   })
 })
