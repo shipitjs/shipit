@@ -26,7 +26,7 @@ const publishTask = shipit => {
         'ln -nfs ' +
         relativeReleasePath +
         ' current_tmp && ' +
-        'mv -fT current_tmp current; ' +
+        'mv -f current_tmp current; ' +
         'fi',
     )
     /* eslint-enable prefer-template */
