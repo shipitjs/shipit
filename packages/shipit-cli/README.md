@@ -128,6 +128,26 @@ Log using Shipit, same API as `console.log`.
 shipit.log('hello %s', 'world')
 ```
 
+## Workflow tasks
+
+When the system initializes it automatically emits events: 
+  * Emit event "init"
+  * Emit event "init:after_ssh_pool"
+
+Each shipit task also generates events:
+  * Emit event "task_start"
+  * Emit event "task_stop"
+  * Emit event "task_err"
+  * Emit event "task_not_found"
+
+Inside the task events, you can test for the task name.
+```js
+ shipit.on("task_start",  (event) => {
+   if (event.task == "first_task"){
+     shipit.log("I'm the first task");
+   }
+  });
+```
 ## License
 
 MIT
