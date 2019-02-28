@@ -52,6 +52,14 @@ describe('Shipit', () => {
       shipit.initialize()
       expect(shipit.initSshPool).toBeCalled()
     })
+    it('should emit a "init" event', async () => {
+	    const spy = jest.fn()
+	    shipit.on('init', spy)
+	    expect(spy).toHaveBeenCalledTimes(0)
+      	    shipit.initialize()
+	    expect(spy).toHaveBeenCalledTimes(1)
+    })
+
   })
 
   describe('#initSshPool', () => {
@@ -62,6 +70,14 @@ describe('Shipit', () => {
       expect(shipit.pool).toEqual(expect.any(ConnectionPool))
       expect(shipit.pool.connections[0].remote.user).toBe('deploy')
       expect(shipit.pool.connections[0].remote.host).toBe('my-server')
+    })
+    it('should emit a "init:after_ssh_pool" event', async () => {
+      shipit.config = { servers: ['deploy@my-server'] }
+	    const spy = jest.fn()
+	    shipit.on('init:after_ssh_pool', spy)
+	    expect(spy).toHaveBeenCalledTimes(0)
+      	    shipit.initSshPool()
+	    expect(spy).toHaveBeenCalledTimes(1)
     })
   })
 
