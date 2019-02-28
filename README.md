@@ -352,6 +352,7 @@ shipit.log('hello %s', 'world')
 * [shipit-captain](https://github.com/timkelty/shipit-captain/)
 * [shipit-bower](https://github.com/willsteinmetz/shipit-bower)
 * [shipit-composer](https://github.com/jeremyzahner/shipit-composer)
+* [shipit-conditional](https://github.com/BrokerageEngine/shipit-conditional)
 
 ## Who use Shipit?
 
