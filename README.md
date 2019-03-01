@@ -354,6 +354,7 @@ shipit.log('hello %s', 'world')
 * [shipit-composer](https://github.com/jeremyzahner/shipit-composer)
 * [shipit-bastion](https://github.com/BrokerageEngine/shipit-bastion)
 * [shipit-yaml](https://github.com/davidbernal/shipit-yaml)
+* [shipit-conditional](https://github.com/BrokerageEngine/shipit-conditional)
 
 ## Who use Shipit?
 
