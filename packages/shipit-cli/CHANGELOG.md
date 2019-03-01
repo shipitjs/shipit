@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.4...v4.2.0) (2019-03-01)
+
+
+### Features
+
+* add "init:after_ssh_pool" event ([#230](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/230)) ([e864338](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/e864338))
+
+
+
+
+
 ## [4.1.2](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.1...v4.1.2) (2018-11-04)
 
 **Note:** Version bump only for package shipit-cli

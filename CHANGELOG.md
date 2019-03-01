@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/shipitjs/shipit/compare/v4.1.4...v4.2.0) (2019-03-01)
+
+
+### Features
+
+* add "init:after_ssh_pool" event ([#230](https://github.com/shipitjs/shipit/issues/230)) ([e864338](https://github.com/shipitjs/shipit/commit/e864338))
+
+
+
+
+
 ## [4.1.4](https://github.com/shipitjs/shipit/compare/v4.1.3...v4.1.4) (2019-02-19)
 
 
