@@ -26,6 +26,8 @@ program
   .option('--require <files...>', 'Script required before launching Shipit')
   .option('--tasks', 'List available tasks')
   .option('--environments', 'List available environments')
+  .option('-p, --showProgress', 'Show rsync Progress')
+  .option('-s, --showStats', 'Show rsync Stats')
 
 program.parse(process.argv)
 
@@ -49,6 +51,14 @@ function logEnvironments(shipit) {
   )
 }
 
+function logProgress(shipit) {
+  shipit.show_progress = true;
+}
+
+function logStats(shipit) {
+  shipit.show_stats = true;
+}
+
 async function asyncInvoke(env) {
   if (!env.configPath) {
     console.error(chalk.red('shipitfile not found'))
@@ -69,6 +79,13 @@ async function asyncInvoke(env) {
   } catch (error) {
     console.error(chalk.red('Could not load async config'))
     throw error
+  }
+
+  if(program.showProgress) {
+    logProgress(shipit);
+  }
+  if(program.showStats){
+    logStats(shipit);
   }
 
   if (program.tasks === true) {

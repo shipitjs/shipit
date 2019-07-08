@@ -69,6 +69,9 @@ class Shipit extends Orchestrator {
     this.options = { ...defaultOptions, ...options }
     this.environment = options.environment
 
+    this.show_progress = false;
+    this.show_stats = false;
+
     this.initializeEvents()
 
     if (this.options.stdout === process.stdout)
@@ -227,6 +230,8 @@ class Shipit extends Orchestrator {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
+      show_progress: this.show_progress,
+      show_stats: this.show_stats,
     }
     const copyOptions = { ...defaultOptions, ...options }
 
@@ -251,6 +256,8 @@ class Shipit extends Orchestrator {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
+      show_progress: this.show_progress,
+      show_stats: this.show_stats,
     }
     const copyOptions = { ...defaultOptions, ...options }
     return this.pool.copyToRemote(src, dest, copyOptions)
@@ -273,6 +280,8 @@ class Shipit extends Orchestrator {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
+      show_progress: this.show_progress,
+      show_stats: this.show_stats,
     }
     const copyOptions = { ...defaultOptions, ...options }
     return this.pool.copyFromRemote(src, dest, copyOptions)
