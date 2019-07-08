@@ -52,11 +52,11 @@ function logEnvironments(shipit) {
 }
 
 function logProgress(shipit) {
-  shipit.setShowProgress(true)
+  shipit.setShowProgress()
 }
 
 function logStats(shipit) {
-  shipit.setShowStats(true)
+  shipit.setShowStats()
 }
 
 async function asyncInvoke(env) {

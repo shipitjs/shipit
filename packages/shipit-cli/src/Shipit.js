@@ -69,9 +69,6 @@ class Shipit extends Orchestrator {
     this.options = { ...defaultOptions, ...options }
     this.environment = options.environment
 
-    this.showProgress = false
-    this.showStats = false
-
     this.initializeEvents()
 
     if (this.options.stdout === process.stdout)
@@ -174,24 +171,22 @@ class Shipit extends Orchestrator {
   }
 
   /**
-   * Set showProgress value for rsync.
+   * Add --progress flag to rsync config.
    *
-   * @param {boolean} shouldShowProgress
    * @returns {Shipit} for chaining
    */
-  setShowProgress(shouldShowProgress){
-    this.showProgress = shouldShowProgress
+  setShowProgress(){
+    this.config.rsync = this.config.rsync ? [...this.config.rsync, "--progress"] : ["--progress"]
     return this
   }
 
   /**
-   * Set showStats value for rsync.
+   * Add --stats flag to rsync config.
    *
-   * @param {boolean} shouldShowStats
    * @returns {Shipit} for chaining
    */
-  setShowStats(shouldShowStats){
-    this.showStats = shouldShowStats
+  setShowStats(){
+    this.config.rsync = this.config.rsync ? [...this.config.rsync, "--stats"] : ["--stats"]
     return this
   }
 
@@ -252,8 +247,6 @@ class Shipit extends Orchestrator {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
-      showProgress: this.showProgress,
-      showStats: this.showStats,
     }
     const copyOptions = { ...defaultOptions, ...options }
 
@@ -278,8 +271,6 @@ class Shipit extends Orchestrator {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
-      showProgress: this.showProgress,
-      showStats: this.showStats,
     }
     const copyOptions = { ...defaultOptions, ...options }
     return this.pool.copyToRemote(src, dest, copyOptions)
@@ -302,8 +293,6 @@ class Shipit extends Orchestrator {
     const defaultOptions = {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
-      showProgress: this.showProgress,
-      showStats: this.showStats,
     }
     const copyOptions = { ...defaultOptions, ...options }
     return this.pool.copyFromRemote(src, dest, copyOptions)
