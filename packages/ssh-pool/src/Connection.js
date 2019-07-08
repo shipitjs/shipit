@@ -331,11 +331,11 @@ class Connection {
       tty: this.options.tty,
     })
 
-    let additionalArgs = (typeof rsync === 'string' ? [rsync] : rsync);
-    if(cmdOptions.show_progress){
+    const additionalArgs = (typeof rsync === 'string' ? [rsync] : rsync);
+    if(cmdOptions.showProgress){
       additionalArgs.push("--progress");
     }
-    if(cmdOptions.show_stats){
+    if(cmdOptions.showStats){
       additionalArgs.push("--stats");
     }
 
@@ -343,7 +343,7 @@ class Connection {
       src,
       dest,
       remoteShell: sshCommand,
-      additionalArgs: additionalArgs,
+      additionalArgs,
       excludes: ignores,
     })
 

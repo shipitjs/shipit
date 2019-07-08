@@ -26,8 +26,8 @@ program
   .option('--require <files...>', 'Script required before launching Shipit')
   .option('--tasks', 'List available tasks')
   .option('--environments', 'List available environments')
-  .option('-p, --showProgress', 'Show rsync Progress')
-  .option('-s, --showStats', 'Show rsync Stats')
+  .option('-p, --show-progress', 'Show rsync Progress')
+  .option('-s, --show-stats', 'Show rsync Stats')
 
 program.parse(process.argv)
 
@@ -52,11 +52,11 @@ function logEnvironments(shipit) {
 }
 
 function logProgress(shipit) {
-  shipit.show_progress = true;
+  shipit.setShowProgress(true)
 }
 
 function logStats(shipit) {
-  shipit.show_stats = true;
+  shipit.setShowStats(true)
 }
 
 async function asyncInvoke(env) {
@@ -82,10 +82,10 @@ async function asyncInvoke(env) {
   }
 
   if(program.showProgress) {
-    logProgress(shipit);
+    logProgress(shipit)
   }
   if(program.showStats){
-    logStats(shipit);
+    logStats(shipit)
   }
 
   if (program.tasks === true) {
