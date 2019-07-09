@@ -27,6 +27,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.15.0",
+    "lodash": "^4.17.10",
     "interpret": "^1.1.0",
     "liftoff": "^2.5.0",
     "orchestrator": "^0.3.7",
