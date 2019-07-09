@@ -248,7 +248,13 @@ class Shipit extends Orchestrator {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
     }
-    const copyOptions = { ...defaultOptions, ...options }
+    let copyOptions = { ...defaultOptions, ...options }
+
+    // Stop rsync config to be overwrited from the deploy rsync options.
+    if(typeof copyOptions.rsync === 'string') {
+      copyOptions.rsync = [copyOptions.rsync]
+    }
+    copyOptions = {...copyOptions, rsync: [...defaultOptions.rsync, ...copyOptions.rsync]}
 
     return this.pool.copy(src, dest, copyOptions)
   }
@@ -272,7 +278,14 @@ class Shipit extends Orchestrator {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
     }
-    const copyOptions = { ...defaultOptions, ...options }
+    let copyOptions = { ...defaultOptions, ...options }
+    
+    // Stop rsync config to be overwrited from the deploy rsync options.
+    if(typeof copyOptions.rsync === 'string') {
+      copyOptions.rsync = [copyOptions.rsync]
+    }
+    copyOptions = {...copyOptions, rsync: [...defaultOptions.rsync, ...copyOptions.rsync]}
+
     return this.pool.copyToRemote(src, dest, copyOptions)
   }
 
@@ -294,7 +307,14 @@ class Shipit extends Orchestrator {
       ignores: this.config && this.config.ignores ? this.config.ignores : [],
       rsync: this.config && this.config.rsync ? this.config.rsync : [],
     }
-    const copyOptions = { ...defaultOptions, ...options }
+    let copyOptions = { ...defaultOptions, ...options }
+
+    // Stop rsync config to be overwrited from the deploy rsync options.
+    if(typeof copyOptions.rsync === 'string') {
+      copyOptions.rsync = [copyOptions.rsync]
+    }
+    copyOptions = {...copyOptions, rsync: [...defaultOptions.rsync, ...copyOptions.rsync]}
+    
     return this.pool.copyFromRemote(src, dest, copyOptions)
   }
 
