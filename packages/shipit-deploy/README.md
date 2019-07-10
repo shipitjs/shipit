@@ -8,10 +8,10 @@ Set of deployment tasks for [Shipit](https://github.com/shipitjs/shipit).
 
 **Features:**
 
-* Deploy tag, branch or commit
-* Add additional behaviour using hooks
-* Build your project locally or remotely
-* Easy rollback
+- Deploy tag, branch or commit
+- Add additional behaviour using hooks
+- Build your project locally or remotely
+- Easy rollback
 
 ## Install
 
@@ -36,6 +36,7 @@ module.exports = shipit => {
       repositoryUrl: 'https://github.com/user/myapp.git',
       ignores: ['.git', 'node_modules'],
       keepReleases: 2,
+      keepWorkspace: false, // should we remove workspace dir after deploy?
       deleteOnRollback: false,
       key: '/path/to/key',
       shallowClone: true,
@@ -65,7 +66,25 @@ shipit staging rollback
 
 Type: `String`
 
-Define a path to an empty directory where Shipit builds it's syncing source. **Beware to not set this path to the root of your repository as shipit-deploy cleans the directory at the given path as a first step.**
+Define a path to a directory where Shipit builds it's syncing source.
+
+> **Beware to not set this path to the root of your repository (unless you are set `keepWorkspace: true`) as shipit-deploy cleans the directory at the given path after successful deploy.**
+
+Here you have the following setup possibilities:
+
+- if you want to build and deploy from the directory with your repo:
+  - set `keepWorkspace: true` so that your workspace dir won't be removed after deploy
+  - optionally set `rsyncFrom` if you want to sync e.g. only `./build` dir
+  - set `branch` so that we can get correct revision hash
+- if you want every time to fetch a fresh repo copy and dun reploy on it:
+  - set `shallowClone: true` — this will speed up repo fetch speed and create a temporary workspace. **NOTE:** if you decide not to use `shallowClone`, you should set `workspace` path manually. If you set `shallowClone: true`, then the temporary workspace directory will be removed after deploy (unless you set `keepWorkspace: true`)
+  - set `repositoryUrl` and optionally `branch` and `gitConfig`
+
+### keepWorkspace
+
+Type: `Boolean`
+
+If `true` — we won't remove workspace dir after deploy.
 
 ### dirToCopy
 
@@ -197,44 +216,44 @@ The current symlink path : `path.join(shipit.config.deployTo, 'current')`.
 
 ## Workflow tasks
 
-* deploy
-  * deploy:init
-    * Emit event "deploy".
-  * deploy:fetch
-    * Create workspace.
-    * Initialize repository.
-    * Add remote.
-    * Fetch repository.
-    * Checkout commit-ish.
-    * Merge remote branch in local branch.
-    * Emit event "fetched".
-  * deploy:update
-    * Create and define release path.
-    * Remote copy project.
-    * Emit event "updated".
-  * deploy:publish
-    * Update symlink.
-    * Emit event "published".
-  * deploy:clean
-    * Remove old releases.
-    * Emit event "cleaned".
-  * deploy:finish
-    * Emit event "deployed".
-* rollback
-  * rollback:init
-    * Define release path.
-    * Emit event "rollback".
-  * deploy:publish
-    * Update symlink.
-    * Emit event "published".
-  * deploy:clean
-    * Remove old releases.
-    * Emit event "cleaned".
-  * rollback:finish
-    * Emit event "rollbacked".
-* pending
-  * pending:log
-    * Log pending commits (diff between HEAD and currently deployed revision) to console.
+- deploy
+  - deploy:init
+    - Emit event "deploy".
+  - deploy:fetch
+    - Create workspace.
+    - Initialize repository.
+    - Add remote.
+    - Fetch repository.
+    - Checkout commit-ish.
+    - Merge remote branch in local branch.
+    - Emit event "fetched".
+  - deploy:update
+    - Create and define release path.
+    - Remote copy project.
+    - Emit event "updated".
+  - deploy:publish
+    - Update symlink.
+    - Emit event "published".
+  - deploy:clean
+    - Remove old releases.
+    - Emit event "cleaned".
+  - deploy:finish
+    - Emit event "deployed".
+- rollback
+  - rollback:init
+    - Define release path.
+    - Emit event "rollback".
+  - deploy:publish
+    - Update symlink.
+    - Emit event "published".
+  - deploy:clean
+    - Remove old releases.
+    - Emit event "cleaned".
+  - rollback:finish
+    - Emit event "rollbacked".
+- pending
+  - pending:log
+    - Log pending commits (diff between HEAD and currently deployed revision) to console.
 
 ## License
 

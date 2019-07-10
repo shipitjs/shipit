@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import utils from 'shipit-utils'
 import chalk from 'chalk'
 import tmp from 'tmp-promise'
@@ -17,24 +18,44 @@ const fetchTask = shipit => {
     /**
      * Create workspace.
      */
-    async function createWorkspace() {
-      async function create() {
-        shipit.log('Create workspace...')
-        /* eslint-disable no-param-reassign */
-        if (shipit.config.shallowClone) {
-          const tmpDir = await tmp.dir({ mode: '0755' })
-          shipit.workspace = tmpDir.path
-        } else {
-          shipit.workspace = shipit.config.workspace
-          if (path.resolve(shipit.workspace) === process.cwd()) {
-            throw new Error('Workspace should be a temporary directory')
-          }
-        }
-        /* eslint-enable no-param-reassign */
-        shipit.log(chalk.green(`Workspace created: "${shipit.workspace}"`))
+    async function setupWorkspace() {
+      const { keepWorkspace, workspace, shallowClone } = shipit.config
+
+      shipit.log('Setup workspace...')
+      if (workspace) {
+        // eslint-disable-next-line no-param-reassign
+        shipit.workspace = workspace
       }
 
-      return create()
+      if (shallowClone) {
+        const tmpDir = await tmp.dir({ mode: '0755' })
+        // eslint-disable-next-line no-param-reassign
+        shipit.workspace = tmpDir.path
+
+        if (workspace) {
+          shipit.log(
+            chalk.yellow(
+              `Warning: Workspace path from config ("${workspace}") is being ignored, when shallowClone: true`,
+            ),
+          )
+        }
+
+        shipit.log(`Temporary workspace created: "${shipit.workspace}"`)
+      }
+
+      if (!shipit.workspace || !fs.existsSync(shipit.workspace)) {
+        throw new Error(
+          `Workspace dir is required. Current value is: ${shipit.workspace}`,
+        )
+      }
+
+      if (!keepWorkspace && path.resolve(shipit.workspace) === process.cwd()) {
+        throw new Error(
+          'Workspace should be a temporary directory. To use current working directory set keepWorkspace: true',
+        )
+      }
+
+      shipit.log(chalk.green('Workspace ready.'))
     }
 
     /**
@@ -173,7 +194,7 @@ const fetchTask = shipit => {
       shipit.log(chalk.green('Submodules updated'))
     }
 
-    await createWorkspace()
+    await setupWorkspace()
 
     if (shipit.config.repositoryUrl) {
       await initRepository()

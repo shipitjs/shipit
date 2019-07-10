@@ -50,6 +50,7 @@ function extendShipit(shipit) {
     branch: 'master',
     keepReleases: 5,
     shallowClone: true,
+    keepWorkspace: false,
     gitLogFormat: '%h: %s - %an',
     ...shipit.config,
   }

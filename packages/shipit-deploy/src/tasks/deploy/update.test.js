@@ -243,4 +243,17 @@ describe('deploy:update task', () => {
     await start(shipit, 'deploy:update')
     expect(rmfr).not.toHaveBeenCalledWith('/tmp/workspace')
   })
+
+  it('should keep workspace when keepWorkspace is true', async () => {
+    shipit.config.shallowClone = true
+    shipit.config.keepWorkspace = true
+
+    stubShipit(shipit)
+
+    rmfr.mockClear()
+
+    await start(shipit, 'deploy:update')
+
+    expect(rmfr).not.toHaveBeenCalled()
+  })
 })

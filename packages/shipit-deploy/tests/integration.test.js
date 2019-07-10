@@ -5,15 +5,20 @@ import { exec } from 'ssh-pool'
 const shipitCli = path.resolve(__dirname, '../../shipit-cli/src/cli.js')
 const shipitFile = path.resolve(__dirname, './sandbox/shipitfile.babel.js')
 
-jest.setTimeout(40000)
-
 describe('shipit-cli', () => {
   it(
     'should run a local task',
     async () => {
-      await exec(
-        `babel-node ${shipitCli} --shipitfile ${shipitFile} test deploy`,
-      )
+      try {
+        await exec(
+          `babel-node ${shipitCli} --shipitfile ${shipitFile} test deploy`,
+        )
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error.stdout)
+
+        throw error
+      }
 
       const { stdout: lsReleases } = await exec(
         `babel-node ${shipitCli} --shipitfile ${shipitFile} test ls-releases`,
@@ -34,6 +39,6 @@ describe('shipit-cli', () => {
 
       expect(latestRelease).toBe(currentRelease)
     },
-    20000,
+    25000,
   )
 })
