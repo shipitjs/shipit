@@ -1,5 +1,6 @@
 import utils from 'shipit-utils'
 import path from 'path2/posix'
+import p from 'path';
 import moment from 'moment'
 import chalk from 'chalk'
 import util from 'util'
@@ -62,10 +63,7 @@ const updateTask = shipit => {
         rsync: '--del',
       }
       const rsyncFrom = shipit.config.rsyncFrom || shipit.workspace
-      const uploadDirPath = path.resolve(
-        rsyncFrom,
-        shipit.config.dirToCopy || '',
-      )
+      const uploadDirPath = p.resolve(rsyncFrom, shipit.config.dirToCopy || '');
 
       shipit.log('Copy project to remote servers.')
 
