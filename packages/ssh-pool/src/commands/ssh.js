@@ -17,10 +17,17 @@ export function formatSshCommand({
   let args = ['ssh']
   if (verbosityLevel) {
     switch (verbosityLevel) {
-    case verbosityLevel <= 0: break
-    case 1: args = [...args, '-v']; break
-    case 2: args = [...args, '-vv']; break
-    default: args = [...args, '-vvv']; break
+      case verbosityLevel <= 0:
+        break
+      case 1:
+        args = [...args, '-v']
+        break
+      case 2:
+        args = [...args, '-vv']
+        break
+      default:
+        args = [...args, '-vvv']
+        break
     }
   }
   if (tty) args = [...args, '-tt']
