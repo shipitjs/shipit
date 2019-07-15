@@ -128,9 +128,7 @@ function extendShipit(shipit) {
     const compareRevision = `${remotes[0]}/${this.config.branch}`
 
     const response = await this.local(
-      `git log --pretty=format:"${
-        shipit.config.gitLogFormat
-      }" ${deployedRevision}..${compareRevision}`,
+      `git log --pretty=format:"${shipit.config.gitLogFormat}" ${deployedRevision}..${compareRevision}`,
       { cwd: shipit.workspace },
     )
     const commits = response.stdout.trim()

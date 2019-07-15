@@ -1,8 +1,8 @@
 language: node_js
 
 node_js:
-  - 6
   - 8
+  - 10
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.28.4
@@ -18,8 +18,8 @@ notifications:
 cache:
   yarn: true
   directories:
-    - ".eslintcache"
-    - "node_modules"
+    - '.eslintcache'
+    - 'node_modules'
 
 addons:
   ssh_known_hosts: test.shipitjs.com
