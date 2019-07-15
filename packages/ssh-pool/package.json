@@ -1,6 +1,6 @@
 {
   "name": "ssh-pool",
-  "version": "4.1.2",
+  "version": "5.0.0",
   "description": "Run remote commands over a pool of server using SSH.",
   "engines": {
     "node": ">=6"
