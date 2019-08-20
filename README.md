@@ -189,6 +189,12 @@ Type: `String`
 
 Path to SSH key.
 
+#### configFile
+
+Type: `String`
+
+Path to SSH config file.
+
 #### servers
 
 Type: `String` or `Array<String>`

@@ -299,6 +299,7 @@ class Connection {
     return formatSshCommand({
       port: this.remote.port,
       key: this.options.key,
+      configFile: this.options.configFile,
       strict: this.options.strict,
       tty: this.options.tty,
       verbosityLevel: this.options.verbosityLevel,
@@ -327,6 +328,7 @@ class Connection {
     const sshCommand = formatSshCommand({
       port: this.remote.port,
       key: this.options.key,
+      configFile: this.options.configFile,
       strict: this.options.strict,
       tty: this.options.tty,
     })

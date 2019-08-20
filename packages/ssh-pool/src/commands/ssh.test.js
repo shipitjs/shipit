@@ -14,6 +14,10 @@ describe('ssh', () => {
       expect(formatSshCommand({ key: 'foo' })).toBe('ssh -i foo')
     })
 
+    it('should support config file', () => {
+      expect(formatSshCommand({ configFile: '/config-file' })).toBe('ssh -F /config-file')
+    })
+
     it('should support strict', () => {
       expect(formatSshCommand({ strict: true })).toBe(
         'ssh -o StrictHostKeyChecking=true',

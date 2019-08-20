@@ -117,6 +117,20 @@ describe('Connection', () => {
       )
     })
 
+    it('should use config file if present', async () => {
+      connection = new Connection({
+        remote: 'user@host',
+        configFile: '/path/to/config-file',
+      })
+
+      await connection.run('my-command -x')
+      expect(exec).toHaveBeenCalledWith(
+        'ssh -F /path/to/config-file user@host "my-command -x"',
+        { maxBuffer: 1024000 },
+        expect.any(Function),
+      )
+    })
+
     it('should use port if present', async () => {
       connection = new Connection({ remote: 'user@host:12345' })
       await connection.run('my-command -x')

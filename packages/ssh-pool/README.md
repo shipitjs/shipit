@@ -36,6 +36,7 @@ Create a new connection to run command on a remote server.
 @param {Stream} [options.stdout] Stdout stream
 @param {Stream} [options.stderr] Stderr stream
 @param {string} [options.key] SSH key
+@param {string} [options.configFile] Path to SSH config file
 @param {function} [options.log] Log method
 @param {boolean} [options.asUser] Use a custom user to run command
 @param {number} [options.verbosityLevel] SSH verbosity level: 0 (none), 1 (-v), 2 (-vv), 3+ (-vvv)
