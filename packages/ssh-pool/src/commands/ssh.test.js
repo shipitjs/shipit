@@ -33,6 +33,18 @@ describe('ssh', () => {
       )
     })
 
+    it('should support known host file', () => {
+      expect(formatSshCommand({ knownHostFile: '/known-host-file' })).toBe(
+        'ssh -o UserKnownHostsFile=/known-host-file',
+      )
+    })
+
+    it('should support known host file and strict check', () => {
+      expect(formatSshCommand({ knownHostFile: '/known-host-file', strict: true })).toBe(
+        'ssh -o UserKnownHostsFile=/known-host-file -o StrictHostKeyChecking=true',
+      )
+    })
+
     it('should support remote', () => {
       expect(
         formatSshCommand({

@@ -131,6 +131,20 @@ describe('Connection', () => {
       )
     })
 
+    it('should use known host file if present', async () => {
+      connection = new Connection({
+        remote: 'user@host',
+        knownHostFile: '/path/to/known-host-file',
+      })
+
+      await connection.run('my-command -x')
+      expect(exec).toHaveBeenCalledWith(
+        'ssh -o UserKnownHostsFile=/path/to/known-host-file user@host "my-command -x"',
+        { maxBuffer: 1024000 },
+        expect.any(Function),
+      )
+    })
+
     it('should use port if present', async () => {
       connection = new Connection({ remote: 'user@host:12345' })
       await connection.run('my-command -x')

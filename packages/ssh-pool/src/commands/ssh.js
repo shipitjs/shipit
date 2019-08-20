@@ -13,7 +13,8 @@ export function formatSshCommand({
   cwd,
   command,
   configFile,
-  verbosityLevel,
+  knownHostFile,
+  verbosityLevel
 }) {
   let args = ['ssh']
   if (verbosityLevel) {
@@ -35,6 +36,7 @@ export function formatSshCommand({
   if (port) args = [...args, '-p', port]
   if (key) args = [...args, '-i', key]
   if (configFile) args = [...args, '-F', configFile]
+  if (knownHostFile) args = [...args, '-o', `UserKnownHostsFile=${knownHostFile}`]
   if (strict !== undefined)
     args = [...args, '-o', `StrictHostKeyChecking=${strict}`]
   if (remote) args = [...args, remote]

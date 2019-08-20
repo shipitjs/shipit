@@ -195,6 +195,12 @@ Type: `String`
 
 Path to SSH config file.
 
+#### knownHostFile
+
+Type: `String`
+
+Path to SSH known host file.
+
 #### servers
 
 Type: `String` or `Array<String>`

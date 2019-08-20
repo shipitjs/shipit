@@ -300,6 +300,7 @@ class Connection {
       port: this.remote.port,
       key: this.options.key,
       configFile: this.options.configFile,
+      knownHostFile: this.options.knownHostFile,
       strict: this.options.strict,
       tty: this.options.tty,
       verbosityLevel: this.options.verbosityLevel,
@@ -329,6 +330,7 @@ class Connection {
       port: this.remote.port,
       key: this.options.key,
       configFile: this.options.configFile,
+      knownHostFile: this.options.knownHostFile,
       strict: this.options.strict,
       tty: this.options.tty,
     })
