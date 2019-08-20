@@ -14,7 +14,7 @@ export function formatSshCommand({
   command,
   configFile,
   knownHostFile,
-  verbosityLevel
+  verbosityLevel,
 }) {
   let args = ['ssh']
   if (verbosityLevel) {
