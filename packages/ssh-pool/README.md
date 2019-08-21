@@ -58,6 +58,18 @@ new Connection({
     port: 4000,
   },
 })
+
+// When defined as an object you can add extra ssh parameters
+new Connection({
+  remote: {
+    user: 'user',
+    host: 'localhost',
+    port: 4000,
+    extraSshOptions: {
+      ServerAliveInterval: '30',
+    }
+  },
+})
 ```
 
 The log method is used to log output directly:

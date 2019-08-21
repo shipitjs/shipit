@@ -301,6 +301,7 @@ class Connection {
       key: this.options.key,
       strict: this.options.strict,
       tty: this.options.tty,
+      extraSshOptions: this.remote.extraSshOptions,
       verbosityLevel: this.options.verbosityLevel,
       remote: formatRemote(this.remote),
       command: formatRawCommand({ command, asUser: this.options.asUser }),
@@ -328,6 +329,7 @@ class Connection {
       port: this.remote.port,
       key: this.options.key,
       strict: this.options.strict,
+      extraSshOptions: this.remote.extraSshOptions,
       tty: this.options.tty,
     })
 

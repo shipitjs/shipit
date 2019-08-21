@@ -197,7 +197,7 @@ The server can use the shorthand syntax or an object:
 
 - `user@host`: user and host
 - `user@host:4000`: user, host and port
-- `{ user, host, port }`: an object
+- `{ user, host, port, extraSshOptions }`: an object
 
 ### Shipit Deploy configuration
 

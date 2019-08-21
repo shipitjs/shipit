@@ -29,6 +29,12 @@ describe('ssh', () => {
       )
     })
 
+    it('should support extra ssh options', () => {
+      expect(formatSshCommand({ extraSshOptions: {ExtraOption: 'test option', MoreOptions: 'more option'} })).toBe(
+        'ssh -o ExtraOption=test option -o MoreOptions=more option',
+      )
+    })
+
     it('should support remote', () => {
       expect(
         formatSshCommand({
