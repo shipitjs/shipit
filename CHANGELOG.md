@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/shipitjs/shipit/compare/v5.0.0...v5.1.0) (2019-08-28)
+
+
+### Bug Fixes
+
+* correct peerDependencies field for shipit-deploy package ([#243](https://github.com/shipitjs/shipit/issues/243)) ([3586c21](https://github.com/shipitjs/shipit/commit/3586c21))
+
+
+### Features
+
+* **shipit-deploy:** Added config so you can rsync including the folder ([#246](https://github.com/shipitjs/shipit/issues/246)) ([64481f8](https://github.com/shipitjs/shipit/commit/64481f8))
+* **ssh-pool:** Added ssh config array to remote server ([#248](https://github.com/shipitjs/shipit/issues/248)) ([ba1d8c2](https://github.com/shipitjs/shipit/commit/ba1d8c2))
+
+
+
+
+
 # [4.2.0](https://github.com/shipitjs/shipit/compare/v4.1.4...v4.2.0) (2019-03-01)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.0.0...v5.1.0) (2019-08-28)
+
+
+### Bug Fixes
+
+* correct peerDependencies field for shipit-deploy package ([#243](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/243)) ([3586c21](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/3586c21))
+
+
+### Features
+
+* **shipit-deploy:** Added config so you can rsync including the folder ([#246](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/246)) ([64481f8](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/64481f8))
+
+
+
+
+
 ## [4.1.4](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.3...v4.1.4) (2019-02-19)
 
 
