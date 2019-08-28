@@ -124,6 +124,21 @@ describe('deploy:update task', () => {
         )
       })
     })
+
+    it('should accept rsync options', async () => {
+      const sh = createShipitInstance({
+        deploy: { remoteCopy: { rsync: '--foo', copyAsDir: true } },
+      })
+      stubShipit(sh)
+
+      await start(sh, 'deploy:update')
+
+      expect(sh.remoteCopy).toBeCalledWith(
+        '/tmp/workspace',
+        '/remote/deploy/releases/YYYYMMDDHHmmss',
+        { rsync: '--foo', copyAsDir: true },
+      )
+    })
   })
 
   describe('#setPreviousRevision', () => {

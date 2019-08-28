@@ -40,6 +40,11 @@ module.exports = shipit => {
       deleteOnRollback: false,
       key: '/path/to/key',
       shallowClone: true,
+      deploy: {
+        remoteCopy: {
+          copyAsDir: false, // Should we copy as the dir (true) or the content of the dir (false)
+        },
+      },
     },
     staging: {
       servers: 'user@myserver.com',
@@ -175,6 +180,12 @@ By default, it will run rsync from the workspace folder.
 Type: `String`
 
 Parameter to pass to `cp` to copy the previous release. Non NTFS filesystems support `-r`. Default: `-a`
+
+### deploy.remoteCopy.copyAsDir
+
+Type: `Boolean` _Optional_
+
+If `true` - We will copy the folder instead of the content of the folder. Default: `false`.
 
 ## Variables
 
