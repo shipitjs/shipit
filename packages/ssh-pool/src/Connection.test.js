@@ -140,6 +140,25 @@ describe('Connection', () => {
       )
     })
 
+    it('should use extra ssh options on remote if present', async () => {
+      connection = new Connection({
+        remote: {
+          host: 'host',
+          user: 'user',
+          extraSshOptions: {
+            ExtraOption: 'option',
+            SshForwardAgent: 'forward',
+          }
+        },
+      })
+      await connection.run('my-command -x')
+      expect(exec).toHaveBeenCalledWith(
+        'ssh -o ExtraOption=option -o SshForwardAgent=forward user@host "my-command -x"',
+        { maxBuffer: 1024000 },
+        expect.any(Function),
+      )
+    })
+
     it('should use port and key if both are present', async () => {
       connection = new Connection({
         remote: 'user@host:12345',
