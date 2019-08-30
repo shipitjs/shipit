@@ -1,6 +1,6 @@
 {
   "name": "shipit-cli",
-  "version": "4.2.0",
+  "version": "5.1.0",
   "description": "Universal automation and deployment tool written in JavaScript.",
   "engines": {
     "node": ">=6"
@@ -26,13 +26,12 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "commander": "^2.15.0",
-    "lodash": "^4.17.10",
+    "commander": "^3.0.0",
     "interpret": "^1.1.0",
-    "liftoff": "^2.5.0",
+    "liftoff": "^3.1.0",
     "orchestrator": "^0.3.7",
     "pretty-hrtime": "^1.0.0",
-    "ssh-pool": "^4.1.2",
+    "ssh-pool": "^5.1.0",
     "stream-line-wrapper": "^0.1.1",
     "v8flags": "^3.1.0"
   }

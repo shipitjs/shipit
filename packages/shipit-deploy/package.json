@@ -1,6 +1,6 @@
 {
   "name": "shipit-deploy",
-  "version": "4.1.4",
+  "version": "5.1.0",
   "description": "Official set of deploy tasks for Shipit.",
   "engines": {
     "node": ">=6"
@@ -22,15 +22,15 @@
     "prepublishOnly": "yarn run build"
   },
   "peerDependencies": {
-    "shipit-cli": "^4.1.0"
+    "shipit-cli": "^5.0.0"
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.15",
     "moment": "^2.21.0",
     "path2": "^0.1.0",
-    "rmfr": "^1.0.8",
+    "rmfr": "^2.0.0",
     "shipit-utils": "^1.1.3",
-    "tmp-promise": "^1.0.4"
+    "tmp-promise": "^2.0.2"
   }
 }

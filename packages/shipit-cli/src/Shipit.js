@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-underscore-dangle */
 import { ConnectionPool, exec } from 'ssh-pool'
 import LineWrapper from 'stream-line-wrapper'
 import Orchestrator from 'orchestrator'

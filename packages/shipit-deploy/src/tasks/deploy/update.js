@@ -1,5 +1,6 @@
 import utils from 'shipit-utils'
 import path from 'path2/posix'
+import p from 'path';
 import moment from 'moment'
 import chalk from 'chalk'
 import util from 'util'
@@ -62,14 +63,15 @@ const updateTask = shipit => {
         rsync: '--del',
       }
       const rsyncFrom = shipit.config.rsyncFrom || shipit.workspace
-      const uploadDirPath = path.resolve(
-        rsyncFrom,
-        shipit.config.dirToCopy || '',
-      )
+      const uploadDirPath = p.resolve(rsyncFrom, shipit.config.dirToCopy || '');
 
       shipit.log('Copy project to remote servers.')
 
-      await shipit.remoteCopy(`${uploadDirPath}/`, shipit.releasePath, options)
+      let srcDirectory = `${uploadDirPath}/`;
+      if(options.copyAsDir){
+        srcDirectory = srcDirectory.slice(0, -1);
+      }
+      await shipit.remoteCopy(srcDirectory, shipit.releasePath, options)
       shipit.log(chalk.green('Finished copy.'))
     }
 
@@ -135,7 +137,7 @@ const updateTask = shipit => {
     }
 
     async function removeWorkspace() {
-      if (shipit.config.shallowClone) {
+      if (!shipit.config.keepWorkspace && shipit.config.shallowClone) {
         shipit.log(`Removing workspace "${shipit.workspace}"`)
         await rmfr(shipit.workspace)
         shipit.log(chalk.green('Workspace removed.'))

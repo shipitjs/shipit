@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.0.0...v5.1.0) (2019-08-28)
+
+**Note:** Version bump only for package shipit-cli
+
+
+
+
+
 # [4.2.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.4...v4.2.0) (2019-03-01)
 
 

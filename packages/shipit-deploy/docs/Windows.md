@@ -37,18 +37,18 @@ Here is where I had problems. On one side, shipit will use the current drive let
 
 #### `"workspace" : "/workspace/"`
 
-* Copies project to `d:\workspace`
-* rsync fails to find the folder
+- Copies project to `d:\workspace`
+- rsync fails to find the folder
 
 #### `"workspace" : "d:/workspace/"`
 
-* Copies project to `d:\workspace`
-* rsync fails to find the folder
+- Copies project to `d:\workspace`
+- rsync fails to find the folder
 
 #### `"workspace" : "/d/workspace/"`
 
-* rsync would work and properly sync from `D:\workspace` but...
-* ... the copy of the project goes Copies project to `d:\d\workspace`
+- rsync would work and properly sync from `D:\workspace` but...
+- ... the copy of the project goes Copies project to `d:\d\workspace`
 
 In the end, I had picked option 1. and I had to make a change in the source code to append the drive letter to rsync's source path. Everything is described in [that commit of my pull request](https://github.com/vpratfr/shipit-deploy/commit/4bbf262a7d7036a2b534ab7233d0152e0d09ba20). You can then simply add a configuration variable to "default": `"rsyncDrive": "/d"`.
 

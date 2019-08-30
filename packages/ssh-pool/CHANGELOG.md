@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.0.0...v5.1.0) (2019-08-28)
+
+
+### Features
+
+* **ssh-pool:** Added ssh config array to remote server ([#248](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/248)) ([ba1d8c2](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/ba1d8c2))
+
+
+
+
+
 ## [4.1.2](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v4.1.1...v4.1.2) (2018-11-04)
 
 

@@ -70,9 +70,9 @@ async function asyncInvoke(env) {
   const shipit = new Shipit({ environment })
 
   try {
-    /* eslint-disable global-require, import/no-dynamic-import, import/no-dynamic-require */
+    /* eslint-disable global-require, import/no-dynamic-require */
     const module = require(env.configPath)
-    /* eslint-enable global-require, import/no-dynamic-import, import/no-dynamic-require */
+    /* eslint-enable global-require, import/no-dynamic-require */
     const initialize =
       typeof module.default === 'function' ? module.default : module
     await initialize(shipit)

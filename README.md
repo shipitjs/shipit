@@ -14,6 +14,7 @@
 [![Tweet][twitter-badge]][twitter]
 
 ## Install shipit command line tools and shipit-deploy in your project
+
 ```
 npm install --save-dev shipit-cli
 npm install --save-dev shipit-deploy
@@ -25,10 +26,10 @@ Shipit provides a good alternative to Capistrano or other build tools. It is eas
 
 **Features:**
 
-* Write your task using JavaScript
-* Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator)
-* Login and interactive SSH commands
-* Easily extendable
+- Write your task using JavaScript
+- Task flow based on [orchestrator](https://github.com/orchestrator/orchestrator)
+- Login and interactive SSH commands
+- Easily extendable
 
 ## Deploy using Shipit
 
@@ -194,9 +195,9 @@ Type: `String` or `Array<String>`
 
 The server can use the shorthand syntax or an object:
 
-* `user@host`: user and host
-* `user@host:4000`: user, host and port
-* `{ user, host, port }`: an object
+- `user@host`: user and host
+- `user@host:4000`: user, host and port
+- `{ user, host, port, extraSshOptions }`: an object
 
 ### Shipit Deploy configuration
 
@@ -331,36 +332,36 @@ shipit.log('hello %s', 'world')
 
 ## Dependencies
 
-* [OpenSSH](http://www.openssh.com/) 5+
-* [rsync](https://rsync.samba.org/) 3+
+- [OpenSSH](http://www.openssh.com/) 5+
+- [rsync](https://rsync.samba.org/) 3+
 
 ## Known Plugins
 
 ### Official
 
-* [shipit-deploy](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy)
+- [shipit-deploy](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy)
 
 ### Third Party
 
-* [shipit-shared](https://github.com/timkelty/shipit-shared)
-* [shipit-db](https://github.com/timkelty/shipit-db)
-* [shipit-assets](https://github.com/timkelty/shipit-assets)
-* [shipit-ssh](https://github.com/timkelty/shipit-ssh)
-* [shipit-utils](https://github.com/timkelty/shipit-utils)
-* [shipit-npm](https://github.com/callerc1/shipit-npm)
-* [shipit-aws](https://github.com/KrashStudio/shipit-aws)
-* [shipit-captain](https://github.com/timkelty/shipit-captain/)
-* [shipit-bower](https://github.com/willsteinmetz/shipit-bower)
-* [shipit-composer](https://github.com/jeremyzahner/shipit-composer)
-* [shipit-bastion](https://github.com/BrokerageEngine/shipit-bastion)
-* [shipit-yaml](https://github.com/davidbernal/shipit-yaml)
-* [shipit-conditional](https://github.com/BrokerageEngine/shipit-conditional)
+- [shipit-shared](https://github.com/timkelty/shipit-shared)
+- [shipit-db](https://github.com/timkelty/shipit-db)
+- [shipit-assets](https://github.com/timkelty/shipit-assets)
+- [shipit-ssh](https://github.com/timkelty/shipit-ssh)
+- [shipit-utils](https://github.com/timkelty/shipit-utils)
+- [shipit-npm](https://github.com/callerc1/shipit-npm)
+- [shipit-aws](https://github.com/KrashStudio/shipit-aws)
+- [shipit-captain](https://github.com/timkelty/shipit-captain/)
+- [shipit-bower](https://github.com/willsteinmetz/shipit-bower)
+- [shipit-composer](https://github.com/jeremyzahner/shipit-composer)
+- [shipit-bastion](https://github.com/BrokerageEngine/shipit-bastion)
+- [shipit-yaml](https://github.com/davidbernal/shipit-yaml)
+- [shipit-conditional](https://github.com/BrokerageEngine/shipit-conditional)
 
 ## Who use Shipit?
 
-* [Le Monde](http://www.lemonde.fr)
-* [Ghost blogging platform](https://ghost.org/)
-* [Fusionary](http://fusionary.com)
+- [Le Monde](http://www.lemonde.fr)
+- [Ghost blogging platform](https://ghost.org/)
+- [Fusionary](http://fusionary.com)
 
 ## License
 

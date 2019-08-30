@@ -124,6 +124,21 @@ describe('deploy:update task', () => {
         )
       })
     })
+
+    it('should accept rsync options', async () => {
+      const sh = createShipitInstance({
+        deploy: { remoteCopy: { rsync: '--foo', copyAsDir: true } },
+      })
+      stubShipit(sh)
+
+      await start(sh, 'deploy:update')
+
+      expect(sh.remoteCopy).toBeCalledWith(
+        '/tmp/workspace',
+        '/remote/deploy/releases/YYYYMMDDHHmmss',
+        { rsync: '--foo', copyAsDir: true },
+      )
+    })
   })
 
   describe('#setPreviousRevision', () => {
@@ -242,5 +257,18 @@ describe('deploy:update task', () => {
     expect(rmfr).not.toHaveBeenCalled()
     await start(shipit, 'deploy:update')
     expect(rmfr).not.toHaveBeenCalledWith('/tmp/workspace')
+  })
+
+  it('should keep workspace when keepWorkspace is true', async () => {
+    shipit.config.shallowClone = true
+    shipit.config.keepWorkspace = true
+
+    stubShipit(shipit)
+
+    rmfr.mockClear()
+
+    await start(shipit, 'deploy:update')
+
+    expect(rmfr).not.toHaveBeenCalled()
   })
 })
