@@ -4,7 +4,6 @@ import LineWrapper from 'stream-line-wrapper'
 import Orchestrator from 'orchestrator'
 import chalk from 'chalk'
 import prettyTime from 'pretty-hrtime'
-import _ from 'lodash'
 
 /**
  * An ExecResult returned when a command is executed with success.
@@ -255,7 +254,7 @@ class Shipit extends Orchestrator {
     if(typeof copyOptions.rsync === 'string') {
       copyOptions.rsync = [copyOptions.rsync]
     }
-    copyOptions = {...copyOptions, rsync: _.uniq([...defaultOptions.rsync, ...copyOptions.rsync])}
+    copyOptions = {...copyOptions, rsync: [...new Set([...defaultOptions.rsync, ...copyOptions.rsync])]}
 
     return this.pool.copy(src, dest, copyOptions)
   }
@@ -285,7 +284,7 @@ class Shipit extends Orchestrator {
     if(typeof copyOptions.rsync === 'string') {
       copyOptions.rsync = [copyOptions.rsync]
     }
-    copyOptions = {...copyOptions, rsync: _.uniq([...defaultOptions.rsync, ...copyOptions.rsync])}
+    copyOptions = {...copyOptions, rsync: [...new Set([...defaultOptions.rsync, ...copyOptions.rsync])]}
 
     return this.pool.copyToRemote(src, dest, copyOptions)
   }
@@ -314,7 +313,7 @@ class Shipit extends Orchestrator {
     if(typeof copyOptions.rsync === 'string') {
       copyOptions.rsync = [copyOptions.rsync]
     }
-    copyOptions = {...copyOptions, rsync: _.uniq([...defaultOptions.rsync, ...copyOptions.rsync])}
+    copyOptions = {...copyOptions, rsync: [...new Set([...defaultOptions.rsync, ...copyOptions.rsync])]}
     
     return this.pool.copyFromRemote(src, dest, copyOptions)
   }
