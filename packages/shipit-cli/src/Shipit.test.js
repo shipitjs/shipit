@@ -154,6 +154,36 @@ describe('Shipit', () => {
         rsync: ['--bar'],
       })
     })
+
+    it('should support show-progress flag', () => {
+
+      shipit.setShowProgress()
+
+      shipit.remoteCopy('src', 'dest', {
+        direction: 'remoteToLocal',
+      })
+
+      expect(shipit.pool.copy).toBeCalledWith('src', 'dest', {
+        direction: 'remoteToLocal',
+        ignores: [],
+        rsync: ["--progress"],
+      })
+    })
+
+    it('should support show-stats flag', () => {
+
+      shipit.setShowStats()
+
+      shipit.remoteCopy('src', 'dest', {
+        direction: 'remoteToLocal',
+      })
+
+      expect(shipit.pool.copy).toBeCalledWith('src', 'dest', {
+        direction: 'remoteToLocal',
+        ignores: [],
+        rsync: ["--stats"],
+      })
+    })
   })
 
   describe('#copyFromRemote', () => {
@@ -194,6 +224,30 @@ describe('Shipit', () => {
         rsync: ['--bar'],
       })
     })
+
+    it('should support show-progress flag', () => {
+
+      shipit.setShowProgress()
+
+      shipit.copyFromRemote('src', 'dest')
+
+      expect(shipit.pool.copyFromRemote).toBeCalledWith('src', 'dest', {
+        ignores: [],
+        rsync: ["--progress"],
+      })
+    })
+
+    it('should support show-stats flag', () => {
+
+      shipit.setShowStats()
+
+      shipit.copyFromRemote('src', 'dest')
+
+      expect(shipit.pool.copyFromRemote).toBeCalledWith('src', 'dest', {
+        ignores: [],
+        rsync: ["--stats"],
+      })
+    })
   })
 
   describe('#copyToRemote', () => {
@@ -232,6 +286,30 @@ describe('Shipit', () => {
       expect(shipit.pool.copyToRemote).toBeCalledWith('src', 'dest', {
         ignores: ['foo'],
         rsync: ['--bar'],
+      })
+    })
+
+    it('should support show-progress flag', () => {
+
+      shipit.setShowProgress()
+
+      shipit.copyToRemote('src', 'dest')
+
+      expect(shipit.pool.copyToRemote).toBeCalledWith('src', 'dest', {
+        ignores: [],
+        rsync: ["--progress"],
+      })
+    })
+
+    it('should support show-stats flag', () => {
+
+      shipit.setShowStats()
+
+      shipit.copyToRemote('src', 'dest')
+
+      expect(shipit.pool.copyToRemote).toBeCalledWith('src', 'dest', {
+        ignores: [],
+        rsync: ["--stats"],
       })
     })
   })
