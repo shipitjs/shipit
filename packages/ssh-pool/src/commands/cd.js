@@ -1,12 +1,14 @@
+import path from 'path'
 import { joinCommandArgs, requireArgs } from './util'
+
+const isWin = /^win/.test(process.platform)
 
 export function formatCdCommand({ folder }) {
   requireArgs(['folder'], { folder }, 'cd')
   const args = ['cd', folder]
-  const isWin = /^win/.test(process.platform)
-  if (isWin && folder.indexOf('/') > 0) {
-    const drive = folder.slice(0, 2)
-    args.push(`&& ${drive}`)
+  const { root } = path.parse(folder)
+  if (isWin && root !== '/') {
+    args.push(`&& ${root}`)
   }
   return joinCommandArgs(args)
 }
