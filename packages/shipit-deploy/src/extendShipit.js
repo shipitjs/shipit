@@ -42,8 +42,22 @@ function computeReleaseDirname(result) {
   return target.split(path.sep).pop()
 }
 
+function validateConfig(config) {
+  const errors = []
+  if (!config.deployTo) {
+    errors.push("Config must include a 'deployTo' property")
+  }
+  if (errors.length) {
+    console.log(errors)
+    throw new Error(
+      'Config is invalid. Please refer to errors above and try again.',
+    )
+  }
+}
+
 function extendShipit(shipit) {
   /* eslint-disable no-param-reassign */
+  validateConfig(shipit.config)
   shipit.currentPath = path.join(shipit.config.deployTo, 'current')
   shipit.releasesPath = path.join(shipit.config.deployTo, 'releases')
   const config = {
@@ -128,7 +142,9 @@ function extendShipit(shipit) {
     const compareRevision = `${remotes[0]}/${this.config.branch}`
 
     const response = await this.local(
-      `git log --pretty=format:"${shipit.config.gitLogFormat}" ${deployedRevision}..${compareRevision}`,
+      `git log --pretty=format:"${
+        shipit.config.gitLogFormat
+      }" ${deployedRevision}..${compareRevision}`,
       { cwd: shipit.workspace },
     )
     const commits = response.stdout.trim()
