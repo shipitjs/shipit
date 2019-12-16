@@ -13,7 +13,9 @@ export function formatRawCommand({ asUser, command }) {
         'You should not use "sudo" and "asUser" options together. Please remove "sudo" from command.',
       )
     }
-    args = [...args, command.replace(SUDO_REGEXP, '')]
+
+    const commandWithoutSudo = command.replace(SUDO_REGEXP, '');
+    args = [...args, 'bash', '-c', `'${commandWithoutSudo}'`]
   } else if (command) args = [...args, command]
   return joinCommandArgs(args)
 }
