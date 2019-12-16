@@ -216,7 +216,7 @@ describe('Connection', () => {
       await connection.run('my-command -x', { tty: true })
 
       expect(exec).toHaveBeenCalledWith(
-        'ssh -tt user@host "sudo -u test my-command -x"',
+        'ssh -tt user@host "sudo -u test bash -c \'my-command -x\'"',
         {
           maxBuffer: 1000 * 1024,
         },
@@ -228,7 +228,7 @@ describe('Connection', () => {
       connection.run('sudo my-command -x', { tty: true })
 
       expect(exec).toHaveBeenCalledWith(
-        'ssh -tt user@host "sudo -u test my-command -x"',
+        'ssh -tt user@host "sudo -u test bash -c \'my-command -x\'"',
         {
           maxBuffer: 1000 * 1024,
         },
