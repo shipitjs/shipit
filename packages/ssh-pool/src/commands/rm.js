@@ -1,7 +1,10 @@
 import { joinCommandArgs, requireArgs } from './util'
+import { formatRawCommand } from './raw'
 
-export function formatRmCommand({ file }) {
+export function formatRmCommand({ asUser, file }) {
   requireArgs(['file'], { file }, 'rm')
-  const args = ['rm', file]
-  return joinCommandArgs(args)
+  return formatRawCommand({
+    asUser,
+    command: joinCommandArgs(['rm', file]),
+  })
 }

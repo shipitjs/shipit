@@ -334,6 +334,7 @@ class Connection {
     })
 
     const cmd = formatRsyncCommand({
+      asUser: this.options.asUser,
       src,
       dest,
       remoteShell: sshCommand,

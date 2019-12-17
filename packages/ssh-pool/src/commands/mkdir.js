@@ -1,7 +1,10 @@
 import { joinCommandArgs, requireArgs } from './util'
+import { formatRawCommand } from './raw'
 
-export function formatMkdirCommand({ folder }) {
+export function formatMkdirCommand({ asUser, folder }) {
   requireArgs(['folder'], { folder }, 'mkdir')
-  const args = ['mkdir', '-p', folder]
-  return joinCommandArgs(args)
+  return formatRawCommand({
+    asUser,
+    command: joinCommandArgs(['mkdir', '-p', folder]),
+  })
 }
