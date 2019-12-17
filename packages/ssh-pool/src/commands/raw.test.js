@@ -13,12 +13,12 @@ describe('raw', () => {
 
     it('should support asUser', () => {
       expect(formatRawCommand({ asUser: 'foo', command: 'echo "ok"' })).toBe(
-        'sudo -u foo echo "ok"',
+        'sudo -u foo bash -c \'echo "ok"\'',
       )
 
       expect(
         formatRawCommand({ asUser: 'foo', command: 'sudo echo "ok"' }),
-      ).toBe('sudo -u foo echo "ok"')
+      ).toBe('sudo -u foo bash -c \'echo "ok"\'')
     })
   })
 })
