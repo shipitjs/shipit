@@ -73,7 +73,7 @@ describe('ssh', () => {
           verbosityLevel: 2,
         }),
       ).toBe(
-        'ssh -vv user@host "cd /usr > /dev/null; echo \\"ok\\"; cd - > /dev/null"',
+        'ssh -vv user@host "cd /usr > /dev/null && echo \\"ok\\"; cd - > /dev/null"',
       )
     })
   })
