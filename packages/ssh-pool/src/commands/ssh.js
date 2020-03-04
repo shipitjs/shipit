@@ -1,7 +1,7 @@
 import { joinCommandArgs, wrapCommand } from './util'
 
 function wrapCwd(cwd, command) {
-  return `cd ${cwd} > /dev/null; ${command}; cd - > /dev/null`
+  return `cd ${cwd} > /dev/null && ${command}; cd - > /dev/null`
 }
 
 export function formatSshCommand({
