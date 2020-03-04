@@ -49,7 +49,7 @@ describe('Connection', () => {
       await connection.run('my-command -x', { cwd: '/root' })
 
       expect(exec).toHaveBeenCalledWith(
-        'ssh user@host "cd /root > /dev/null; my-command -x; cd - > /dev/null"',
+        'ssh user@host "cd /root > /dev/null && my-command -x; cd - > /dev/null"',
         {
           maxBuffer: 1024000,
         },
