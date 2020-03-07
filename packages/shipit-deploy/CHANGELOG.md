@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.1.0...v5.2.0) (2020-03-07)
+
+
+### Features
+
+* add a config validation function ([#258](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/258)) ([d98ec8e](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/d98ec8e))
+
+
+
+
+
 # [5.1.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.0.0...v5.1.0) (2019-08-28)
 
 
