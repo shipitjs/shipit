@@ -312,7 +312,7 @@ describe('Connection', () => {
           expect.any(Function),
         ])
         expect(exec.mock.calls[4]).toEqual([
-          'ssh user@host "cd /x/y/z && tar --strip-components=1 -xzf foo.tar.gz"',
+          'ssh user@host "cd /x/y/z && tar -xzf foo.tar.gz"',
           { maxBuffer: 1024000 },
           expect.any(Function),
         ])
@@ -351,7 +351,7 @@ describe('Connection', () => {
           expect.any(Function),
         ])
         expect(exec.mock.calls[4]).toEqual([
-          'cd /x/y/z && tar --strip-components=1 -xzf foo.tar.gz',
+          'cd /x/y/z && tar -xzf foo.tar.gz',
           { maxBuffer: 1024000 },
           expect.any(Function),
         ])
@@ -392,7 +392,7 @@ describe('Connection', () => {
           expect.any(Function),
         ])
         expect(exec.mock.calls[4]).toEqual([
-          'ssh -p 12345 -i /path/to/key user@host "cd /x/y/z && tar --strip-components=1 -xzf foo.tar.gz"',
+          'ssh -p 12345 -i /path/to/key user@host "cd /x/y/z && tar -xzf foo.tar.gz"',
           { maxBuffer: 1024000 },
           expect.any(Function),
         ])
@@ -481,8 +481,8 @@ describe('Connection', () => {
         '/src/dir',
         'user@host:/dest/dir',
       )
-      expect(output.stdout[0].toString()).toBe('@host first line\n')
-      expect(output.stderr[0].toString()).toBe('@host-err an error\n')
+      expect(output.stdout.toString()).toContain('@host first line\n')
+      expect(output.stderr.toString()).toContain('@host-err an error\n')
     })
   })
 })

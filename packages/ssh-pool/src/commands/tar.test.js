@@ -54,7 +54,7 @@ describe('tar', () => {
           archive: 'file.tar.gz',
           mode: 'extract',
         }),
-      ).toBe('tar --strip-components=1 -xzf file.tar.gz')
+      ).toBe('tar -xzf file.tar.gz')
     })
 
     it('should support "excludes"', () => {
