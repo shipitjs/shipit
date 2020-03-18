@@ -13,6 +13,7 @@ function formatExcludes(excludes) {
 }
 
 export function formatRsyncCommand({
+  asUser,
   src,
   dest,
   excludes,
@@ -21,6 +22,7 @@ export function formatRsyncCommand({
 }) {
   requireArgs(['src', 'dest'], { src, dest }, 'rsync')
   let args = ['rsync', '--archive', '--compress']
+  if (asUser) args = [...args, '--rsync-path', wrapCommand(`sudo -u ${asUser} rsync`)]
   if (additionalArgs) args = [...args, ...additionalArgs]
   if (excludes) args = [...args, ...formatExcludes(excludes)]
   if (remoteShell) args = [...args, '--rsh', wrapCommand(remoteShell)]

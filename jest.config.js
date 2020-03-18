@@ -1,3 +1,5 @@
+process.env.FORCE_COLOR=0;
+
 module.exports = {
   testEnvironment: 'node',
   roots: ['packages'],

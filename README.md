@@ -201,6 +201,12 @@ The server can use the shorthand syntax or an object:
 
 ### Shipit Deploy configuration
 
+#### asUser
+
+Type: `String`
+
+Allows you to ‘become’ another user, different from the user that logged into the machine (remote user). 
+
 #### deleteOnRollback
 
 Type: `Boolean`, default to `false`

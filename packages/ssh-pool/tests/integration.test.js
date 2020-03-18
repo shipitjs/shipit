@@ -1,4 +1,5 @@
-import path from 'path'
+import {resolve, basename} from 'path'
+import {copyFileSync, unlinkSync} from 'fs';
 
 const sshPool = require('../src')
 
@@ -7,7 +8,7 @@ describe('ssh-pool', () => {
 
   beforeEach(() => {
     pool = new sshPool.ConnectionPool(['deploy@test.shipitjs.com'], {
-      key: path.resolve(__dirname, '../../../ssh/id_rsa'),
+      key: resolve(__dirname, '../../../ssh/id_rsa'),
     })
   })
 
@@ -25,9 +26,19 @@ describe('ssh-pool', () => {
   }, 10000)
 
   it('should copy to remote', async () => {
-    await pool.scpCopyToRemote(
-      path.resolve(__dirname, '__fixtures__/test.txt'),
-      './',
-    )
-  }, 20000)
+    const time = (+new Date);
+    const sourceFile = resolve(__dirname, '__fixtures__/test.txt')
+    const targetFile = `${__dirname}/__fixtures__/test.${time}.txt`;
+
+    copyFileSync(sourceFile, targetFile);
+
+    try {
+      await pool.scpCopyToRemote(targetFile, './',);
+      const [{ stdout: first }] = await pool.run(`cd ./ && cat ${basename(targetFile)}`);
+      expect(first).toBe('Hello\n')
+    } finally {
+      unlinkSync(targetFile);
+    }
+
+  }, 1e6)
 })

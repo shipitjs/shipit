@@ -157,6 +157,7 @@ class Shipit extends Orchestrator {
     const options = {
       ...this.options,
       key: this.config.key,
+      asUser: this.config.asUser,
       strict: this.config.strict,
       verbosityLevel:
         this.config.verboseSSHLevel === undefined

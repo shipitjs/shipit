@@ -18,7 +18,6 @@ export function formatTarCommand({ file, archive, excludes, mode }) {
     }
     case 'extract': {
       requireArgs(['archive'], { file, archive }, 'tar')
-      args = [...args, '--strip-components=1']
       args = [...args, '-xzf', archive]
       return joinCommandArgs(args)
     }
