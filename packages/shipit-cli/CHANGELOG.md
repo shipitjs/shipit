@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.2.0...v5.3.0) (2020-03-18)
+
+
+### Features
+
+* add support of `asUser` ([#260](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/issues/260)) ([4e79edb](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/commit/4e79edb))
+
+
+
+
+
 # [5.2.0](https://github.com/shipitjs/shipit/tree/master/packages/shipit-deploy/compare/v5.1.0...v5.2.0) (2020-03-07)
 
 **Note:** Version bump only for package shipit-cli
