@@ -21,8 +21,8 @@ describe('shipit-cli', () => {
     stdout = stdout.trim();
 
     expect(stdout).toMatch(/Running 'remoteUser' task.../)
-    expect(stdout).toMatch(/Running "echo \$USER" on host "test.shipitjs.com"./)
-    expect(stdout).toMatch(/@test.shipitjs.com deploy/)
+    expect(stdout).toMatch(/Running "echo \$USER" on host "localhost"./)
+    expect(stdout).toMatch(/@localhost travis/)
     expect(stdout).toMatch(/Finished 'remoteUser' after/)
   }, 10000)
 
@@ -30,6 +30,6 @@ describe('shipit-cli', () => {
     const { stdout } = await exec(
       `${babelNode} ${shipitCli} --shipitfile ${shipitFile} test cwdSsh`,
     )
-    expect(stdout).toMatch(/@test.shipitjs.com \/home\/deploy\/\.ssh/)
+    expect(stdout).toMatch(/@localhost \/home\/travis\/\.ssh/)
   }, 10000)
 })

@@ -2,7 +2,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "chmod 400 ./ssh/id_rsa ./ssh/id_rsa.pub",
     "build": "lerna run build",
     "ci": "yarn build && yarn lint && yarn test --ci --coverage && codecov",
     "dev": "lerna run build --parallel -- --watch",

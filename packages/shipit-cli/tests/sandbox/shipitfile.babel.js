@@ -3,10 +3,10 @@
 export default shipit => {
   shipit.initConfig({
     default: {
-      key: './ssh/id_rsa',
+      key: '/home/travis/.ssh/id_rsa',
     },
     test: {
-      servers: 'deploy@test.shipitjs.com',
+      servers: 'travis@localhost',
     },
   })
 
