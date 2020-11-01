@@ -7,17 +7,17 @@ function formatExcludes(excludes) {
   )
 }
 
-export function formatTarCommand({ file, archive, excludes, mode }) {
+export function formatTarCommand({ file: fileOrDir, archive, excludes, mode }) {
   let args = ['tar']
   switch (mode) {
     case 'compress': {
-      requireArgs(['file', 'archive'], { file, archive }, 'tar')
+      requireArgs(['file', 'archive'], { file: fileOrDir, archive }, 'tar')
       if (excludes) args = [...args, ...formatExcludes(excludes)]
-      args = [...args, '-czf', archive, file]
+      args = [...args, '-czf', archive, fileOrDir]
       return joinCommandArgs(args)
     }
     case 'extract': {
-      requireArgs(['archive'], { file, archive }, 'tar')
+      requireArgs(['archive'], { file: fileOrDir, archive }, 'tar')
       args = [...args, '-xzf', archive]
       return joinCommandArgs(args)
     }

@@ -430,6 +430,8 @@ class Connection {
     const stdoutPipe = stdout || this.options.stdout
     const stderrPipe = stderr || this.options.stderr
 
+    this.log('Running "%s" on locally.', cmd)
+
     return exec(cmd, cmdOptions, child => {
       if (stdoutPipe)
         child.stdout
