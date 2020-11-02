@@ -7,19 +7,19 @@ describe('ssh-pool', () => {
   let pool
 
   beforeEach(() => {
-    pool = new sshPool.ConnectionPool(['deploy@test.shipitjs.com'], {
-      key: resolve(__dirname, '../../../ssh/id_rsa'),
+    pool = new sshPool.ConnectionPool(['travis@localhost'], {
+      key: resolve(__dirname, '/home/travis/.ssh/id_rsa'),
     })
   })
 
   it('should run a command remotely', async () => {
     const [{ stdout }] = await pool.run('hostname')
-    expect(stdout).toBe('shipit-test\n')
+    expect(stdout).toMatch(/travis-job-/)
   }, 10000)
 
   it('should escape command properly', async () => {
     const [{ stdout: first }] = await pool.run('echo $USER')
-    expect(first).toBe('deploy\n')
+    expect(first).toBe('travis\n')
 
     const [{ stdout: second }] = await pool.run("echo '$USER'")
     expect(second).toBe('$USER\n')

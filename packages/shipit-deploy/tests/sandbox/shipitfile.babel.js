@@ -6,7 +6,7 @@ export default shipit => {
 
   shipit.initConfig({
     default: {
-      key: './ssh/id_rsa',
+      key: '/home/travis/.ssh/id_rsa',
       workspace: '/tmp/shipit-workspace',
       deployTo: '/tmp/shipit',
       repositoryUrl: 'https://github.com/shipitjs/shipit.git',
@@ -14,7 +14,7 @@ export default shipit => {
       shallowClone: true,
     },
     test: {
-      servers: 'deploy@test.shipitjs.com',
+      servers: 'travis@localhost',
     },
   })
 

@@ -25,7 +25,8 @@ describe('shipit-cli', () => {
 
     const latestRelease = lsReleases
       .split('\n')
-      .reverse()[2]
+      .filter(s => s.match(/^@localhost/))
+      .reverse()[0]
       .match(/\d{14}/)[0]
 
     const { stdout: lsCurrent } = await exec(
@@ -33,7 +34,8 @@ describe('shipit-cli', () => {
     )
 
     const currentRelease = lsCurrent
-      .split('\n')[3]
+      .split('\n')
+      .filter(s => s.match(/^@localhost/))[0]
       .match(/releases\/(\d{14})/)[1]
 
     expect(latestRelease).toBe(currentRelease)
