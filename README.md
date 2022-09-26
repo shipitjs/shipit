@@ -6,6 +6,8 @@
 [![Build Status][build-badge]][build]
 [![version][version-badge]][package]
 [![MIT License][license-badge]][license]
+[![kandi X-Ray](https://kandi.openweaver.com/badges/xray.svg)](https://kandi.openweaver.com/javascript/shipitjs/shipit)
+[![kandi Featured](https://kandi.openweaver.com/badges/featured.svg)](https://kandi.openweaver.com/collections/automation/javascript-automation)
 
 [![PRs Welcome][prs-badge]][prs]
 
